@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View,Text ,TextInput } from "react-native";
 import { Input } from 'native-base';
 import MaterialFixedLabelTextbox from "../components/MaterialFixedLabelTextbox";
 import PasswordText from "../components/Password";
@@ -11,10 +11,12 @@ function Untitled1({ navigation: { navigate } }) {
     <View style={styles.container}>
       <Text style={styles.baiDỗXeLisa}>Bãi đỗ xe Lisa</Text>
       <View style={styles.rect}>
-        <Input
+        <TextInput
+          placeholder="Tài khoản"
           style={styles.materialFixedLabelTextbox}
-        ></Input>
-        <PasswordText style={styles.materialRightIconTextbox}></PasswordText>
+        ></TextInput>
+        <TextInput secureTextEntry={true} style={styles.materialFixedLabelTextbox} placeholder="Mật khẩu" value="" />
+        {/* <PasswordText style={styles.materialRightIconTextbox}></PasswordText> */}
         <MaterialButtonViolet
           onPress={() =>
             navigate('Root')
@@ -59,7 +61,8 @@ const styles = StyleSheet.create({
     borderColor: "rgba(221,221,221,1)",
     borderRadius: 9,
     marginTop: 42,
-    marginLeft: 13
+    marginLeft: 27,
+    paddingLeft: 10
   },
   materialRightIconTextbox: {
     height: 43,
@@ -74,10 +77,10 @@ const styles = StyleSheet.create({
   materialButtonViolet: {
     width: 134,
     height: 36,
-    marginTop: 18,
+    marginTop: 20,
 
     marginBottom: 15,
-    marginLeft: 92
+    marginLeft: 110
   },
   baiDỗXeLisa: {
     fontFamily: "montserrat-700",
@@ -101,7 +104,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.33,
     shadowRadius: 10,
     marginTop: 386,
-    marginLeft: 105
+    marginLeft: 110
   },
   materialButtonViolet2: {
     height: 44,
@@ -118,7 +121,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.33,
     shadowRadius: 10,
     marginTop: 14,
-    marginLeft: 105
+    marginLeft: 125
   }
 });
 
