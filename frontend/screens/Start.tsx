@@ -36,6 +36,9 @@ function Untitled({ navigation: { navigate } }) {
           <MaterialButtonViolet
             title="Đăng ký"
             style={styles.materialButtonViolet1}
+            onPress={() =>
+              navigate('Signup')
+            }
           ></MaterialButtonViolet>
 
           <MaterialButtonViolet
