@@ -1,43 +1,51 @@
 import React, { Component } from "react";
-import { StyleSheet, View,Text ,TextInput } from "react-native";
+import { StyleSheet, View,Text ,TextInput,CheckBox } from "react-native";
 import { Input } from 'native-base';
 import MaterialFixedLabelTextbox from "../components/MaterialFixedLabelTextbox";
 import PasswordText from "../components/Password";
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
 import MaterialButtonViolet1 from "../components/MaterialButtonViolet1";
+import { ScrollView } from "react-native-gesture-handler";
 
-function Untitled1({ navigation: { navigate } }) {
+function Signup({ navigation: { navigate } }) {
   return (
     <View style={styles.container}>
-      <View style={{flex: 3, justifyContent: "center"}}>
-          <Text style={styles.appname}>Đăng nhập</Text>
+      <View style={{flex: 3, justifyContent: "center", marginTop:20}}>
+          <Text style={styles.appname}>Đăng ký</Text>
       </View>
       
-      <View style={styles.rect}>       
-        <View style={{flex: 3, justifyContent: "center"}}>
-            <Text style={{justifyContent: "center", marginLeft: 15, marginTop: 25}}>Số điện thoai:</Text>
-            <TextInput
-              placeholder="Tài khoản"
-              style={styles.materialFixedLabelTextbox}
-            ></TextInput>
-            <Text style={{justifyContent: "center", marginLeft: 15, marginTop: 10}}>Mật khẩu:</Text>
-            <TextInput secureTextEntry={true} style={styles.materialFixedLabelTextbox} placeholder="Mật khẩu" value="" />        
-        </View>
-        <View style={{flex: 1.5, justifyContent: "center",alignItems: 'center'}}>
+      <View style={styles.rect}>    
+        <View style={{flex: 5}}>
+            <ScrollView scrollEnabled showsHorizontalScrollIndicator={false}>
+                <Text style={{justifyContent: "center", marginLeft: 15, marginTop: 10}}>Tên người dùng:</Text>
+                <TextInput placeholder="Tài khoản" style={styles.materialFixedLabelTextbox}></TextInput>
+                <Text style={{justifyContent: "center", marginLeft: 15, marginTop: 10}}>Số điện thoại:</Text>
+                <TextInput secureTextEntry={true} style={styles.materialFixedLabelTextbox} placeholder="Mật khẩu" value="" /> 
+                <Text style={{justifyContent: "center", marginLeft: 15, marginTop: 10}}>Mật khẩu:</Text>
+                <TextInput secureTextEntry={true} style={styles.materialFixedLabelTextbox} placeholder="Mật khẩu" value="" />  
+                <Text style={{justifyContent: "center", marginLeft: 15, marginTop: 10}}>Nhập lại mật khẩu:</Text>
+                <TextInput secureTextEntry={true} style={styles.materialFixedLabelTextbox} placeholder="Nhập lại mật khẩu" value="" />        
+                <View style={{flexDirection:"row",alignItems: 'center',marginLeft: 15,}}>
+                    <CheckBox value={true} />
+                    <Text style={{}}>Là chủ bãi đỗ?</Text>              
+                </View>           
+            </ScrollView>
+        </View>   
+        <View style={{flex: 1, justifyContent: "center",alignItems: 'center'}}>
           <MaterialButtonViolet
             onPress={() =>
               navigate('Root')
             }
             style={styles.materialButtonViolet}
-            title="Đăng nhập"
+            title="Đăng ký"
           ></MaterialButtonViolet>
         </View>
         
       </View>
 
-      <View style={{flex: 3, alignItems: 'center',justifyContent: 'center', paddingTop: 10}}>
+      <View style={{flex: 2, alignItems: 'center',justifyContent: 'center', paddingTop: 10, flexDirection:"row"}}>
         <MaterialButtonViolet
-        title="Đăng ký"
+        title="Đăng nhập"
           style={styles.materialButtonViolet2}
         ></MaterialButtonViolet>
 
@@ -56,7 +64,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(22,241,152,1)"
   },
   rect: {
-    flex: 2,
+    flex: 4,
     backgroundColor: "rgba(255,255,255,1)",
     borderWidth: 5,
     borderColor: "rgba(255,255,255,1)",
@@ -115,7 +123,7 @@ const styles = StyleSheet.create({
   },
   materialButtonViolet2: {
     height: 44,
-    width: 158,
+    width: 140,
     borderWidth: 1,
     borderColor: "rgba(35,225,142,1)",
     borderRadius: 6,
@@ -127,8 +135,8 @@ const styles = StyleSheet.create({
     elevation: 30,
     shadowOpacity: 0.33,
     shadowRadius: 10,
-    marginBottom: 10
+    marginBottom: 10, marginLeft:5
   }
 });
 
-export default Untitled1;
+export default Signup;

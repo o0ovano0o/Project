@@ -10,47 +10,62 @@ var height = Dimensions.get('window').height; //full height
 function Untitled({ navigation: { navigate } }) {
   return (
     <View style={styles.container}>
-      <Image
-        source={require('../assets/images/start.png')}
-        resizeMode="cover"
-        style={styles.image}
-      ></Image>
-      <Text style={styles.baiDỗXeLisa}>Bãi đỗ xe Lisa</Text>
-      <MaterialButtonViolet
-        style={styles.materialButtonViolet2}
-        title="Đăng ký"
-        onPress={() =>
-          navigate('Login')
-        }
-      ></MaterialButtonViolet>
-      <MaterialButtonViolet
-        title="Đăng nhập"
-        style={styles.materialButtonViolet1}
-      ></MaterialButtonViolet>
-      <MaterialButtonViolet
-        title="Tìm bãi đỗ"
-        style={styles.materialButtonViolet1}
-      ></MaterialButtonViolet>
+        <View style={{flex: 2}}>
+          <View style={{flex:2, justifyContent: "center"}}>
+            <Text style={styles.appname}>Bãi đỗ xe Lisa</Text>
+          </View>
+          
+          <View style={{flex:3}}>
+            <Image
+              source={require('../assets/images/start.png')}
+              resizeMode="cover"
+              style={styles.image}
+            ></Image>   
+          </View>     
+        </View>
+
+        <View style={{flex:1}}>
+          <MaterialButtonViolet
+            style={styles.materialButtonViolet2}
+            title="Đăng nhập"
+            onPress={() =>
+              navigate('Login')
+            }
+          ></MaterialButtonViolet>
+
+          <MaterialButtonViolet
+            title="Đăng ký"
+            style={styles.materialButtonViolet1}
+            onPress={() =>
+              navigate('Signup')
+            }
+          ></MaterialButtonViolet>
+
+          <MaterialButtonViolet
+            title="Tìm bãi đỗ"
+            style={styles.materialButtonViolet1}
+          ></MaterialButtonViolet>
+        </View>
+        
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: width,
+    height: height,
     backgroundColor: "#16f198"
   },
   image: {
     width: width,
-    height: 252,
-    marginTop: 200,
-
+    height: height/3,
+    bottom: 0
   },
-  baiDỗXeLisa: {
+  appname: {
     fontFamily: "montserrat-700",
     color: "rgba(48,60,68,1)",
     fontSize: 28,
-    marginTop: -331,
     alignSelf: "center"
   },
   materialButtonViolet2: {
@@ -66,8 +81,8 @@ const styles = StyleSheet.create({
     elevation: 30,
     shadowOpacity: 0.33,
     shadowRadius: 10,
-    marginTop: 376,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginBottom:5
   },
   materialButtonViolet1: {
     height: 44,
@@ -83,8 +98,8 @@ const styles = StyleSheet.create({
     elevation: 30,
     shadowOpacity: 0.33,
     shadowRadius: 10,
-    marginTop: 20,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginBottom: 5
   }
 });
 
