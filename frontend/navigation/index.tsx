@@ -10,6 +10,13 @@ import LinkingConfiguration from './LinkingConfiguration';
 import StartScreen from '../screens/Start';
 import LoginScreen from '../screens/Login';
 import SignupScreen from '../screens/Signup';
+import OwnerProfile from '../OwnerScreens/OwnerProfile';
+import EditProfileOwner from '../OwnerScreens/EditProfileOwner';
+import CustomerProfile from '../CustomerScreens/CustomerProfile';
+import GuardProfile from '../GuardScreens/GuardProfile';
+import ListVehicle from '../CustomerScreens/ListVehicle';
+import Vehicle from '../CustomerScreens/Vehicle';
+import AddNewVehicle from '../CustomerScreens/AddNewVehicle';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -33,6 +40,10 @@ function RootNavigator() {
       <Stack.Screen name="Start" component={StartScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Signup" component={SignupScreen} />
+      <Stack.Screen name="GuardProfile" component={GuardProfile} />
+      <Stack.Screen name="Vehicle" component={Vehicle} />
+      <Stack.Screen name="ListVehicle" component={ListVehicle} />
+      <Stack.Screen name="AddNewVehicle" component={AddNewVehicle} />
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>

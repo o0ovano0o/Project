@@ -44,6 +44,9 @@ function Untitled({ navigation: { navigate } }) {
           <MaterialButtonViolet
             title="Tìm bãi đỗ"
             style={styles.materialButtonViolet1}
+            onPress={() =>
+              navigate('AddNewVehicle')
+            }
           ></MaterialButtonViolet>
         </View>
         
