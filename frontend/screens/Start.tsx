@@ -45,7 +45,7 @@ function Untitled({ navigation: { navigate } }) {
             title="Tìm bãi đỗ"
             style={styles.materialButtonViolet1}
             onPress={() =>
-              navigate('EditProfileOwner')
+              navigate('GuardProfile')
             }
           ></MaterialButtonViolet>
         </View>
