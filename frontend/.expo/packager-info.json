@@ -1,1 +1,8 @@
-{}
+{
+  "devToolsPort": 19002,
+  "expoServerPort": 19000,
+  "packagerPort": 19000,
+  "expoServerNgrokUrl": "https://y8-zcg.anonymous.frontend.exp.direct",
+  "packagerNgrokUrl": "https://packager.y8-zcg.anonymous.frontend.exp.direct",
+  "ngrokPid": 4216
+}
