@@ -67,30 +67,21 @@ app.get('/api/me', validateAppAPI, async (req, res) => {
     });
 });
 
-cron.schedule('* * * * *', reminderSendMail);
-
 const PUPLIC_APIS = [
     'login',
     'register'
 ];
 
-const APP_APIS = [
-    'exam',
-    'listsubject',
-    'home',
-    'student',
-    'admin',
-    'classes',
-    'subject',
-    'print',
-    'result'
+const OWNER_APIS = [
+   'login',
+    'register'
 ];
 
 /* eslint-disable global-require */
 PUPLIC_APIS.forEach((apiPath) =>
     app.use(require(`./src/routes/public/${apiPath}`))
 );
-APP_APIS.forEach((apiPath) => app.use(require(`./src/routes/app/${apiPath}`)));
+OWNER_APIS.forEach((apiPath) => app.use(require(`./src/routes/owner/${apiPath}`)));
 
 // module.exports = app;
 const server = app.listen(process.env.PORT || 3000, () =>
