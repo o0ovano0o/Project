@@ -5,4 +5,12 @@ const Role =
         owner : 2,
 }
 
-module.exports = { Role };
+const TypeTime = {
+        hour: 0,
+        day:1
+}
+const TypeVehicle = {
+        car:0,
+        bike:1
+}
+module.exports = { Role,TypeTime,TypeVehicle };

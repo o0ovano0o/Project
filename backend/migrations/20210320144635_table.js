@@ -9,6 +9,7 @@ exports.up = async function(knex) {
     table.text('email');
     table.bigInteger('role').notNullable();
     table.bigInteger('parkingid');
+    table.bigInteger('ownerid');
   });
   await knex.schema.createTable('vehicle', table => {
     table.bigIncrements('vehicleid');
@@ -43,12 +44,13 @@ exports.up = async function(knex) {
     table.bigInteger('typeverhicle').notNullable();
     table.text('drescription');
     table.bigInteger('isDefault').notNullable();
+    table.bigInteger('ownerid').notNullable();
   });
   await knex.schema.createTable('transaction', table => {
     table.bigIncrements('transactionid');
     table.bigInteger('userid');
-    table.bigInteger('vehicleID');
-    table.bigInteger('placeID');
+    table.bigInteger('vehicleid');
+    table.bigInteger('parkingid');
     table.bigInteger('ticketID');
     // table.bigInteger('examid').references('id').inTable('exam').notNullable().onDelete('CASCADE');
     table.text('Timein').notNullable();
@@ -78,9 +80,9 @@ exports.up = async function(knex) {
 };
 
 exports.down = async function(knex) {
-  await knex.schema.dropTableIfExists('user');
-  await knex.schema.dropTableIfExists('vehicle');
-  await knex.schema.dropTableIfExists('parking');
-  await knex.schema.dropTableIfExists('ticket');
   await knex.schema.dropTableIfExists('transaction');
+  await knex.schema.dropTableIfExists('ticket');
+  await knex.schema.dropTableIfExists('parking');
+  await knex.schema.dropTableIfExists('vehicle');
+  await knex.schema.dropTableIfExists('user');
 };

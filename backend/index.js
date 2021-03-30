@@ -69,12 +69,14 @@ app.get('/api/me', validateAppAPI, async (req, res) => {
 
 const PUPLIC_APIS = [
     'login',
-    'register'
+    'register',
+    'parking'
 ];
 
 const OWNER_APIS = [
-   'login',
-    'register'
+   'guard',
+   'ticket',
+   'parking'
 ];
 
 /* eslint-disable global-require */

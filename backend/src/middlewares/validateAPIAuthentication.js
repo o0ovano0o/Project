@@ -1,6 +1,6 @@
 const knex = require('../knex');
 const jwt_decode = require("jwt-decode");
-const Enum = require('../../common/Enum');
+const Enum = require('../common/Enum');
 function validateAppSession(req) {
   if (!req.session.userid) {
     return { success: false, msg: 'Bạn cần đăng nhập!' };
