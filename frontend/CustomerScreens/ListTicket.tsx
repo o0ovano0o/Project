@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { StyleSheet, View,Text ,Image,Dimensions,SafeAreaView,StatusBar,ScrollView  } from "react-native";
+import { StyleSheet, View,Text ,Image,Dimensions,SafeAreaView,StatusBar,ScrollView,useWindowDimensions   } from "react-native";
 import { AntDesign,Feather,MaterialIcons  ,MaterialCommunityIcons,Ionicons,Fontisto    } from '@expo/vector-icons'; 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
-
+import { TabView, SceneMap } from 'react-native-tab-view';
 function ItemPayScreen() {
     return (
         <View style={styles.item}>
@@ -59,7 +58,7 @@ function ItemPayScreen() {
         </View>
         <View style={{flex:7, marginLeft:5, marginTop:-2}}>
             <View style={{flexDirection:'row', alignItems:'center'}}>
-                <Text style={styles.namecar}>Bãi đỗ xe Duy Tân</Text>
+                <Text style={styles.namecar}>Bãi đỗ xe Duy Tân 2</Text>
             </View>
             
             <View style={{flexDirection:'row', alignItems:'center'}}>
@@ -88,7 +87,7 @@ function ItemPayScreen() {
   function PayScreen() {
     return (
         <View style={styles.profile}>          
-            <ScrollView style={{height:height-120, borderBottomColor:"#CCCCCC"}}>
+            <ScrollView style={{height:height-200, borderBottomColor:"#CCCCCC"}}>
                 <ItemPayScreen/> 
                 <ItemPayScreen/> 
                 <ItemPayScreen/> 
@@ -101,7 +100,7 @@ function ItemPayScreen() {
   function NoPayScreen() {
     return (
         <View style={styles.profile}>          
-            <ScrollView style={{height:height-120, borderBottomColor:"#CCCCCC"}}>
+            <ScrollView style={{height:height-150, borderBottomColor:"#CCCCCC"}}>
                 <ItemNoPayScreen/>           
             </ScrollView>
         </View>
@@ -111,6 +110,16 @@ const Tab = createBottomTabNavigator();
 
 
 function ListTicket({ navigation: { navigate } }) {
+    const layout = useWindowDimensions();
+    const [index, setIndex] = React.useState(0);
+    const [routes] = React.useState([
+        { key: 'first', title: 'Chưa thanh toán' },
+        { key: 'second', title: 'Đã thanh toán' },
+    ]);
+    const renderScene = SceneMap({
+        first: NoPayScreen,
+        second: PayScreen,
+      });
   return (
     <SafeAreaView  style={styles.container}>
         <StatusBar
@@ -126,10 +135,16 @@ function ListTicket({ navigation: { navigate } }) {
             <View style={{flex:1}}>
             </View>
       </View>
-        <Tab.Navigator>
-            <Tab.Screen name="ItemNoPayScreen" component={NoPayScreen} />
-            <Tab.Screen name="ItemPayScreen" component={PayScreen} />
-        </Tab.Navigator>
+      <View style={{height: height-100}}>
+        <TabView
+            navigationState={{ index, routes }}
+            renderScene={renderScene}
+            onIndexChange={setIndex}
+            initialLayout={{ width: width, height:height-100}}
+            />
+      </View>
+      
+        <View style={{height:50, backgroundColor:"gray"}}></View>
     </SafeAreaView>
   );
 }
@@ -146,12 +161,10 @@ const styles = StyleSheet.create({
       backgroundColor: "#16f198"   ,
       justifyContent:'center',
       alignItems:'center',
-      borderBottomWidth:1,
-      borderBottomColor:"#CCCCCC",
       flexDirection:'row'
   },
   profile:{
-      height: height-50,
+      height: height-160,
       width: width,     
       marginTop:10
   },
