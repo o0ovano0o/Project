@@ -1,8 +1,12 @@
-import React, { Component } from "react";
-import { StyleSheet, View,Text ,Image,Dimensions,SafeAreaView,StatusBar,ScrollView,useWindowDimensions   } from "react-native";
+import React, { Component,useState  } from "react";
+import { StyleSheet, View,Image,Text ,Dimensions,SafeAreaView,StatusBar,ScrollView,useWindowDimensions   } from "react-native";
 import { AntDesign,Feather,MaterialIcons  ,MaterialCommunityIcons,Ionicons,Fontisto    } from '@expo/vector-icons'; 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TabView, SceneMap } from 'react-native-tab-view';
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import Modal from "react-native-modal";
+import Dropdown from "react-native-modal-dropdown";
+
 function ItemPayScreen() {
     return (
         <View style={styles.item}>
@@ -97,11 +101,88 @@ function ItemPayScreen() {
         </View>
     );
   }
+  
   function NoPayScreen() {
+    const [visible, setVisible] = React.useState(false);
+    const showModal = () => setVisible(true);
+    const hideModal = () => setVisible(false);
+    const containerStyle = {backgroundColor: 'white', padding: 20};
     return (
-        <View style={styles.profile}>          
+        <View style={styles.profile}>      
+            <Modal
+                isVisible={visible} onDismiss={hideModal}
+                useNativeDriver
+                style={styles.modalContainer}
+                backdropColor={"gray"} 
+                onBackButtonPress={hideModal}
+                onBackdropPress={hideModal}
+                onSwipeComplete={hideModal}    
+            >
+                <View style={styles.modal}>  
+                    <View style={{margin:10, flexDirection:'row'}}> 
+                        <View style={{ marginLeft:20,borderColor:'#CCCCCC', borderWidth:1, borderRadius:20, height:20, width:160, justifyContent:'center',alignItems:'center'}}>
+                            <Text style={{color:'#FFCC66'}}>Chưa thanh toán</Text>
+                        </View> 
+                        <View style={{position:'absolute', right:10}}>
+                            <Feather name="map-pin" size={20} color="#00CCFF" style={{ marginLeft:8}}/>
+                        </View>
+                    </View>
+                    <ScrollView style={{height:height*0.5, borderBottomColor:"#CCCCCC"}}>
+                        <View style={{flex:7, marginLeft:5, marginTop:-2}}>
+                            <View style={{flexDirection:'row', alignItems:'center'}}>
+                                <Text style={styles.namecar}>Bãi đỗ xe Duy Tân 2</Text>
+                            </View>
+                            
+                            <View style={{flexDirection:'row', alignItems:'center'}}>
+                                <Feather name="map-pin" size={14} color="gray" style={{ marginLeft:8}}/>
+                                <Text style={styles.textcar}>Ngõ 12, phố Duy Tân, Cầu Giấy, Hà Nội</Text>
+                            </View>
+                            <View style={{marginTop:10, marginLeft:-15,width:width, alignItems:'center'}}>
+                                <Text style={{fontSize:20, fontWeight:'bold'}}>VÉ GỬI XE</Text>
+                            </View>
+                            <View style={{marginTop:10, marginLeft:5,width:width}}>
+                                <Text style={{marginTop:5}}>Biển số: 255-448-789</Text>
+                                <Text style={{marginTop:5}}>Loại xe: Xe máy</Text>
+                                <Text style={{marginTop:5}}>Màu xe: trắng, đỏ</Text>
+                                <Text style={{marginTop:5}}>Mô tả: vết xước dài 10 cm đầu xe</Text>
+                            </View>
+                            <View style={{flexDirection:'row', alignItems:'center', marginTop:10}}>
+                                <MaterialIcons name="date-range" size={20} color="gray" style={{ marginLeft:5}}  />
+                                <View style={{flex:2}}>
+                                    <Text style={{marginLeft:5, fontSize:13}}>Giờ vào</Text>
+                                    <Text style={{marginLeft:5, fontSize:13}}>30/3/2021</Text>
+                                    <Text style={{marginLeft:5, fontSize:13}}>14:30</Text>
+                                </View>
+                                <View style={{flex:1}}>
+                                    <AntDesign name="arrowright" size={24} color="#CCCCCC" />
+                                </View>
+                                <View style={{flex:2}}>
+                                    <Text style={{marginLeft:5, fontSize:13}}>Giờ ra</Text>
+                                    <Text style={{marginLeft:5, fontSize:13}}>30/3/2021</Text>
+                                    <Text style={{marginLeft:5, fontSize:13}}>16:30</Text>
+                                </View>  
+                            </View>
+                            <View style={{flexDirection:'row'}}>
+                                <MaterialCommunityIcons name="qrcode-scan" size={20} color="gray" style={{marginRight:10, marginTop:10}} />
+                                <Text style={{fontSize:16, fontWeight:'bold',  marginTop:10,fontFamily:'sans-serif-light'}}>Mã QR</Text>
+                            </View>
+                            <View style={{justifyContent:'center', alignItems:'center', marginBottom:20, marginTop:10}}>
+                                <Image
+                                source={require('../assets/images/QRcode.jpg')}
+                                resizeMode="cover"
+                                style={styles.image}
+                                ></Image> 
+                            </View> 
+                        </View>
+                    </ScrollView>
+                </View>
+            </Modal>
             <ScrollView style={{height:height-150, borderBottomColor:"#CCCCCC"}}>
-                <ItemNoPayScreen/>           
+            <TouchableWithoutFeedback
+                onPress={showModal}
+            >
+                <ItemNoPayScreen/>     
+            </TouchableWithoutFeedback>      
             </ScrollView>
         </View>
     );
@@ -155,6 +236,18 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white"   
   },
+  modalContainer:{
+    margin: 0,
+    justifyContent: "flex-end"
+  },
+  modal:{
+    flexDirection: "column",
+    height:  height* 0.75,
+    padding: 15 ,
+    backgroundColor: "white",
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15
+  },
   tabback:{
       height: 50,
       width:width,
@@ -169,10 +262,8 @@ const styles = StyleSheet.create({
       marginTop:10
   },
   image:{
-    height:70,
-    width:70,
-    borderRadius:70,
-    marginLeft:20,   
+    height:200,
+    width:200,
   },
   item:{
     height:150,
