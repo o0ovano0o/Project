@@ -5,7 +5,7 @@ import MaterialFixedLabelTextbox from "../components/MaterialFixedLabelTextbox";
 import PasswordText from "../components/Password";
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
 import MaterialButtonViolet1 from "../components/MaterialButtonViolet1";
-
+import styles from '../Style/LoginStyle';
 function Untitled1({ navigation: { navigate } }) {
   return (
     <View style={styles.container}>
@@ -50,85 +50,6 @@ function Untitled1({ navigation: { navigate } }) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "rgba(22,241,152,1)"
-  },
-  rect: {
-    flex: 2,
-    backgroundColor: "rgba(255,255,255,1)",
-    borderWidth: 5,
-    borderColor: "rgba(255,255,255,1)",
-    borderRadius: 12,
-    marginHorizontal: 20,
-    minHeight: 180
-  },
-  materialFixedLabelTextbox: {
-    minHeight: 40,
-    maxHeight: 40,
-    backgroundColor: "rgba(255,255,255,1)",
-    borderWidth: 1,
-    borderColor: "rgba(221,221,221,1)",
-    borderRadius: 9,
-    marginHorizontal: 10,
-    marginTop: 10,
-    paddingLeft:10,
-    fontSize:14
-  },
-  materialRightIconTextbox: {
-    minHeight: 40,
-    maxHeight: 40,
-    backgroundColor: "#fff",
-    borderWidth: 1,
-    borderColor: "rgba(221,221,221,1)",
-    borderRadius: 6,
-    marginHorizontal: 10,
-    paddingLeft:10,
-    marginTop: 10,
-    fontSize:13
-  },
-  materialButtonViolet: {
-    width: 134,
-    height: 36,
-  },
-  appname: {
-    fontFamily: "montserrat-700",
-    color: "#121212",
-    fontSize: 28,
-    alignSelf: "center"
-  },
-  materialButtonViolet1: {
-    height: 44,
-    width: 158,
-    borderWidth: 1,
-    borderColor: "rgba(35,225,142,1)",
-    borderRadius: 6,
-    shadowColor: "rgba(0,0,0,1)",
-    shadowOffset: {
-      width: 0,
-      height: 3
-    },
-    elevation: 30,
-    shadowOpacity: 0.33,
-    shadowRadius: 10,
-  },
-  materialButtonViolet2: {
-    height: 44,
-    width: 158,
-    borderWidth: 1,
-    borderColor: "rgba(35,225,142,1)",
-    borderRadius: 6,
-    shadowColor: "rgba(0,0,0,1)",
-    shadowOffset: {
-      width: 0,
-      height: 3
-    },
-    elevation: 30,
-    shadowOpacity: 0.33,
-    shadowRadius: 10,
-    marginBottom: 10
-  }
-});
+
 
 export default Untitled1;
