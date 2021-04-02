@@ -18,6 +18,7 @@ import ListVehicle from '../CustomerScreens/ListVehicle';
 import Vehicle from '../CustomerScreens/Vehicle';
 import AddNewVehicle from '../CustomerScreens/AddNewVehicle';
 import ListTicket from '../CustomerScreens/ListTicket';
+import Map from '../screens/Map';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -46,6 +47,7 @@ function RootNavigator() {
       <Stack.Screen name="ListVehicle" component={ListVehicle} />
       <Stack.Screen name="AddNewVehicle" component={AddNewVehicle} />
       <Stack.Screen name="ListTicket" component={ListTicket} />
+      <Stack.Screen name="Map" component={Map} />
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>

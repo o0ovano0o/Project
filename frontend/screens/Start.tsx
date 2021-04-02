@@ -45,7 +45,7 @@ function Untitled({ navigation: { navigate } }) {
             title="Tìm bãi đỗ"
             style={styles.materialButtonViolet1}
             onPress={() =>
-              navigate('ListTicket')
+              navigate('Map')
             }
           ></MaterialButtonViolet>
         </View>

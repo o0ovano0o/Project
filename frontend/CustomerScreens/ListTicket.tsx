@@ -5,8 +5,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import Modal from "react-native-modal";
-import Dropdown from "react-native-modal-dropdown";
-
+import { SearchBar } from 'react-native-elements';
+//giao diện vé đã thanh toán
 function ItemPayScreen() {
     return (
         <View style={styles.item}>
@@ -47,6 +47,7 @@ function ItemPayScreen() {
     </View> 
     );
   }
+//   giao diện vé chưa thanh toán
   function ItemNoPayScreen() {
     return (
         <View style={styles.item}>
@@ -89,9 +90,25 @@ function ItemPayScreen() {
   }
 
   function PayScreen() {
+    // state = {
+    //     search: '',
+    //   };
+    
+    //   updateSearch = (search) => {
+    //     this.setState({ search });
+    //   };
+    // giao diện trang đã thanh toán
     return (
-        <View style={styles.profile}>          
-            <ScrollView style={{height:height-200, borderBottomColor:"#CCCCCC"}}>
+        <View style={styles.profile}>  
+            <View style={styles.find}>
+                <SearchBar
+                    round     
+                    placeholder="Tìm kiếm..."
+                    
+                />
+            </View>
+            
+            <ScrollView style={{height:height-150, borderBottomColor:"#CCCCCC"}}>
                 <ItemPayScreen/> 
                 <ItemPayScreen/> 
                 <ItemPayScreen/> 
@@ -101,14 +118,22 @@ function ItemPayScreen() {
         </View>
     );
   }
-  
+  //tham khảo thanh tìm kiếm
+//   https://snack.expo.io/embedded/@aboutreact/example-of-search-bar-in-react-native?iframeId=2k48h7eupo&preview=true&platform=ios&theme=dark
   function NoPayScreen() {
+    //   giao diện trang chưa thanh toán
     const [visible, setVisible] = React.useState(false);
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
     const containerStyle = {backgroundColor: 'white', padding: 20};
     return (
-        <View style={styles.profile}>      
+        <View style={styles.profile}>   
+            <View style={styles.find}>
+                <SearchBar
+                    round     
+                    placeholder="Tìm kiếm..."   
+                />
+            </View>   
             <Modal
                 isVisible={visible} onDismiss={hideModal}
                 useNativeDriver
@@ -177,7 +202,7 @@ function ItemPayScreen() {
                     </ScrollView>
                 </View>
             </Modal>
-            <ScrollView style={{height:height-150, borderBottomColor:"#CCCCCC"}}>
+            <ScrollView style={{height:height-100, borderBottomColor:"#CCCCCC"}}>
             <TouchableWithoutFeedback
                 onPress={showModal}
             >
@@ -206,22 +231,13 @@ function ListTicket({ navigation: { navigate } }) {
         <StatusBar
         animated={true}
         hidden={true} />
-        <View style={styles.tabback}>
-            <View style={{flex:1, alignItems:'center'}}>
-                <AntDesign name="left" size={24} color="gray" />
-            </View>
-            <View style={{flex:5, alignItems:'center'}}>
-                <Text style={{fontSize:16, fontWeight:'bold'}}>Danh sách vé xe</Text>
-            </View>
-            <View style={{flex:1}}>
-            </View>
-      </View>
-      <View style={{height: height-100}}>
+        
+      <View style={{height: height-50}}>
         <TabView
             navigationState={{ index, routes }}
             renderScene={renderScene}
             onIndexChange={setIndex}
-            initialLayout={{ width: width, height:height-100}}
+            initialLayout={{ width: width, height:height-50}}
             />
       </View>
       
@@ -235,6 +251,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white"   
+  },
+  find:{
+    marginTop:-10,
+    marginBottom:10
   },
   modalContainer:{
     margin: 0,
@@ -257,7 +277,7 @@ const styles = StyleSheet.create({
       flexDirection:'row'
   },
   profile:{
-      height: height-160,
+      height: height-110,
       width: width,     
       marginTop:10
   },
