@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { StyleSheet, View,Text ,Image,Dimensions,SafeAreaView,StatusBar,ScrollView,TextInput } from "react-native";
-import { AntDesign,Feather,Foundation,MaterialIcons,Ionicons,EvilIcons ,Fontisto    } from '@expo/vector-icons'; 
 import {Camera} from 'expo-camera'
 import * as Permissions from 'expo-permissions';
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -38,8 +37,17 @@ export default class ScanQRCode extends React.Component{
                                     flex:1, 
                                     backgroundColor:'gray', 
                                     flexDirection:'row'}}
+                                    onPress={()=>{
+                                        this.setState({
+                                            type: this.state.type === Camera.Constants.Type.back ? Camera.Constants.Type.front:Camera.Constants.Type.back,
+                                        });
+                                    }}
                             >
-                                <Text>Hi</Text>
+                                <Text
+                                    style={{fontSize:18, marginBottom:10, color:'white'}}
+                                >
+                                    {''}Flip{''}
+                                </Text>
                             </TouchableOpacity>
 
                         </View>
