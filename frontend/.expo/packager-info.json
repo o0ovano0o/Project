@@ -2,9 +2,9 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19000,
-  "expoServerNgrokUrl": "https://tg-vu5.anonymous.frontend.exp.direct",
-  "packagerNgrokUrl": "https://packager.tg-vu5.anonymous.frontend.exp.direct",
-  "ngrokPid": 3660,
+  "expoServerNgrokUrl": "https://h7-2x2.anonymous.frontend.exp.direct",
+  "packagerNgrokUrl": "https://packager.h7-2x2.anonymous.frontend.exp.direct",
+  "ngrokPid": 7384,
   "packagerPid": null,
   "webpackServerPort": null
 }
