@@ -31,10 +31,16 @@ export default class ScanQRCode extends React.Component{
                               }}
                     
                     >
-                        <View style={{flex:1, backgroundColor:'gray', flexDirection:'row'}}>
+                        <View style={{height:80, width:width, flexDirection:'row', marginTop:height-100, justifyContent:'center'}}>
                             <TouchableOpacity
                                 style={{
-                                    flex:1, 
+                                    height:80,
+                                    width:80,
+                                    borderRadius:80,
+                                    borderWidth:1,
+                                    borderColor:'gray',
+                                    justifyContent:'center',
+                                    alignItems:'center',
                                     backgroundColor:'gray', 
                                     flexDirection:'row'}}
                                     onPress={()=>{
@@ -46,7 +52,7 @@ export default class ScanQRCode extends React.Component{
                                 <Text
                                     style={{fontSize:18, marginBottom:10, color:'white'}}
                                 >
-                                    {''}Flip{''}
+                                    {''}Scan{''}
                                 </Text>
                             </TouchableOpacity>
 
@@ -57,3 +63,5 @@ export default class ScanQRCode extends React.Component{
         }
     }
 }
+var width = Dimensions.get('window').width; //full width
+var height = Dimensions.get('window').height; //full height
