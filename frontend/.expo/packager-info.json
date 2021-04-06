@@ -4,7 +4,7 @@
   "packagerPort": 19000,
   "expoServerNgrokUrl": "https://h7-2x2.anonymous.frontend.exp.direct",
   "packagerNgrokUrl": "https://packager.h7-2x2.anonymous.frontend.exp.direct",
-  "ngrokPid": 7384,
+  "ngrokPid": 5064,
   "packagerPid": null,
   "webpackServerPort": null
 }
