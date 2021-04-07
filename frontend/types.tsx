@@ -3,6 +3,14 @@ export type RootStackParamList = {
   Start: undefined;
   Root: undefined;
   NotFound: undefined;
+  Signup: undefined;
+  GuardProfile: undefined;
+  Vehicle: undefined;
+  ListVehicle: undefined;
+  AddNewVehicle: undefined;
+  ListTicket: undefined;
+  Map: undefined;
+  ScanQRCode: undefined;
 };
 
 export type BottomTabParamList = {

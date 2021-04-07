@@ -6,16 +6,17 @@ const handleAPIError = require('../../common/handleAPIError');
 router.post('/api/user/login', async (req, res) => {
   try {
     const { username, password } = req.body;
-    if (!username || !password) return res.status(400).json({ success: false, msg: 'Tài khoản hoặc mật khẩu thiếu' });
+    if (!username || !password) return res.json({ status: 400, success: false, msg: 'Tài khoản hoặc mật khẩu thiếu' });
     const user = await knex('user')
       .first('userid', 'username', 'password', 'phonenumber','role', 'parkingid')
       .where({ username, password: sha1(password) });
-    if (!user) return res.status(400).json({ success: false, msg: 'Tài khoản hoặc mật khẩu không chính xác' });
+    if (!user) return res.json({ status: 400, success: false, msg: 'Tài khoản hoặc mật khẩu không chính xác' });
     req.session.userid = user.userid;
     req.session.username= user.username;
     req.session.phonenumber= user.phonenumber;
     req.session.role= user.role;
     return res.status(200).json({
+      status: 200,
       success: true,
       data: user,
       msg: `Đăng nhập thành công`,

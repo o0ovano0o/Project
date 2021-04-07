@@ -56,7 +56,7 @@ router.delete('/api/owner/ticket/:ticketid',validateOwnerAPI, async(req, res) =>
         }
         const check = await knex('ticket')
             .delete()
-            .where({ userid, ticketid, isDefault: true });
+            .where({ userid, ticketid });
         if (!check) return res.status(400).json({ success: false, msg: 'Xóa vé thất bại' });
         return res.status(200).json({
             success: true,

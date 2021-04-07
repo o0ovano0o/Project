@@ -9,7 +9,10 @@ import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import TabThreeScreen from '../screens/TabThreeScreen';
 import TabFourScreen from '../screens/TabFourScreen';
+import Map from '../screens/Map';
 import { BottomTabParamList, TabFourParamList, TabOneParamList, TabThreeParamList, TabTwoParamList } from '../types';
+import NotFoundScreen from '../screens/NotFoundScreen';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -43,7 +46,7 @@ export default function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="TabFour"
-        component={TabOneNavigator}
+        component={TabFourNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
         }}
@@ -61,17 +64,59 @@ function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 const TabOneStack = createStackNavigator<TabOneParamList>();
+const user = {
+  userid:1,
+  role:2
+}
+async function getUser() {
+  const value = await AsyncStorage.getItem('user');
+  if(value)
+  return {
+    ...JSON.parse(value),
+    login: true
+  }
 
+  else {
+    return {
+      login: false,
+    }
+  }
+}
 function TabOneNavigator() {
-  return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
-        options={{headerShown: false}}
-      />
-    </TabOneStack.Navigator>
-  );
+  var user = getUser();
+
+  if(user.role == 1) {
+    return (
+      <TabOneStack.Navigator>
+        <TabOneStack.Screen
+          name="TabOneScreen"
+          component={TabOneScreen}
+          options={{headerShown: false}}
+        />
+      </TabOneStack.Navigator>
+    );
+  }
+  else if( user.role == 2) {
+    return (
+      <TabOneStack.Navigator>
+        <TabOneStack.Screen
+          name="TabOneScreen"
+          component={Map}
+          options={{headerShown: false}}
+        />
+      </TabOneStack.Navigator>
+    );
+  } else {
+    return (
+      <TabOneStack.Navigator>
+        <TabOneStack.Screen
+          name="TabOneScreen"
+          component={NotFoundScreen}
+          options={{headerShown: false}}
+        />
+      </TabOneStack.Navigator>
+    );
+  }
 }
 
 function TabThreeNavigator() {
@@ -90,7 +135,7 @@ function TabFourNavigator() {
     <TabFourStack.Navigator>
       <TabFourStack.Screen
         name="TabFourScreen"
-        component={TabFourScreen}
+        component={Map}
         options={{headerShown: false}}
       />
     </TabFourStack.Navigator>

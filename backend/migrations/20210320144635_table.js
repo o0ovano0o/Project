@@ -16,6 +16,7 @@ exports.up = async function(knex) {
     table.text('color').notNullable();
     table.text('code').notNullable();
     table.text('type').notNullable();
+    table.boolean('isDefault').notNullable();
     table.text('description');
     table.text('QRCode');
     table.bigInteger('userid').references('userid').inTable('user').notNullable().onDelete('CASCADE');;
@@ -48,7 +49,7 @@ exports.up = async function(knex) {
   });
   await knex.schema.createTable('transaction', table => {
     table.bigIncrements('transactionid');
-    table.bigInteger('userid');
+    table.bigInteger('guarid');
     table.bigInteger('vehicleid');
     table.bigInteger('parkingid');
     table.bigInteger('ticketID');
@@ -76,6 +77,7 @@ exports.up = async function(knex) {
     table.text('addressuser');
 
     table.text('guardname').notNullable();
+    table.text('userid').notNullable();
   });
 };
 

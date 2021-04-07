@@ -14,14 +14,14 @@ function Untitled({ navigation: { navigate } }) {
           <View style={{flex:2, justifyContent: "center"}}>
             <Text style={styles.appname}>Bãi đỗ xe Lisa</Text>
           </View>
-          
+
           <View style={{flex:3}}>
             <Image
               source={require('../assets/images/start.png')}
               resizeMode="cover"
               style={styles.image}
-            ></Image>   
-          </View>     
+            ></Image>
+          </View>
         </View>
 
         <View style={{flex:1}}>
@@ -45,11 +45,11 @@ function Untitled({ navigation: { navigate } }) {
             title="Tìm bãi đỗ"
             style={styles.materialButtonViolet1}
             onPress={() =>
-              navigate('ScanQRCode')
+              navigate('Map')
             }
           ></MaterialButtonViolet>
         </View>
-        
+
     </View>
   );
 }
