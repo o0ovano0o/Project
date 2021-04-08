@@ -18,6 +18,8 @@ import ListVehicle from '../CustomerScreens/ListVehicle';
 import Vehicle from '../CustomerScreens/Vehicle';
 import AddNewVehicle from '../CustomerScreens/AddNewVehicle';
 import ListTicket from '../CustomerScreens/ListTicket';
+import AddTicket from '../GuardScreens/AddTicket';
+import SuccessScreen from '../CustomerScreens/SuccessScreen';
 import Map from '../screens/Map';
 import ScanQRCode from '../OwnerScreens/ScanQRCode';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -69,7 +71,9 @@ async function getUser() {
       <Stack.Screen name="AddNewVehicle" component={AddNewVehicle} />
       <Stack.Screen name="ListTicket" component={ListTicket} />
       <Stack.Screen name="Map" component={Map} />
+      <Stack.Screen name="AddTicket" component={AddTicket} />
       <Stack.Screen name="AcceptTicket" component={AcceptTicket} />
+      <Stack.Screen name="SuccessScreen" component={SuccessScreen} />
       <Stack.Screen name="ScanQRCode" component={ScanQRCode} />
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />

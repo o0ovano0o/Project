@@ -24,6 +24,21 @@ var height = Dimensions.get('window').height; //full height
             borderTopLeftRadius: 15,
             borderTopRightRadius: 15
           },
+          hoursDropdown: {
+            borderRadius: 15 / 2,
+            borderColor: "gray",
+            borderWidth: 1,
+            paddingLeft:10,
+            paddingTop:10,
+            marginRight: 16 / 2,
+            width:200,
+            height:40
+          },
+          hoursDropdownStyle: {
+            marginLeft: -10,
+            paddingHorizontal: 10 / 2,
+            marginVertical: -(10 + 1)
+          },
           accept:{
             height: 40,
             width: 120,
@@ -36,6 +51,29 @@ var height = Dimensions.get('window').height; //full height
               height: 3
             },
             margin:10
+          },
+          accept2:{
+            height: 40,
+            width: 300,
+            borderWidth: 1,
+            borderColor: "rgba(35,225,142,1)",
+            borderRadius: 6,
+            shadowColor: "rgba(0,0,0,1)",
+            shadowOffset: {
+              width: 0,
+              height: 3
+            },
+            margin:10
+          },
+          modeladd:{
+            flex:11,
+            borderTopWidth:1, 
+            borderColor:'gray',
+            flexDirection: "column",
+            padding: 10 ,
+            backgroundColor: "white",
+            borderTopLeftRadius: 15,
+            borderTopRightRadius: 15
           },
           tabback:{
               height: 50,

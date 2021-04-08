@@ -1,1 +1,10 @@
-{}
+{
+  "devToolsPort": 19002,
+  "expoServerPort": 19000,
+  "packagerPort": 19000,
+  "expoServerNgrokUrl": "https://bq-h6y.anonymous.frontend.exp.direct",
+  "packagerNgrokUrl": "https://packager.bq-h6y.anonymous.frontend.exp.direct",
+  "ngrokPid": 1788,
+  "packagerPid": null,
+  "webpackServerPort": null
+}
