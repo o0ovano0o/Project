@@ -24,6 +24,19 @@ var height = Dimensions.get('window').height; //full height
             borderTopLeftRadius: 15,
             borderTopRightRadius: 15
           },
+          accept:{
+            height: 40,
+            width: 120,
+            borderWidth: 1,
+            borderColor: "rgba(35,225,142,1)",
+            borderRadius: 6,
+            shadowColor: "rgba(0,0,0,1)",
+            shadowOffset: {
+              width: 0,
+              height: 3
+            },
+            margin:10
+          },
           tabback:{
               height: 50,
               width:width,

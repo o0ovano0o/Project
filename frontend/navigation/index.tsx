@@ -22,6 +22,7 @@ import Map from '../screens/Map';
 import ScanQRCode from '../OwnerScreens/ScanQRCode';
 import AsyncStorage from '@react-native-community/async-storage';
 
+import AcceptTicket from '../CustomerScreens/AcceptTicket';
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -68,6 +69,7 @@ async function getUser() {
       <Stack.Screen name="AddNewVehicle" component={AddNewVehicle} />
       <Stack.Screen name="ListTicket" component={ListTicket} />
       <Stack.Screen name="Map" component={Map} />
+      <Stack.Screen name="AcceptTicket" component={AcceptTicket} />
       <Stack.Screen name="ScanQRCode" component={ScanQRCode} />
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
