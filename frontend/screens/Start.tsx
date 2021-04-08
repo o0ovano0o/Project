@@ -12,7 +12,7 @@ function Untitled({ navigation: { navigate } }) {
     <View style={styles.container}>
         <View style={{flex: 2}}>
           <View style={{flex:2, justifyContent: "center"}}>
-            <Text style={styles.appname}>Bãi đỗ xe Lisa</Text>
+            <Text style={styles.appname}>Bãi đỗ xe 3AP</Text>
           </View>
 
           <View style={{flex:3}}>
@@ -21,7 +21,7 @@ function Untitled({ navigation: { navigate } }) {
               resizeMode="cover"
               style={styles.image}
             ></Image>
-          </View>
+        </View>
         </View>
 
         <View style={{flex:1}}>

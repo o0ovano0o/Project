@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { StyleSheet, View,Text ,Image,Dimensions,SafeAreaView,StatusBar,ScrollView  } from "react-native";
-import { AntDesign,Feather,Foundation,MaterialIcons,Ionicons,EvilIcons    } from '@expo/vector-icons'; 
+import { AntDesign,Feather,Foundation,MaterialIcons,Ionicons,EvilIcons    } from '@expo/vector-icons';
+import { StackScreenProps } from "@react-navigation/stack";
+import { RootStackParamList } from "../types";
 
-function CustomerProfile({ navigation: { navigate } }) {
+function CustomerProfile({ navigation: { navigate } })  {
   return (
     <SafeAreaView  style={styles.container}>
         <StatusBar
@@ -25,53 +27,53 @@ function CustomerProfile({ navigation: { navigate } }) {
                         source={require('../assets/images/start.png')}
                         resizeMode="cover"
                         style={styles.image}
-                    ></Image> 
+                    ></Image>
                 </View>
                 <View style={{flex:4,justifyContent:'center'}}>
                     <Text style={styles.username}>username</Text>
                 </View>
-            
+
                 <View style={{flex:1,justifyContent:'center'}}>
                     <Feather name="edit" size={20} color="gray" style={{position:'absolute', right:10}} />
-                </View>                
+                </View>
             </View>
             <ScrollView style={{height:height-120, borderBottomColor:"#CCCCCC"}}>
                 <View style={{height:70, borderBottomColor:"#CCCCCC", borderBottomWidth:1}}>
                     <View style={{flexDirection:'row', paddingTop:10, marginBottom:5}}>
                         <EvilIcons name="user" size={24} color="gray" style={{marginRight:10, marginLeft:20}}/>
                         <Text style={{ }}>Họ và tên:</Text>
-                    </View>  
+                    </View>
                     <Text style={{marginRight:10, marginLeft:20, fontSize:16, fontWeight:'bold'}}>Đỗ Minh Anh</Text>
                 </View>
                 <View style={{height:70, borderBottomColor:"#CCCCCC", borderBottomWidth:1}}>
                     <View style={{flexDirection:'row', paddingTop:10, marginBottom:5}}>
                         <Foundation name="telephone" size={20} color="gray"  style={{marginRight:10, marginLeft:20}}/>
                         <Text style={{ }}>Số điện thoại:</Text>
-                    </View>  
+                    </View>
                     <Text style={{marginRight:10, marginLeft:20, fontSize:16, fontWeight:'bold'}}>0971128133</Text>
                 </View>
                 <View style={{height:70, borderBottomColor:"#CCCCCC", borderBottomWidth:1}}>
                     <View style={{flexDirection:'row', paddingTop:10, marginBottom:5}}>
                         <MaterialIcons name="alternate-email" size={20} color="gray" style={{marginRight:10, marginLeft:20}} />
                         <Text style={{ }}>Email:</Text>
-                    </View>  
+                    </View>
                     <Text style={{marginRight:10, marginLeft:20, fontSize:16, fontWeight:'bold'}}>minhanh.th99@gmail.com</Text>
                 </View>
                 <View style={{height:70, borderBottomColor:"#CCCCCC", borderBottomWidth:1}}>
                     <View style={{flexDirection:'row', paddingTop:10, marginBottom:5}}>
                         <Feather name="key" size={20} color="gray" style={{marginRight:10, marginLeft:20}}/>
                         <Text style={{ }}>Mật khẩu:</Text>
-                    </View> 
+                    </View>
                     <View style={{flexDirection:'row'}}>
                         <View style={{flex:6}}>
                             <Text style={{marginRight:10, marginLeft:20, fontSize:16, fontWeight:'bold'}}>123456789</Text>
                         </View>
                         <View style={{flex:1}}>
-                            <Feather name="eye" size={24} color="gray" style={{position:'absolute', right:10}} /> 
-                            <Feather name="eye-off" size={24} color="gray" style={{position:'absolute', right:10}} /> 
-                        </View>      
-                    </View> 
-                    
+                            <Feather name="eye" size={24} color="gray" style={{position:'absolute', right:10}} />
+                            <Feather name="eye-off" size={24} color="gray" style={{position:'absolute', right:10}} />
+                        </View>
+                    </View>
+
                 </View>
                 <View style={{height:50, borderColor:"#CCCCCC", borderBottomWidth:1,flexDirection:'row',marginTop:10, borderTopWidth:1}}>
                     <View style={{flex:6,flexDirection:'row', alignItems:'center'}}>
@@ -80,9 +82,9 @@ function CustomerProfile({ navigation: { navigate } }) {
                     </View>
                     <View style={{flex:1, paddingTop:10,position:'absolute', right:5}}>
                         <EvilIcons name="chevron-right" size={30} color="gray" />
-                    </View> 
+                    </View>
                 </View>
-                
+
 
                 <View style={{height:50, borderColor:"#CCCCCC", borderBottomWidth:1,flexDirection:'row', marginTop:10, borderTopWidth:1}}>
                     <View style={{flex:6,flexDirection:'row', alignItems:'center'}}>
@@ -91,9 +93,9 @@ function CustomerProfile({ navigation: { navigate } }) {
                     </View>
                     <View style={{flex:1, paddingTop:10,position:'absolute', right:5}}>
                         <EvilIcons name="chevron-right" size={30} color="gray" />
-                    </View>  
+                    </View>
                 </View>
-                
+
             </ScrollView>
             {/* Khoảng cho menubar */}
             <View style={{height:50, backgroundColor:"gray"}}></View>
@@ -106,7 +108,7 @@ var height = Dimensions.get('window').height; //full height
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white"   
+    backgroundColor: "white"
   },
   tabback:{
       height: 50,
@@ -120,13 +122,13 @@ const styles = StyleSheet.create({
   },
   profile:{
       height: height-50,
-      width: width,     
+      width: width,
   },
   image:{
     height:70,
     width:70,
     borderRadius:70,
-    marginLeft:20,   
+    marginLeft:20,
   },
   avatar:{
     borderBottomWidth:1,
@@ -141,4 +143,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default CustomerProfile;
+export default CustomerProfile ;

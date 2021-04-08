@@ -5,6 +5,7 @@ export type RootStackParamList = {
   NotFound: undefined;
   Signup: undefined;
   GuardProfile: undefined;
+  CustomerProfile: undefined;
   Vehicle: undefined;
   ListVehicle: undefined;
   AddNewVehicle: undefined;
@@ -12,6 +13,23 @@ export type RootStackParamList = {
   Map: undefined;
   ScanQRCode: undefined;
 };
+
+export type RootLoginedStackParamList = {
+  Root: undefined;
+  NotFound: undefined;
+  Signup: undefined;
+  GuardProfile: undefined;
+  CustomerProfile: undefined;
+  Vehicle: undefined;
+  ListVehicle: undefined;
+  AddNewVehicle: undefined;
+  ListTicket: undefined;
+  Map: undefined;
+  ScanQRCode: undefined;
+  Login: undefined;
+  Start: undefined;
+};
+
 
 export type BottomTabParamList = {
   TabOne: undefined;
