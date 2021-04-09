@@ -23,7 +23,7 @@ import SuccessScreen from '../CustomerScreens/SuccessScreen';
 import Map from '../screens/Map';
 import ScanQRCode from '../OwnerScreens/ScanQRCode';
 import AsyncStorage from '@react-native-community/async-storage';
-
+import MainScreen from '../GuardScreens/MainScreen';
 import AcceptTicket from '../CustomerScreens/AcceptTicket';
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -74,6 +74,7 @@ async function getUser() {
       <Stack.Screen name="AddTicket" component={AddTicket} />
       <Stack.Screen name="AcceptTicket" component={AcceptTicket} />
       <Stack.Screen name="SuccessScreen" component={SuccessScreen} />
+      <Stack.Screen name="MainScreen" component={MainScreen} />
       <Stack.Screen name="ScanQRCode" component={ScanQRCode} />
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
