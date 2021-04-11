@@ -20,10 +20,11 @@ import AddNewVehicle from '../CustomerScreens/AddNewVehicle';
 import ListTicket from '../CustomerScreens/ListTicket';
 import AddTicket from '../GuardScreens/AddTicket';
 import SuccessScreen from '../CustomerScreens/SuccessScreen';
+import ListVehicleInOut from '../GuardScreens/ListVehicleInOut';
 import Map from '../screens/Map';
 import ScanQRCode from '../OwnerScreens/ScanQRCode';
 import AsyncStorage from '@react-native-community/async-storage';
-
+import MainScreen from '../GuardScreens/MainScreen';
 import AcceptTicket from '../CustomerScreens/AcceptTicket';
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -68,12 +69,14 @@ async function getUser() {
       <Stack.Screen name="CustomerProfile" component={CustomerProfile} />
       <Stack.Screen name="Vehicle" component={Vehicle} />
       <Stack.Screen name="ListVehicle" component={ListVehicle} />
+      <Stack.Screen name="ListVehicleInOut" component={ListVehicleInOut} />
       <Stack.Screen name="AddNewVehicle" component={AddNewVehicle} />
       <Stack.Screen name="ListTicket" component={ListTicket} />
       <Stack.Screen name="Map" component={Map} />
       <Stack.Screen name="AddTicket" component={AddTicket} />
       <Stack.Screen name="AcceptTicket" component={AcceptTicket} />
       <Stack.Screen name="SuccessScreen" component={SuccessScreen} />
+      <Stack.Screen name="MainScreen" component={MainScreen} />
       <Stack.Screen name="ScanQRCode" component={ScanQRCode} />
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
