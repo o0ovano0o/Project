@@ -3,8 +3,27 @@ import { StyleSheet, View,Text ,Image,Dimensions,SafeAreaView,StatusBar,ScrollVi
 import { AntDesign,Feather,Foundation,MaterialIcons,Ionicons,EvilIcons    } from '@expo/vector-icons';
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamList } from "../types";
+import AsyncStorage from "@react-native-community/async-storage";
+async function getUser() {
+    const value = await AsyncStorage.getItem('user');
+    if(value)
+    return JSON.parse(value);
+    else {
+      return {
+        login: false,
+      }
+    }
+  }
+ function CustomerProfile({ navigation: { navigate } })  {
+    const [user, setUser] = React.useState('');
+    React.useEffect(() => {
+      getUser();
+    },[]);
+    const getUser = async () => {
+      let value = await AsyncStorage.getItem('user');
+      setUser(JSON.parse(value));
+    }
 
-function CustomerProfile({ navigation: { navigate } })  {
   return (
     <SafeAreaView  style={styles.container}>
         <StatusBar
@@ -15,7 +34,9 @@ function CustomerProfile({ navigation: { navigate } })  {
                 <AntDesign name="left" size={24} color="gray" />
             </View>
             <View style={{flex:5, alignItems:'center'}}>
-                <Text style={{fontSize:16, fontWeight:'bold'}}>Trang cá nhân</Text>
+                <Text style={{fontSize:16, fontWeight:'bold'}}>Trang cá nhân
+
+                </Text>
             </View>
             <View style={{flex:1}}>
             </View>
@@ -30,7 +51,7 @@ function CustomerProfile({ navigation: { navigate } })  {
                     ></Image>
                 </View>
                 <View style={{flex:4,justifyContent:'center'}}>
-                    <Text style={styles.username}>username</Text>
+                    <Text style={styles.username}>username a {JSON.stringify(user)}</Text>
                 </View>
 
                 <View style={{flex:1,justifyContent:'center'}}>

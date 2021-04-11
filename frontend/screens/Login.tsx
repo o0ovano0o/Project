@@ -76,7 +76,6 @@ async function login(navigate:any, phonenumber: string, password: string) {
     // handle success
     if(response.data.success) {
       var data = JSON.stringify(response.data.data);
-      alert(data);
       await AsyncStorage.setItem(
         'user',
         data

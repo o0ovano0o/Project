@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const knex = require('../../knex');
 const handleAPIError = require('../../common/handleAPIError');
+const Enum = require('../../common/Enum');
+const sha1 = require('sha1');
 const { validateOwnerAPI } = require('../../middlewares/validateAPIAuthentication');
 
 router.post('/api/owner/guard', validateOwnerAPI, async(req, res) => {

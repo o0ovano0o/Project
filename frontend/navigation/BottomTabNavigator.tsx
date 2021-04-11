@@ -21,20 +21,40 @@ const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
-
+  const [user, setUser] = React.useState('');
+  const [tab1, setTab1] = React.useState('Tab 1');
+  const [tab2, setTab2] = React.useState('Tab 2');
+  React.useEffect(() => {
+    getUser();
+  },[]);
+  const getUser = async () => {
+    let value = await AsyncStorage.getItem('user');
+    let data = JSON.parse(value);
+    if(data.role == 1) {
+      setTab1('Bãi đỗ');
+      setTab2('Vé xe');
+    } else if(data.role == 2){
+      setTab1('Bãi đỗ');
+      setTab2('Thiết lập');
+    } else {
+      setTab1('Vé xe');
+      setTab2('Bãi đỗ');
+    }
+     setUser(JSON.parse(value));
+  }
   return (
     <BottomTab.Navigator
       initialRouteName="TabOne"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
       <BottomTab.Screen
-        name="TabOne"
+        name={tab1}
         component={TabOneNavigator}
         options={{
           tabBarIcon: ({ color }) => renderIconTabOne({color}),
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
+        name={tab2}
         component={TabTwoNavigator}
         options={{
           tabBarIcon: ({ color }) => renderIconTabTwo({color}),
@@ -71,14 +91,21 @@ const user = {
   userid:1,
   role:2
 }
-function renderIconTabOne({color}) {
-  var user = getUser();
-
-  if(user.role == 1) {
-    return (
-     <TabBarIcon name="ios-code" color={color} />);
+ function renderIconTabOne({color}) {
+  const [user, setUser] = React.useState('');
+  React.useEffect(() => {
+    getUser();
+  },[]);
+  const getUser = async () => {
+    let value = await AsyncStorage.getItem('user');
+     setUser(JSON.parse(value));
   }
-  else if(user.role == 2) {
+
+  if(user.role == 1  || user.role=="1") {
+    return (
+     <TabBarIcon name="map" color={color} />);
+  }
+  else if(user.role == 2  || user.role=="2") {
 
     return (<TabBarIcon name="ios-code" color={color} />);
   }
@@ -87,14 +114,21 @@ function renderIconTabOne({color}) {
     return (<TabBarIcon name="albums" color={color} />);
   }
 }
-function renderIconTabTwo({color}) {
-  var user = getUser();
-
-  if(user.role == 1) {
-    return (
-     <TabBarIcon name="ios-code" color={color} />);
+ function renderIconTabTwo({color}) {
+  const [user, setUser] = React.useState('');
+  React.useEffect(() => {
+    getUser();
+  },[]);
+  const getUser = async () => {
+    let value = await AsyncStorage.getItem('user');
+     setUser(JSON.parse(value));
   }
-  else if(user.role == 2) {
+
+  if(user.role == 1  || user.role=="1") {
+    return (
+     <TabBarIcon name="albums" color={color} />);
+  }
+  else if(user.role == 2  || user.role=="2") {
 
     return (<TabBarIcon name="ios-code" color={color} />);
   }
@@ -104,23 +138,28 @@ function renderIconTabTwo({color}) {
   }
 }
 async function getUser() {
-  const value = await AsyncStorage.getItem('user');
-  if(value)
-  return {
-    ...JSON.parse(value),
-    login: true
-  }
-
-  else {
-    return {
-      login: false,
-    }
-  }
+  let value = await AsyncStorage.getItem('user');
+  value = JSON.parse(value);
+  return value;
+  // if(value)
+  // return JSON.parse(value);
+  // else {
+  //   return {
+  //     login: false,
+  //     userid:0
+  //   }
+  // }
 }
 function TabOneNavigator() {
-  var user = getUser();
-
-  if(user.role == 1) {
+  const [user, setUser] = React.useState('');
+  React.useEffect(() => {
+    getUser();
+  },[]);
+  const getUser = async () => {
+    let value = await AsyncStorage.getItem('user');
+     setUser(JSON.parse(value));
+  }
+  if(user.role == 1  || user.role=="1") {
     return (
       <TabOneStack.Navigator>
         <TabOneStack.Screen
@@ -131,7 +170,7 @@ function TabOneNavigator() {
       </TabOneStack.Navigator>
     );
   }
-  else if( user.role == 2) {
+  else if( user.role == 2  || user.role=="2") {
     return (
       <TabOneStack.Navigator>
         <TabOneStack.Screen
@@ -166,9 +205,15 @@ function TabOneNavigator() {
 //   );
 // }
 function TabThreeNavigator() {
-  var user = getUser();
-
-  if(user.role == 2) {
+  const [user, setUser] = React.useState('');
+  React.useEffect(() => {
+    getUser();
+  },[]);
+  const getUser = async () => {
+    let value = await AsyncStorage.getItem('user');
+     setUser(JSON.parse(value));
+  }
+  if(user.role == 2  || user.role=="2") {
     return (
       <TabFourStack.Navigator>
         <TabFourStack.Screen
@@ -178,7 +223,7 @@ function TabThreeNavigator() {
         />
       </TabFourStack.Navigator>
     );
-  } else if(user.role == 1) {
+  } else if(user.role == 1 || user.role=="1") {
     return (
       <TabFourStack.Navigator>
         <TabFourStack.Screen
@@ -201,9 +246,16 @@ function TabThreeNavigator() {
   }
 }
 function TabTwoNavigator() {
-  var user = getUser();
+  const [user, setUser] = React.useState('');
+  React.useEffect(() => {
+    getUser();
+  },[]);
+  const getUser = async () => {
+    let value = await AsyncStorage.getItem('user');
+     setUser(JSON.parse(value));
+  }
 
-  if(user.role == 1) {
+  if(user.role == 1 || user.role=="1") {
     return (
       <TabTwoStack.Navigator>
         <TabTwoStack.Screen
@@ -213,7 +265,7 @@ function TabTwoNavigator() {
         />
       </TabTwoStack.Navigator>
     );
-  } else if(user.role == 2) {
+  } else if(user.role == 2  || user.role=="2") {
     return (
       <TabTwoStack.Navigator>
         <TabTwoStack.Screen
