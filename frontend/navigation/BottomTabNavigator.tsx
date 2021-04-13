@@ -61,7 +61,7 @@ export default function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="Trang cá nhân"
+        name="profile"
         component={TabThreeNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="person-circle-outline" color={color} />,

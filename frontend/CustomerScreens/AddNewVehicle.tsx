@@ -1,17 +1,48 @@
-import React, { Component } from "react";
-import { StyleSheet, View,Text ,Image,Dimensions,SafeAreaView,StatusBar,ScrollView,TextInput  } from "react-native";
-import { AntDesign,Feather,FontAwesome ,MaterialCommunityIcons,Ionicons,Fontisto    } from '@expo/vector-icons'; 
+import React, { Component, useState } from "react";
+import { StyleSheet, View,Text ,Image,Dimensions,SafeAreaView,StatusBar,ScrollView,TextInput, TouchableHighlight  } from "react-native";
+import { AntDesign,Feather,FontAwesome ,MaterialCommunityIcons,Ionicons,Fontisto    } from '@expo/vector-icons';
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
-function AddNewVehicle({ navigation: { navigate } }) {
+import { Picker } from 'native-base';
+import QRCodeGen from 'react-native-qrcode-svg';
+
+import CheckBox from "@react-native-community/checkbox";
+import axios from "axios";
+import AsyncStorage from "@react-native-community/async-storage";
+function AddNewVehicle({ navigation }) {
+const [color, setColor] = useState('');
+const [code, setCode] = useState('');
+const [type, setType] = useState('motobike');
+const [brand, setBrand] = useState('');
+const [description, setDescription] = useState('');
+const [QRCode, setQRCode] = useState('demo');
+const [isDefault, setDefault] = useState(false);
+const [user, setUser] = React.useState('');
+React.useEffect(() => {
+  getUser();
+},[]);
+const getUser = async () => {
+  let value = await AsyncStorage.getItem('user');
+  setUser(JSON.parse(value));
+  genCode();
+}
+const genCode = () => {
+    const data = new Array();
+    data.push(user.userid);
+    data.push(user.phonenumber);
+    data.push(code);
+    data.push(type);
+    setQRCode(data.join('-'));
+    return data.join('-');
+}
   return (
     <SafeAreaView  style={styles.container}>
         <StatusBar
         animated={true}
         hidden={true} />
       <View style={styles.tabback}>
-            <View style={{flex:1, alignItems:'center'}}>
+            <TouchableHighlight  onPress={() => navigation.push('ListVehicle')} style={{flex:1, alignItems:'center'}}>
                 <AntDesign name="left" size={24} color="gray" />
-            </View>
+            </TouchableHighlight>
             <View style={{flex:5, alignItems:'center'}}>
                 <Text style={{fontSize:16, fontWeight:'bold'}}>Thêm mới xe</Text>
             </View>
@@ -19,91 +50,137 @@ function AddNewVehicle({ navigation: { navigate } }) {
             </View>
       </View>
       <View style={styles.profile}>
-            {/* <View style={{ height:40}}>      
-                <Feather name="edit" size={20} color="gray"  style={{position:'absolute', right:10, top:10}}/>   
+            {/* <View style={{ height:40}}>
+                <Feather name="edit" size={20} color="gray"  style={{position:'absolute', right:10, top:10}}/>
             </View> */}
-            
+
             <ScrollView style={{height:height-120, borderBottomColor:"#CCCCCC"}}>
-                <View style={styles.item}>
+                {/* <View style={styles.item}>
                     <View style={{flex:2, justifyContent:'center'}}>
                         <Text style={styles.text}>Tên xe</Text>
                     </View>
-                    <TextInput style={styles.btn} placeholder="Nhập tên xe..." value="hhhhhhhhhhhhhhhhhhhhhhhhhhhhh" />
-                </View>
+                    <TextInput style={styles.btn} placeholder="Nhập tên xe..."  defaultValue={type} onChangeText={(type)=>setType(type)} />
+                </View> */}
                 <View style={styles.item}>
                     <View style={{flex:2, justifyContent:'center'}}>
                         <Text style={styles.text}>Loại xe</Text>
                     </View>
-                    <TextInput style={styles.btn} placeholder="Nhập loại xe" value="hhhhhhhhhhhhhhhhhhhhhhhhhhhhh" />
+                    <Picker
+                        selectedValue={type}
+                        style={{ height: 50, width: 150 }}
+                        onValueChange={(itemValue, itemIndex) => {
+                            setType(itemValue);
+                            genCode();
+                        }}
+                    >
+                        <Picker.Item label="Ô tô" value="car" />
+                        <Picker.Item label="Xe máy" value="motobike" />
+                        <Picker.Item label="Xe đạp" value="bike" />
+                    </Picker>
+                    {/* <TextInput style={styles.btn} placeholder="Nhập loại xe" defaultValue={type} onChangeText={(type)=>setType(type)} /> */}
                 </View>
                 <View style={styles.item}>
                     <View style={{flex:2, justifyContent:'center'}}>
                         <Text style={styles.text}>Hãng xe</Text>
                     </View>
-                    <TextInput style={styles.btn} placeholder="Nhập tên hãng..." value="hhhhhhhhhhhhhhhhhhhhhhhhhhhhh" />
-                </View>  
+                    <TextInput style={styles.btn} placeholder="Nhập tên hãng..."  defaultValue={brand} onChangeText={(value)=>setBrand(value)} />
+                </View>
                 <View style={styles.item}>
                     <View style={{flex:2, justifyContent:'center'}}>
                         <Text style={styles.text}>Biển số</Text>
                     </View>
-                    <TextInput style={styles.btn} placeholder="Nhập biển số..." value="hhhhhhhhhhhhhhhhhhhhhhhhhhhhh" />
+                    <TextInput style={styles.btn} placeholder="Nhập biển số..."  defaultValue={code} onChangeText={(value)=>{
+                        setCode(value); genCode();
+                    }
+                        } />
                 </View>
                 <View style={styles.item}>
                     <View style={{flex:2, justifyContent:'center'}}>
                         <Text style={styles.text}>Màu xe</Text>
                     </View>
-                    <TextInput style={styles.btn} placeholder="Nhập màu xe..." value="hhhhhhhhhhhhhhhhhhhhhhhhhhhhh" />
+                    <TextInput style={styles.btn} placeholder="Nhập màu xe..."  defaultValue={color} onChangeText={(value)=>setColor(value)} />
                 </View>
                 <View style={styles.item}>
                     <View style={{flex:2, justifyContent:'center'}}>
                         <Text style={styles.text}>Mô tả</Text>
                     </View>
-                    <TextInput style={styles.btn} 
-                    placeholder="Nhập mô tả xe..." value="hhhhhhhhhhhhhhhhhhhh" />
+                    <TextInput style={styles.btn}
+                    placeholder="Nhập mô tả xe..."  defaultValue={description} onChangeText={(value)=>setDescription(value)} />
                 </View>
                 <View style={styles.item}>
                     <View style={{flex:2, justifyContent:'center'}}>
+                        <Text style={styles.text}>Chọn làm xe chính</Text>
+                    </View>
+                    <CheckBox
+                    value={isDefault}
+                    onValueChange={setDefault}/>
+                </View>
+                {/* <View style={styles.item}>
+                    <View style={{flex:2, justifyContent:'center'}}>
                         <Text style={styles.text}>Số điện thoại</Text>
                     </View>
-                    <TextInput style={styles.btn} placeholder="Nhập số điện thoại..." value="hhhhhhhhhhhhhhhhhhhhhhhhhhhhh" />
-                </View>
+                    <TextInput style={styles.btn} placeholder="Nhập số điện thoại..."  defaultValue={type} onChangeText={(type)=>setType(type)} />
+                </View> */}
                 <View style={{ backgroundColor:'white',justifyContent:'center', marginTop:10, borderColor:'#CCCCCC',  borderBottomWidth:1}}>
                     <View style={{flexDirection:'row'}}>
                         <MaterialCommunityIcons name="qrcode-scan" size={20} color="gray" style={{marginHorizontal:20, marginTop:10}} />
                         <Text style={{fontSize:16, fontWeight:'bold',  marginTop:10,fontFamily:'sans-serif-light'}}>Mã QR</Text>
                     </View>
-                    
+
                     <View style={{justifyContent:'center', alignItems:'center', marginBottom:20, marginTop:10}}>
-                        <Image
-                        source={require('../assets/images/QRcode.jpg')}
-                        resizeMode="cover"
-                        style={styles.image}
-                        ></Image> 
-                    </View>                    
-                </View>    
-                
+                    <QRCodeGen
+                        value={QRCode}
+                        size={200}
+                        logoBackgroundColor='transparent'
+                        />
+                    </View>
+
+                </View>
+
                 <View style={{height:50, backgroundColor:'white',alignItems:'center',justifyContent:'center', marginTop:10, borderBottomColor:'#CCCCCC', borderBottomWidth:1}}>
                     <MaterialButtonViolet
-                        onPress={() =>
-                        navigate('Root')
-                        }   
-                        style={styles.accept}                    
+                        onPress={() => addVehicle(navigation, color, code, type, brand, description, QRCode, isDefault)}
+                        style={styles.accept}
                         title="Thêm mới"
                     ></MaterialButtonViolet>
-                </View>                                           
+                </View>
             </ScrollView>
-            {/* Khoảng cho menubar */}
-            <View style={{height:50, backgroundColor:"gray"}}></View>
+
       </View>
     </SafeAreaView>
   );
 }
+
+async function addVehicle(navigation:any, color: string, code: string, type: string, brand: string, description: string, QRCode: string, isDefault: boolean) {
+    // alert(JSON.stringify({
+    //     color, code, type, brand, description, QRCode, isDefault
+    //     }));
+    await axios
+    .post('https://project3na.herokuapp.com/api/customer/vehicle', {
+        color, code, type, brand, description, QRCode, isDefault
+        })
+    .then(async function (response) {
+      // handle success
+      if(response.data.success) {
+        alert(response.data.msg)
+        navigation.push('ListVehicle');
+      } else {
+        alert(response.data.msg);
+      }
+    })
+    .catch(function (error) {
+      // handle error
+         alert(error);
+    })
+    .finally(function () {
+    });
+  }
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white"   
+    backgroundColor: "white"
   },
   tabback:{
       height: 50,
@@ -117,8 +194,8 @@ const styles = StyleSheet.create({
   },
   profile:{
       height: height-50,
-      width: width,     
-      backgroundColor: "#EEEEEE"   
+      width: width,
+      backgroundColor: "#EEEEEE"
   },
   accept:{
     height: 40,
@@ -150,13 +227,13 @@ const styles = StyleSheet.create({
   item:{
     backgroundColor:'white',
     flexDirection:'row',
-    height:50, 
-    borderBottomColor:'#CCCCCC', 
+    height:50,
+    borderBottomColor:'#CCCCCC',
     borderBottomWidth:1
   },
   text:{
     marginLeft:20,
-    fontSize:15, 
+    fontSize:15,
     fontFamily:'sans-serif-light',
   }
 });

@@ -2,7 +2,7 @@ const router = require('express').Router();
 const knex = require('../../knex');
 const handleAPIError = require('../../common/handleAPIError');
 const { validateGuardAPI } = require('../../middlewares/validateAPIAuthentication');
-
+const Enum = require('../../common/Enum');
 router.post('/api/guard/transaction', validateGuardAPI, async(req, res) => {
     try {
         let { vehicleid,parkingid,ticketID,Timein,Timeout,TotalAmount,Status, userid } = req.body;

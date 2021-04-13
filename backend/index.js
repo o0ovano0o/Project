@@ -79,11 +79,26 @@ const OWNER_APIS = [
    'parking'
 ];
 
+const Customer_APIS = [
+    'verhicle'
+ ];
+
+const Guard_APIS = [
+    'transaction'
+ ];
+
+
+const general_APIS = [
+    'user'
+ ];
 /* eslint-disable global-require */
 PUPLIC_APIS.forEach((apiPath) =>
     app.use(require(`./src/routes/public/${apiPath}`))
 );
 OWNER_APIS.forEach((apiPath) => app.use(require(`./src/routes/owner/${apiPath}`)));
+Customer_APIS.forEach((apiPath) => app.use(require(`./src/routes/customer/${apiPath}`)));
+Guard_APIS.forEach((apiPath) => app.use(require(`./src/routes/guard/${apiPath}`)));
+general_APIS.forEach((apiPath) => app.use(require(`./src/routes/general/${apiPath}`)));
 
 // module.exports = app;
 const server = app.listen(process.env.PORT || 3000, () =>

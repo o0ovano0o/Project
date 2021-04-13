@@ -66,17 +66,18 @@ async function getUser() {
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Signup" component={SignupScreen} />
       <Stack.Screen name="GuardProfile" component={GuardProfile} />
-      <Stack.Screen name="CustomerProfile" component={CustomerProfile} />
       <Stack.Screen name="Vehicle" component={Vehicle} />
       <Stack.Screen name="ListVehicle" component={ListVehicle} />
       <Stack.Screen name="ListVehicleInOut" component={ListVehicleInOut} />
       <Stack.Screen name="AddNewVehicle" component={AddNewVehicle} />
       <Stack.Screen name="ListTicket" component={ListTicket} />
+      <Stack.Screen name="CustomerProfile" component={CustomerProfile} />
       <Stack.Screen name="Map" component={Map} />
       <Stack.Screen name="AddTicket" component={AddTicket} />
       <Stack.Screen name="AcceptTicket" component={AcceptTicket} />
       <Stack.Screen name="SuccessScreen" component={SuccessScreen} />
       <Stack.Screen name="MainScreen" component={MainScreen} />
+      <Stack.Screen name="EditProfileOwner" component={EditProfileOwner} />
       <Stack.Screen name="ScanQRCode" component={ScanQRCode} />
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />

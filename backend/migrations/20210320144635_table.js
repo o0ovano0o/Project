@@ -16,6 +16,7 @@ exports.up = async function(knex) {
     table.text('color').notNullable();
     table.text('code').notNullable();
     table.text('type').notNullable();
+    table.text('brand').notNullable();
     table.boolean('isDefault').notNullable();
     table.text('description');
     table.text('QRCode');

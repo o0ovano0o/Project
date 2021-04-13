@@ -8,7 +8,7 @@ router.post('/api/user/login', async (req, res) => {
     const { phonenumber, password } = req.body;
     if (!phonenumber || !password) return res.json({ status: 400, success: false, msg: 'Tài khoản hoặc mật khẩu thiếu' });
     const user = await knex('user')
-      .first('userid', 'username', 'password', 'phonenumber','role', 'parkingid')
+      .first('userid', 'username', 'password','address','email', 'phonenumber','role', 'parkingid')
       .where({ phonenumber, password: sha1(password) });
     if (!user) return res.json({ status: 400, success: false, msg: 'Tài khoản hoặc mật khẩu không chính xác' });
     req.session.userid = user.userid;

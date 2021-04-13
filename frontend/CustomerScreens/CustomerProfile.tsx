@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { StyleSheet, View,Text ,Image,Dimensions,SafeAreaView,StatusBar,ScrollView  } from "react-native";
+import { StyleSheet, View,Text ,Image,Dimensions,SafeAreaView,StatusBar,ScrollView,Button, TouchableHighlight  } from "react-native";
 import { AntDesign,Feather,Foundation,MaterialIcons,Ionicons,EvilIcons    } from '@expo/vector-icons';
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamList } from "../types";
 import AsyncStorage from "@react-native-community/async-storage";
+import { TouchableOpacity } from "react-native-gesture-handler";
 async function getUser() {
     const value = await AsyncStorage.getItem('user');
     if(value)
@@ -14,7 +15,7 @@ async function getUser() {
       }
     }
   }
- function CustomerProfile({ navigation: { navigate } })  {
+ function CustomerProfile({ navigation })  {
     const [user, setUser] = React.useState('');
     React.useEffect(() => {
       getUser();
@@ -30,9 +31,9 @@ async function getUser() {
         animated={true}
         hidden={true} />
       <View style={styles.tabback}>
-            <View style={{flex:1, alignItems:'center'}}>
+            {/* <View style={{flex:1, alignItems:'center'}}>
                 <AntDesign name="left" size={24} color="gray" />
-            </View>
+            </View> */}
             <View style={{flex:5, alignItems:'center'}}>
                 <Text style={{fontSize:16, fontWeight:'bold'}}>Trang cá nhân
 
@@ -51,36 +52,36 @@ async function getUser() {
                     ></Image>
                 </View>
                 <View style={{flex:4,justifyContent:'center'}}>
-                    <Text style={styles.username}>username a {JSON.stringify(user)}</Text>
+                    <Text style={styles.username}>{user.username}</Text>
                 </View>
 
-                <View style={{flex:1,justifyContent:'center'}}>
+                <TouchableHighlight onPress={()=> navigation.push('EditProfileOwner')} style={{flex:1,justifyContent:'center'}}>
                     <Feather name="edit" size={20} color="gray" style={{position:'absolute', right:10}} />
-                </View>
+                </TouchableHighlight>
             </View>
             <ScrollView style={{height:height-120, borderBottomColor:"#CCCCCC"}}>
                 <View style={{height:70, borderBottomColor:"#CCCCCC", borderBottomWidth:1}}>
                     <View style={{flexDirection:'row', paddingTop:10, marginBottom:5}}>
                         <EvilIcons name="user" size={24} color="gray" style={{marginRight:10, marginLeft:20}}/>
-                        <Text style={{ }}>Họ và tên:</Text>
+                        <Text style={{ }}>Địa chỉ:</Text>
                     </View>
-                    <Text style={{marginRight:10, marginLeft:20, fontSize:16, fontWeight:'bold'}}>Đỗ Minh Anh</Text>
+                    <Text style={{marginRight:10, marginLeft:20, fontSize:16, fontWeight:'bold'}}>{user.address}</Text>
                 </View>
                 <View style={{height:70, borderBottomColor:"#CCCCCC", borderBottomWidth:1}}>
                     <View style={{flexDirection:'row', paddingTop:10, marginBottom:5}}>
                         <Foundation name="telephone" size={20} color="gray"  style={{marginRight:10, marginLeft:20}}/>
                         <Text style={{ }}>Số điện thoại:</Text>
                     </View>
-                    <Text style={{marginRight:10, marginLeft:20, fontSize:16, fontWeight:'bold'}}>0971128133</Text>
+                    <Text style={{marginRight:10, marginLeft:20, fontSize:16, fontWeight:'bold'}}>{user.phonenumber}</Text>
                 </View>
                 <View style={{height:70, borderBottomColor:"#CCCCCC", borderBottomWidth:1}}>
                     <View style={{flexDirection:'row', paddingTop:10, marginBottom:5}}>
                         <MaterialIcons name="alternate-email" size={20} color="gray" style={{marginRight:10, marginLeft:20}} />
                         <Text style={{ }}>Email:</Text>
                     </View>
-                    <Text style={{marginRight:10, marginLeft:20, fontSize:16, fontWeight:'bold'}}>minhanh.th99@gmail.com</Text>
+                    <Text style={{marginRight:10, marginLeft:20, fontSize:16, fontWeight:'bold'}}>{user.email}</Text>
                 </View>
-                <View style={{height:70, borderBottomColor:"#CCCCCC", borderBottomWidth:1}}>
+                {/* <View style={{height:70, borderBottomColor:"#CCCCCC", borderBottomWidth:1}}>
                     <View style={{flexDirection:'row', paddingTop:10, marginBottom:5}}>
                         <Feather name="key" size={20} color="gray" style={{marginRight:10, marginLeft:20}}/>
                         <Text style={{ }}>Mật khẩu:</Text>
@@ -95,15 +96,16 @@ async function getUser() {
                         </View>
                     </View>
 
-                </View>
+                </View> */}
                 <View style={{height:50, borderColor:"#CCCCCC", borderBottomWidth:1,flexDirection:'row',marginTop:10, borderTopWidth:1}}>
                     <View style={{flex:6,flexDirection:'row', alignItems:'center'}}>
                         <AntDesign name="car" size={20} color="gray" style={{marginRight:10, marginLeft:20}}/>
                         <Text style={{ }}>Danh sách xe:</Text>
                     </View>
-                    <View style={{flex:1, paddingTop:10,position:'absolute', right:5}}>
-                        <EvilIcons name="chevron-right" size={30} color="gray" />
-                    </View>
+                    <TouchableHighlight  onPress={() => navigation.navigate('ListVehicle')} style={{flex:1, paddingTop:10,position:'absolute', right:5}}>
+                        <EvilIcons  name="chevron-right" size={30} color="gray" />
+                    </TouchableHighlight>
+
                 </View>
 
 

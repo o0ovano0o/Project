@@ -16,7 +16,8 @@ function validateOwner(req){
 }
 
 function validateCustomer(req){
-  if(!req.session.role || req.session.role!=Enum.Role.customer){
+  console.log(req.session);
+  if(req.session.role!=Enum.Role.customer){
     return { success: false, msg: 'Bạn không có quyền truy cập' };
   }
   return { success: true };
