@@ -12,10 +12,12 @@ import TabFourScreen from '../screens/TabFourScreen';
 import Map from '../screens/Map';
 import { BottomTabParamList, TabFourParamList, TabOneParamList, TabThreeParamList, TabTwoParamList } from '../types';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import AsyncStorage from '@react-native-community/async-storage';
+import { AsyncStorage } from 'react-native';
 import CustomerProfile from '../CustomerScreens/CustomerProfile';
 import GuardProfile from '../GuardScreens/GuardProfile';
 import ListTicket from '../CustomerScreens/ListTicket';
+import MainScreen from '../GuardScreens/MainScreen';
+import ScanQRCode from '../OwnerScreens/ScanQRCode';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -164,7 +166,7 @@ function TabOneNavigator() {
       <TabOneStack.Navigator>
         <TabOneStack.Screen
           name="TabOneScreen"
-          component={NotFoundScreen}
+          component={MainScreen}
           options={{headerShown: false}}
         />
       </TabOneStack.Navigator>
@@ -175,7 +177,7 @@ function TabOneNavigator() {
       <TabOneStack.Navigator>
         <TabOneStack.Screen
           name="TabOneScreen"
-          component={NotFoundScreen}
+          component={MainScreen}
           options={{headerShown: false}}
         />
       </TabOneStack.Navigator>
@@ -213,27 +215,27 @@ function TabThreeNavigator() {
     let value = await AsyncStorage.getItem('user');
      setUser(JSON.parse(value));
   }
-  if(user.role == 2  || user.role=="2") {
-    return (
-      <TabFourStack.Navigator>
-        <TabFourStack.Screen
-          name="TabFourScreen"
-          component={GuardProfile}
-          options={{headerShown: false}}
-        />
-      </TabFourStack.Navigator>
-    );
-  } else if(user.role == 1 || user.role=="1") {
-    return (
-      <TabFourStack.Navigator>
-        <TabFourStack.Screen
-          name="TabFourScreen"
-          component={GuardProfile}
-          options={{headerShown: false}}
-        />
-      </TabFourStack.Navigator>
-    );
-  } else {
+  // if(user.role == 2  || user.role=="2") {
+  //   return (
+  //     <TabFourStack.Navigator>
+  //       <TabFourStack.Screen
+  //         name="TabFourScreen"
+  //         component={GuardProfile}
+  //         options={{headerShown: false}}
+  //       />
+  //     </TabFourStack.Navigator>
+  //   );
+  // } else if(user.role == 1 || user.role=="1") {
+  //   return (
+  //     <TabFourStack.Navigator>
+  //       <TabFourStack.Screen
+  //         name="TabFourScreen"
+  //         component={GuardProfile}
+  //         options={{headerShown: false}}
+  //       />
+  //     </TabFourStack.Navigator>
+  //   );
+  // } else {
     return (
       <TabFourStack.Navigator>
         <TabFourStack.Screen
@@ -243,7 +245,7 @@ function TabThreeNavigator() {
         />
       </TabFourStack.Navigator>
     );
-  }
+  // }
 }
 function TabTwoNavigator() {
   const [user, setUser] = React.useState('');
@@ -260,7 +262,7 @@ function TabTwoNavigator() {
       <TabTwoStack.Navigator>
         <TabTwoStack.Screen
           name="TabTwoScreen"
-          component={NotFoundScreen}
+          component={ScanQRCode}
           options={{headerShown: false}}
         />
       </TabTwoStack.Navigator>

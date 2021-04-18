@@ -2,7 +2,7 @@ import React, { Component, useState } from "react";
 import { StyleSheet, View,Text ,TextInput } from "react-native";
 import { Input } from 'native-base';
 import axios from 'axios';
-import AsyncStorage  from '@react-native-community/async-storage';
+import { AsyncStorage } from 'react-native';
 import MaterialFixedLabelTextbox from "../components/MaterialFixedLabelTextbox";
 import PasswordText from "../components/Password";
 import MaterialButtonViolet from "../components/MaterialButtonViolet";

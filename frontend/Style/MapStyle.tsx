@@ -7,7 +7,7 @@ const DEVICE_HEIGHT = Dimensions.get('window').height;
         container: {
             flex: 1,
             backgroundColor: '#fff'
-            
+
         },
         headerTitle: {
             color: "gray"
@@ -24,7 +24,7 @@ const DEVICE_HEIGHT = Dimensions.get('window').height;
         markerStatus: { color: "gray" },
         map: {
             flex: 3
-            
+
           },
         header:{
             flexDirection: "row",
@@ -40,7 +40,7 @@ const DEVICE_HEIGHT = Dimensions.get('window').height;
             bottom:24
         },
         parking:{
-            backgroundColor:'white',       
+            backgroundColor:'white',
             borderRadius:6,
             padding:12,
             marginHorizontal:24,
@@ -55,7 +55,7 @@ const DEVICE_HEIGHT = Dimensions.get('window').height;
             padding: 15,
             marginRight: 16 / 2
         },
-        
+
         logo:{
             width:70,
             height:70
@@ -120,8 +120,8 @@ const DEVICE_HEIGHT = Dimensions.get('window').height;
             padding:8,
             flex:1,
             flexDirection:'row'  ,
-            borderWidth: 1, 
-            borderColor: "white"     
+            borderWidth: 1,
+            borderColor: "white"
         },
         modalContainer: {
             margin: 0,

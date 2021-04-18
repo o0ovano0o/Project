@@ -3,7 +3,7 @@ import { StyleSheet, View,Text ,Image,Dimensions,SafeAreaView,StatusBar,ScrollVi
 import { AntDesign,Feather,Foundation,MaterialIcons,Ionicons,EvilIcons    } from '@expo/vector-icons';
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamList } from "../types";
-import AsyncStorage from "@react-native-community/async-storage";
+import { AsyncStorage } from 'react-native';
 import { TouchableOpacity } from "react-native-gesture-handler";
 async function getUser() {
     const value = await AsyncStorage.getItem('user');
@@ -97,7 +97,9 @@ async function getUser() {
                     </View>
 
                 </View> */}
-                <View style={{height:50, borderColor:"#CCCCCC", borderBottomWidth:1,flexDirection:'row',marginTop:10, borderTopWidth:1}}>
+                {
+                    user.role==0 &&
+                    <View style={{height:50, borderColor:"#CCCCCC", borderBottomWidth:1,flexDirection:'row',marginTop:10, borderTopWidth:1}}>
                     <View style={{flex:6,flexDirection:'row', alignItems:'center'}}>
                         <AntDesign name="car" size={20} color="gray" style={{marginRight:10, marginLeft:20}}/>
                         <Text style={{ }}>Danh sách xe:</Text>
@@ -107,6 +109,7 @@ async function getUser() {
                     </TouchableHighlight>
 
                 </View>
+                }
 
 
                 <View style={{height:50, borderColor:"#CCCCCC", borderBottomWidth:1,flexDirection:'row', marginTop:10, borderTopWidth:1}}>

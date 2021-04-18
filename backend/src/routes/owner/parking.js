@@ -5,15 +5,15 @@ const { validateOwnerAPI } = require('../../middlewares/validateAPIAuthenticatio
 
 router.post('/api/owner/parking', validateOwnerAPI, async(req, res) => {
     try {
-        const { parkingname, TotalParkingCar, TotalParkingBike,address } = req.body;
+        const { parkingname, TotalParkingCar,latitude,longitude,description, TotalParkingBike,address } = req.body;
         const userid = req.session.userid;
         const TotalPackingTime = 0, UsedPackingBike = 0, UsedPackingCar = 0;
         if (!parkingname || !TotalParkingCar || !TotalParkingBike) {
-          return res.status(400).json({ success: false, msg: 'Thiếu thông tin bắt buộc' });
+          return res.json({ success: false, msg: 'Thiếu thông tin bắt buộc' });
         }
         const result = await knex('parking')
-        .insert({ parkingname, TotalParkingCar,TotalParkingBike,address, TotalPackingTime,address,UsedPackingBike, UsedPackingCar, userid });
-        if (!result) return res.status(400).json({ success: true, msg: 'Đăng ký bãi đỗ thất bại' });
+        .insert({ parkingname, TotalParkingCar,TotalParkingBike,address, TotalPackingTime,latitude,longitude,description,address,UsedPackingBike, UsedPackingCar, userid });
+        if (!result) return res.json({ success: true, msg: 'Đăng ký bãi đỗ thất bại' });
         return res.status(200).json({ success: true, msg: 'Đăng ký bãi đỗ thành công' });
     } catch (err) {
         handleAPIError(err, res);
@@ -24,17 +24,17 @@ router.delete('/api/owner/parking/:parkingid',validateOwnerAPI, async(req, res) 
     try {
         const { parkingid } = req.params;
         const userid = req.session.userid;
-        if (!userid || !parkingid) return res.status(400).json({ success: false, msg: 'Thông tin bắt buộc bị thiếu' });
+        if (!userid || !parkingid) return res.json({ success: false, msg: 'Thông tin bắt buộc bị thiếu' });
         const checkTransaction = await knex('transaction').select().where({
             parkingid
         });
         if(checkTransaction && checkTransaction.length > 0) {
-            return res.status(400).json({ success: false, msg: 'Bãi đỗ vẫn đang có giao dịch chưa hoàn thành. Không thể xóa !' });
+            return res.json({ success: false, msg: 'Bãi đỗ vẫn đang có giao dịch chưa hoàn thành. Không thể xóa !' });
         }
         const check = await knex('parking')
             .delete()
             .where({ userid, parkingid });
-        if (!check) return res.status(400).json({ success: false, msg: 'Xóa bãi đỗ thất bại' });
+        if (!check) return res.json({ success: false, msg: 'Xóa bãi đỗ thất bại' });
         return res.status(200).json({
             success: true,
             msg: `Xóa bãi đỗ thành công`,
@@ -46,15 +46,15 @@ router.delete('/api/owner/parking/:parkingid',validateOwnerAPI, async(req, res) 
 
 router.put('/api/owner/parking/:parkingid', validateOwnerAPI, async(req, res) => {
     try {
-        const { parkingname, TotalParkingCar, TotalParkingBike,address,TotalPackingTime,UsedPackingBike,UsedPackingCar } = req.body;
+        const { parkingname, TotalParkingCar,latitude,longitude,description, TotalParkingBike,address,TotalPackingTime,UsedPackingBike,UsedPackingCar } = req.body;
         const userid = req.session.userid;
         const { parkingid } = req.params;
         if (!parkingname || !TotalParkingCar || !TotalParkingBike) {
-          return res.status(400).json({ success: false, msg: 'Thiếu thông tin bắt buộc' });
+          return res.json({ success: false, msg: 'Thiếu thông tin bắt buộc' });
         }
         const result = await knex('parking')
-        .update({ parkingname, TotalParkingCar,TotalParkingBike,address, TotalPackingTime,address,UsedPackingBike, UsedPackingCar }).where({ userid, parkingid});
-        if (!result) return res.status(400).json({ success: true, msg: 'Sửa thông tin bãi đỗ thất bại' });
+        .update({ parkingname, TotalParkingCar,TotalParkingBike,address, latitude,longitude,description,TotalPackingTime,address,UsedPackingBike, UsedPackingCar }).where({ userid, parkingid});
+        if (!result) return res.json({ success: true, msg: 'Sửa thông tin bãi đỗ thất bại' });
         return res.status(200).json({ success: true, msg: 'Sửa thông tin bãi đỗ thành công' });
     } catch (err) {
         handleAPIError(err, res);
@@ -78,11 +78,11 @@ router.get('/api/owner/parking/:parkingid',validateOwnerAPI, async(req, res) => 
     try {
         const { parkingid } = req.params;
         const userid = req.session.userid;
-        if (!parkingid) return res.status(400).json({ success: false, msg: 'Thông tin bắt buộc bị thiếu' });
+        if (!parkingid) return res.json({ success: false, msg: 'Thông tin bắt buộc bị thiếu' });
         const parking = await knex('parking')
             .first()
             .where({ parkingid, userid  });
-        if (!parking) return res.status(400).json({ success: false, msg: 'Lấy thông tin bãi đỗ thất bại' });
+        if (!parking) return res.json({ success: false, msg: 'Lấy thông tin bãi đỗ thất bại' });
         return res.status(200).json({
             success: true,
             data: parking,

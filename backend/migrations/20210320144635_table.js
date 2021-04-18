@@ -29,6 +29,9 @@ exports.up = async function(knex) {
     table.bigInteger('userid').notNullable();
     table.text('address').notNullable();
     table.text('parkingname').notNullable();
+    table.text('latitude').notNullable();
+    table.text('longitude').notNullable();
+    table.text('description').notNullable();
     table.bigInteger('TotalParkingCar').notNullable();
     table.bigInteger('TotalParkingBike').notNullable();
     table.bigInteger('UsedPackingCar').notNullable();

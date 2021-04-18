@@ -2,13 +2,12 @@ import React, { Component, useState } from "react";
 import { StyleSheet, View, Text, Image, Dimensions, SafeAreaView, StatusBar, ScrollView, TextInput, TouchableHighlight } from "react-native";
 import { AntDesign, Feather, Foundation, MaterialIcons, Ionicons, EvilIcons, Fontisto } from '@expo/vector-icons';
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
-import AsyncStorage from "@react-native-community/async-storage";
+import { AsyncStorage } from 'react-native';
 import axios from "axios";
 
 function EditProfileOwner({ navigation }) {
     const [username, setusername] = useState('');
-    const [password, setpassword] = useState('');
-    const [repassword, setrepassword] = useState('');
+
     const [phonenumber, setphonenumber] = useState('');
     const [address, setaddress] = useState('');
     const [email, setemail] = useState('');
@@ -87,39 +86,7 @@ function EditProfileOwner({ navigation }) {
                             <TextInput style={styles.btn} placeholder="Nhập email..." onChangeText={email => setemail(email)}
                 defaultValue={email} />
                         </View>
-                        <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1 }}>
-                            <View style={{ flexDirection: 'row', paddingTop: 10, marginBottom: 5 }}>
-                                <Feather name="key" size={20} color="gray" style={{ marginRight: 10, marginLeft: 20 }} />
-                                <Text style={{}}>Mật khẩu:</Text>
-                            </View>
-                            <View style={{ flexDirection: 'row' }}>
-                                <View style={{ flex: 6 }}>
-                                    <TextInput secureTextEntry={true} style={styles.btn} placeholder="Nhập mật khẩu..."  onChangeText={password => setpassword(password)}
-                  defaultValue={password} />
-                                </View>
-                                <View style={{ flex: 1 }}>
-                                    <Feather name="eye" size={24} color="gray" style={{ position: 'absolute', right: 10 }} />
-                                    <Feather name="eye-off" size={24} color="gray" style={{ position: 'absolute', right: 10 }} />
-                                </View>
-                            </View>
 
-                        </View>
-                        <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1 }}>
-                            <View style={{ flexDirection: 'row', paddingTop: 10, marginBottom: 5 }}>
-                                <Feather name="key" size={20} color="gray" style={{ marginRight: 10, marginLeft: 20 }} />
-                                <Text style={{}}>Nhập lại mật khẩu:</Text>
-                            </View>
-                            <View style={{ flexDirection: 'row' }}>
-                                <View style={{ flex: 6 }}>
-                                    <TextInput secureTextEntry={true} style={styles.btn} placeholder="Nhập lại mật khẩu..." onChangeText={repassword => setrepassword(repassword)}
-                 defaultValue={repassword}  />
-                                </View>
-                                <View style={{ flex: 1 }}>
-                                    <Feather name="eye" size={24} color="gray" style={{ position: 'absolute', right: 10 }} />
-                                    <Feather name="eye-off" size={24} color="gray" style={{ position: 'absolute', right: 10 }} />
-                                </View>
-                            </View>
-                        </View>
                         <View style={{ height: 60, borderBottomColor: "#CCCCCC", borderBottomWidth: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                             <View style={{ marginRight: 10 }}>
                                 <MaterialButtonViolet
@@ -130,29 +97,31 @@ function EditProfileOwner({ navigation }) {
                             </View>
 
                             <MaterialButtonViolet
-                               onPress={() => editProfile(navigation, username, password,repassword,phonenumber,address,email)}
+                               onPress={() => editProfile(navigation, username,phonenumber,address,email)}
                                 style={styles.accept}
                                 title="Xác nhận"
                             ></MaterialButtonViolet>
                         </View>
+                        <View style={{ height: 60, borderBottomColor: "#CCCCCC", borderBottomWidth: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+                        <MaterialButtonViolet
+                               onPress={() => navigation.push('ChangePassword')}
+                                style={styles.change}
+                                title="Đổi mật khẩu"
+                            ></MaterialButtonViolet>
+                    </View>
                     </ScrollView>
                     {/* Khoảng cho menubar */}
-                    <View style={{ height: 50, backgroundColor: "gray" }}></View>
                 </View>
             </SafeAreaView>
         );
     }
 
 
-async function editProfile(navigation:any, username: string, password: string,repassword :string,phonenumber :string,address: string,email:string) {
+async function editProfile(navigation:any, username: string,phonenumber :string,address: string,email:string) {
     var endpoint = 'https://project3na.herokuapp.com/api/user';
-    if(password != repassword) {
-      return alert('Mật khẩu không khớp. Vui lòng nhập lại.');
-    }
     await axios
     .put(endpoint, {
           username,
-          password,
           phonenumber,address,email
         })
     .then(async function (response) {
@@ -234,6 +203,21 @@ async function editProfile(navigation:any, username: string, password: string,re
             shadowOpacity: 0.33,
             shadowRadius: 10,
             backgroundColor: 'red'
+        },
+        change:{
+            height: 40,
+            width: 160,
+            borderWidth: 1,
+            borderColor: "rgba(35,225,142,1)",
+            borderRadius: 6,
+            shadowColor: "rgba(0,0,0,1)",
+            shadowOffset: {
+                width: 0,
+                height: 3
+            },
+            elevation: 30,
+            shadowOpacity: 0.33,
+            shadowRadius: 10,
         },
         accept: {
             height: 40,

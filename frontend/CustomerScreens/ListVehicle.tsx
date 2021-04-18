@@ -1,7 +1,6 @@
 import React, { Component, useCallback, useState } from "react";
 import { StyleSheet, View,Text ,Image,Dimensions,SafeAreaView,StatusBar,ScrollView, TouchableHighlight, RefreshControl  } from "react-native";
 import { AntDesign,Feather,FontAwesome ,MaterialCommunityIcons,Ionicons,Fontisto    } from '@expo/vector-icons';
-import AsyncStorage from "@react-native-community/async-storage";
 import axios from "axios";
 
 function ListVehicle({ navigation }) {

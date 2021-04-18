@@ -7,7 +7,7 @@ import QRCodeGen from 'react-native-qrcode-svg';
 
 import CheckBox from "@react-native-community/checkbox";
 import axios from "axios";
-import AsyncStorage from "@react-native-community/async-storage";
+import { AsyncStorage } from 'react-native';
 function AddNewVehicle({ navigation }) {
 const [color, setColor] = useState('');
 const [code, setCode] = useState('');
@@ -31,8 +31,8 @@ const genCode = () => {
     data.push(user.phonenumber);
     data.push(code);
     data.push(type);
-    setQRCode(data.join('-'));
-    return data.join('-');
+    setQRCode(data.join('*'));
+    return data.join('*');
 }
   return (
     <SafeAreaView  style={styles.container}>

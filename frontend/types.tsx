@@ -7,6 +7,7 @@ export type RootStackParamList = {
   GuardProfile: undefined;
   CustomerProfile: undefined;
   Vehicle: undefined;
+  ChangePassword:undefined;
   ListVehicle: undefined;
   AddNewVehicle: undefined;
   ListTicket: undefined;
@@ -20,6 +21,7 @@ export type RootLoginedStackParamList = {
   Signup: undefined;
   GuardProfile: undefined;
   CustomerProfile: undefined;
+  ChangePassword:undefined;
   Vehicle: undefined;
   ListVehicle: undefined;
   AddNewVehicle: undefined;

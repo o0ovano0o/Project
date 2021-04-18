@@ -2,14 +2,14 @@ const router = require('express').Router();
 const knex = require('../../knex');
 const Enum = require('../../common/Enum');
 const handleAPIError = require('../../common/handleAPIError');
-const { validateOwnerAPI } = require('../../middlewares/validateAPIAuthentication');
+const { validateOwnerAPI, validateAppAPI } = require('../../middlewares/validateAPIAuthentication');
 
 router.post('/api/owner/ticket', validateOwnerAPI, async(req, res) => {
     try {
         let { name, price, typetime,typeverhicle,drescription,isDefault } = req.body;
         const ownerid = req.session.userid;
         if (!name || !price || !typetime || !typeverhicle ) {
-          return res.status(400).json({ success: false, msg: 'Thiếu thông tin bắt buộc' });
+          return res.json({ success: false, msg: 'Thiếu thông tin bắt buộc' });
         }
         typetime = typetime == Enum.TypeTime.hour ?  Enum.TypeTime.hour :  Enum.TypeTime.day;
         typeverhicle = typeverhicle == Enum.TypeVehicle.car ?  Enum.TypeVehicle.car :  Enum.TypeVehicle.bike;
@@ -19,7 +19,7 @@ router.post('/api/owner/ticket', validateOwnerAPI, async(req, res) => {
         else isDefault = true;
         const result = await knex('ticket')
         .insert({ name, price,typetime,typeverhicle, drescription,isDefault,ownerid});
-        if (!result) return res.status(400).json({ success: true, msg: 'Tạo thông tin vé xe thất bại' });
+        if (!result) return res.json({ success: true, msg: 'Tạo thông tin vé xe thất bại' });
         return res.status(200).json({ success: true, msg: 'Tạo thông tin vé xe thành công' });
     } catch (err) {
         handleAPIError(err, res);
@@ -31,13 +31,13 @@ router.post('/api/owner/ticket/default/:ticketid', validateOwnerAPI, async(req, 
         let { ticketid } = req.params;
         const ownerid = req.session.userid;
         if (!ticketid) {
-          return res.status(400).json({ success: false, msg: 'Thiếu thông tin bắt buộc' });
+          return res.json({ success: false, msg: 'Thiếu thông tin bắt buộc' });
         }
         await knex('ticket').update({ isDefault : false });
         let isDefault = true;
         const result = await knex('ticket')
         .update({ isDefault}).where({ ownerid, ticketid });
-        if (!result) return res.status(400).json({ success: true, msg: 'Sửa thông tin vé xe thất bại' });
+        if (!result) return res.json({ success: true, msg: 'Sửa thông tin vé xe thất bại' });
         return res.status(200).json({ success: true, msg: 'Sửa thông tin vé xe thành công' });
     } catch (err) {
         handleAPIError(err, res);
@@ -48,17 +48,17 @@ router.delete('/api/owner/ticket/:ticketid',validateOwnerAPI, async(req, res) =>
     try {
         const { ticketid } = req.params;
         const ownerid = req.session.userid;
-        if (!ownerid || !ticketid) return res.status(400).json({ success: false, msg: 'Thông tin bắt buộc bị thiếu' });
+        if (!ownerid || !ticketid) return res.json({ success: false, msg: 'Thông tin bắt buộc bị thiếu' });
         const checkTransaction = await knex('transaction').select().where({
             ticketid
         });
         if(checkTransaction && checkTransaction.length > 0) {
-            return res.status(400).json({ success: false, msg: 'Loại vé vẫn đang có giao dịch chưa hoàn thành. Không thể xóa !' });
+            return res.json({ success: false, msg: 'Loại vé vẫn đang có giao dịch chưa hoàn thành. Không thể xóa !' });
         }
         const check = await knex('ticket')
             .delete()
             .where({ userid, ticketid });
-        if (!check) return res.status(400).json({ success: false, msg: 'Xóa vé thất bại' });
+        if (!check) return res.json({ success: false, msg: 'Xóa vé thất bại' });
         return res.status(200).json({
             success: true,
             msg: `Xóa vé thành công`,
@@ -74,7 +74,7 @@ router.put('/api/owner/ticket/:ticketid', validateOwnerAPI, async(req, res) => {
         let { ticketid } = req.params;
         const ownerid = req.session.userid;
         if (!name || !price || !typetime || !typeverhicle ) {
-          return res.status(400).json({ success: false, msg: 'Thiếu thông tin bắt buộc' });
+          return res.json({ success: false, msg: 'Thiếu thông tin bắt buộc' });
         }
         typetime = typetime == Enum.TypeTime.hour ?  Enum.TypeTime.hour :  Enum.TypeTime.day;
         typeverhicle = typeverhicle == Enum.TypeVehicle.car ?  Enum.TypeVehicle.car :  Enum.TypeVehicle.bike;
@@ -84,7 +84,7 @@ router.put('/api/owner/ticket/:ticketid', validateOwnerAPI, async(req, res) => {
         else isDefault = true;
         const result = await knex('ticket')
         .update({ name, price,typetime,typeverhicle, drescription,isDefault}).where({ ticketid, ownerid });
-        if (!result) return res.status(400).json({ success: true, msg: 'Sửa thông tin vé xe thất bại' });
+        if (!result) return res.json({ success: true, msg: 'Sửa thông tin vé xe thất bại' });
         return res.status(200).json({ success: true, msg: 'Sửa thông tin vé xe thành công' });
     } catch (err) {
         handleAPIError(err, res);
@@ -108,14 +108,35 @@ router.get('/api/owner/ticket/:ticketid',validateOwnerAPI, async(req, res) => {
     try {
         const { ticketid } = req.params;
         const ownerid = req.session.userid;
-        if (!ticketid) return res.status(400).json({ success: false, msg: 'Thông tin bắt buộc bị thiếu' });
+        if (!ticketid) return res.json({ success: false, msg: 'Thông tin bắt buộc bị thiếu' });
         const ticket = await knex('ticket')
             .first()
             .where({ ticketid, ownerid  });
-        if (!ticket) return res.status(400).json({ success: false, msg: 'Lấy thông tin vé xe thất bại' });
+        if (!ticket) return res.json({ success: false, msg: 'Lấy thông tin vé xe thất bại' });
         return res.status(200).json({
             success: true,
             data: ticket,
+        });
+    } catch (err) {
+        handleAPIError(err, res);
+    }
+});
+
+router.post('/api/vehicle',validateAppAPI, async(req, res) => {
+    try {
+        const { QRCode } = req.body;
+        if (!QRCode) return res.json({ success: false, msg: 'Thông tin bắt buộc bị thiếu' });
+        const vehicle = await knex('vehicle')
+            .first()
+            .where({ QRCode });
+        const [user] = await knex('user').where({userid: vehicle.userid});
+        if (!vehicle) return res.json({ success: false, msg: 'Lấy thông tin xe thất bại' });
+        return res.status(200).json({
+            success: true,
+            data: {
+                ...vehicle,
+                username: user.username
+            },
         });
     } catch (err) {
         handleAPIError(err, res);

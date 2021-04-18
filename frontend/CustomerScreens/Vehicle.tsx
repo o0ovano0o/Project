@@ -5,7 +5,7 @@ import MaterialButtonViolet from "../components/MaterialButtonViolet";
 import { Picker } from "native-base";
 import QRCodeGen from 'react-native-qrcode-svg';
 import CheckBox from "@react-native-community/checkbox";
-import AsyncStorage from "@react-native-community/async-storage";
+import { AsyncStorage } from 'react-native';
 import axios from "axios";
 function Vehicle({ navigation,route }) {
     const { vehicle } = route.params;

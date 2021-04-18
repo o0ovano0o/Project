@@ -7,7 +7,7 @@ router.post('/api/guard/transaction', validateGuardAPI, async(req, res) => {
     try {
         let { vehicleid,parkingid,ticketID,Timein,Timeout,TotalAmount,Status, userid } = req.body;
         if (!vehicleid || !parkingid || !ticketID) {
-          return res.status(400).json({ success: false, msg: 'Thiếu thông tin bắt buộc' });
+          return res.status(400).json({ success: false, msg: 'Thiếu thông tin bắt buộc', data: req.body });
         }
         const guarid = req.session.userid;
         const vehicle = await knex('vehicle').first().where({vehicleid});
@@ -15,9 +15,7 @@ router.post('/api/guard/transaction', validateGuardAPI, async(req, res) => {
         const user = await knex('user').first().where({userid});
         const guard = await knex('user').first().where({userid:guarid});
         const transactionid = await knex('transaction').insert({
-          vehicleid,parkingid,ticketID,Timein,Timeout,TotalAmount,Status,guardid, userid
-        }).returning('transactionid');
-        await knex('transaction').update({
+          vehicleid,parkingid,ticketID,Timein,Timeout,TotalAmount,Status,guarid, userid,
           color:vehicle.color,
           code:vehicle.code,
           type:vehicle.type,
@@ -30,10 +28,11 @@ router.post('/api/guard/transaction', validateGuardAPI, async(req, res) => {
           phonenumber:user.phonenumber,
           addressuser:user.address,
 
-          guardname:guard.guardname,
-        }).where({transactionid});
+          guardname:guard.username,
+        }).returning('transactionid');
 
-        if (!transactionid) return res.status(400).json({ success: true, msg: 'Tạo vé giao dịch thất bại' });
+
+        if (!transactionid) return res.status(400).json({ success: false, msg: 'Tạo vé giao dịch thất bại' });
         return res.status(200).json({ success: true, msg: 'Tạo vé giao dịch thành công' });
     } catch (err) {
         handleAPIError(err, res);
@@ -121,6 +120,32 @@ router.get('/api/guard/transaction/:transactionid',validateGuardAPI, async(req, 
         return res.status(200).json({
             success: true,
             data: transaction,
+        });
+    } catch (err) {
+        handleAPIError(err, res);
+    }
+});
+
+router.get('/api/default-ticket/:type',validateGuardAPI, async(req, res) => {
+    try {
+        const userid = req.session.userid;
+        const {type} = req.params;
+        var typeverhicle = type=='motobike' ? 1 : (type=='car' ? 2 : 3);
+        const owner = await knex('user').first().where({ userid });
+        let tickets = await knex('ticket')
+            .where({ typeverhicle, ownerid: owner.ownerid  });
+        let priceex = type=='car' ? 10000:5000;
+        if(!tickets||!tickets.length) tickets.push({
+            typeverhicle,
+            ticketid:1,
+            name:"vé lượt",
+            price:priceex,
+            typetime:0,
+            drescription:"Vé mặc định"
+        })
+        return res.status(200).json({
+            success: true,
+            data: tickets,
         });
     } catch (err) {
         handleAPIError(err, res);

@@ -12,6 +12,7 @@ import LoginScreen from '../screens/Login';
 import SignupScreen from '../screens/Signup';
 import OwnerProfile from '../OwnerScreens/OwnerProfile';
 import EditProfileOwner from '../OwnerScreens/EditProfileOwner';
+import ChangePassword from '../OwnerScreens/ChangePassword';
 import CustomerProfile from '../CustomerScreens/CustomerProfile';
 import GuardProfile from '../GuardScreens/GuardProfile';
 import ListVehicle from '../CustomerScreens/ListVehicle';
@@ -23,7 +24,7 @@ import SuccessScreen from '../CustomerScreens/SuccessScreen';
 import ListVehicleInOut from '../GuardScreens/ListVehicleInOut';
 import Map from '../screens/Map';
 import ScanQRCode from '../OwnerScreens/ScanQRCode';
-import AsyncStorage from '@react-native-community/async-storage';
+import { AsyncStorage } from 'react-native';
 import MainScreen from '../GuardScreens/MainScreen';
 import AcceptTicket from '../CustomerScreens/AcceptTicket';
 // If you are not familiar with React Navigation, we recommend going through the
@@ -74,6 +75,7 @@ async function getUser() {
       <Stack.Screen name="CustomerProfile" component={CustomerProfile} />
       <Stack.Screen name="Map" component={Map} />
       <Stack.Screen name="AddTicket" component={AddTicket} />
+      <Stack.Screen name="ChangePassword" component={ChangePassword} />
       <Stack.Screen name="AcceptTicket" component={AcceptTicket} />
       <Stack.Screen name="SuccessScreen" component={SuccessScreen} />
       <Stack.Screen name="MainScreen" component={MainScreen} />
