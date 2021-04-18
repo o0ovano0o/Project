@@ -22,6 +22,7 @@ import ListTicket from '../CustomerScreens/ListTicket';
 import AddTicket from '../GuardScreens/AddTicket';
 import SuccessScreen from '../CustomerScreens/SuccessScreen';
 import ListVehicleInOut from '../GuardScreens/ListVehicleInOut';
+import ListTicketAddNew from '../GuardScreens/ListTicket_AddNew';
 import Map from '../screens/Map';
 import ScanQRCode from '../OwnerScreens/ScanQRCode';
 import { AsyncStorage } from 'react-native';
@@ -74,6 +75,7 @@ async function getUser() {
       <Stack.Screen name="ListTicket" component={ListTicket} />
       <Stack.Screen name="CustomerProfile" component={CustomerProfile} />
       <Stack.Screen name="Map" component={Map} />
+      <Stack.Screen name="ListTicketAddNew" component={ListTicketAddNew} />
       <Stack.Screen name="AddTicket" component={AddTicket} />
       <Stack.Screen name="ChangePassword" component={ChangePassword} />
       <Stack.Screen name="AcceptTicket" component={AcceptTicket} />
