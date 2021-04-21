@@ -92,8 +92,18 @@ var height = Dimensions.get('window').height; //full height
             borderTopLeftRadius: 15,
             borderTopRightRadius: 15
           },
+          button:{
+            flex:4,
+            borderTopWidth:1,
+            borderColor:'gray',
+            flexDirection: "column",
+            padding: 10 ,
+            backgroundColor: "white",
+            borderTopLeftRadius: 15,
+            borderTopRightRadius: 15
+          },
           tabback:{
-              height: 50,
+              height:50,
               width:width,
               backgroundColor: "#16f198"   ,
               justifyContent:'center',

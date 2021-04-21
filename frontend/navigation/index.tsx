@@ -20,6 +20,7 @@ import Vehicle from '../CustomerScreens/Vehicle';
 import AddNewVehicle from '../CustomerScreens/AddNewVehicle';
 import ListTicket from '../CustomerScreens/ListTicket';
 import AddTicket from '../GuardScreens/AddTicket';
+import CloseTicket from '../GuardScreens/CloseTicket';
 import SuccessScreen from '../CustomerScreens/SuccessScreen';
 import ListVehicleInOut from '../GuardScreens/ListVehicleInOut';
 import ListTicketAddNew from '../GuardScreens/ListTicket_AddNew';
@@ -77,6 +78,7 @@ async function getUser() {
       <Stack.Screen name="Map" component={Map} />
       <Stack.Screen name="ListTicketAddNew" component={ListTicketAddNew} />
       <Stack.Screen name="AddTicket" component={AddTicket} />
+      <Stack.Screen name="CloseTicket" component={CloseTicket} />
       <Stack.Screen name="ChangePassword" component={ChangePassword} />
       <Stack.Screen name="AcceptTicket" component={AcceptTicket} />
       <Stack.Screen name="SuccessScreen" component={SuccessScreen} />

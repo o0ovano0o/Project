@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View,Text ,Image,Dimensions,SafeAreaView,StatusBar,ScrollView,TextInput } from "react-native";
+import { StyleSheet, View,Text ,Image,Dimensions,SafeAreaView,StatusBar,ScrollView,TextInput, AsyncStorage } from "react-native";
 import {Camera} from 'expo-camera'
 import styles from '../Style/ListTicketStyle';
 import * as Permissions from 'expo-permissions';
@@ -7,14 +7,20 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import axios from "axios";
+import moment from "moment";
 export default class ScanQRCode extends React.Component{
     state={
         hasCameraPermission:true,
         type:Camera.Constants.Type.back,
-        data:null
+        data:null,
+        user:{}
     };
-
+    async getUser(){
+        let value = await AsyncStorage.getItem('user');
+        this.setState({ user : JSON.parse(value)});
+      }
     async componentDidMount(){
+        this.getUser();
         const {status}= await Permissions.askAsync(Permissions.CAMERA);
         this.setState({ hasCameraPermission:status === 'granted'})
     }
@@ -41,7 +47,26 @@ export default class ScanQRCode extends React.Component{
             .post('https://project3na.herokuapp.com/api/vehicle', {
                 QRCode: this.state.data?.QRCode
             });
+        var hour = moment().format('hh:mm');
+        var date = moment().format('DD/MM/YYYY');
+        var check = await axios
+        .post('https://project3na.herokuapp.com/api/guard/transaction/active', {
+            vehicleid: parseInt(reponse.data.data.vehicleid),
+            parkingid: parseInt(this.state.user.parkingid),
+            Timeout: `${hour} ${date}`
+
+        });
+        alert(JSON.stringify(check));
+        if(!check.data.success)
         this.props.navigation.push('AddTicket', { data: reponse.data.data });
+        else {
+            alert(JSON.stringify(check));
+
+            this.props.navigation.push('CloseTicket', { data: {
+                ...reponse.data.data,
+                ...check.data.data
+            } });
+        }
     }
     successTicketRender(){
         const availableHours = ["Vé lượt", "Vé ngày" ];
