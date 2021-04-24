@@ -80,7 +80,8 @@ const OWNER_APIS = [
 ];
 
 const Customer_APIS = [
-    'verhicle'
+    'verhicle',
+    'transaction'
  ];
 
 const Guard_APIS = [
