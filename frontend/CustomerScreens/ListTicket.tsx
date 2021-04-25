@@ -6,6 +6,8 @@ import { TabView, SceneMap } from 'react-native-tab-view';
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import Modal from "react-native-modal";
 import { SearchBar } from 'react-native-elements';
+
+import QRCodeGen from 'react-native-qrcode-svg';
 import styles from '../Style/ListTicketStyle';
 import axios from "axios";
 //giao diện vé đã thanh toán
@@ -221,7 +223,7 @@ function ItemPayScreen() {
     }
     const getTicketPay = async () => {
         await axios
-        .get('https://project3na.herokuapp.com/api/customer/transaction/2')
+        .get('https://project3na.herokuapp.com/api/customer/transaction/1')
         .then(async function (response) {
             var trans = response.data.data;
             setRefreshPage(false);
@@ -236,7 +238,7 @@ function ItemPayScreen() {
                         <View style={styles.itemimage}>
                             <View style={{flex:6, marginTop:2}}>
                                 <View style={{ marginLeft:20,borderColor:'#CCCCCC', borderWidth:1, borderRadius:20, height:20, width:160, justifyContent:'center',alignItems:'center'}}>
-                                    <Text style={{color:'#33CC66'}}>Đã thanh toán</Text>
+                                    <Text style={{color:'#33CC66'}}>Chưa thanh toán</Text>
                                 </View>
                             </View>
                             <View style={{flex:1}}>
@@ -328,28 +330,30 @@ function ItemPayScreen() {
                                 <MaterialIcons name="date-range" size={20} color="gray" style={{ marginLeft:5}}  />
                                 <View style={{flex:2}}>
                                     <Text style={{marginLeft:5, fontSize:13}}>Giờ vào</Text>
-                                    <Text style={{marginLeft:5, fontSize:13}}>30/3/2021</Text>
-                                    <Text style={{marginLeft:5, fontSize:13}}>14:30</Text>
+                                    {/* <Text style={{marginLeft:5, fontSize:13}}>{ticketcurrent.Timein}</Text> */}
+                                    <Text style={{marginLeft:5, fontSize:13}}>{ticketcurrent.Timein}</Text>
                                 </View>
                                 <View style={{flex:1}}>
                                     <AntDesign name="arrowright" size={24} color="#CCCCCC" />
                                 </View>
+                                {/* {ticketcurrent.Timeout && */}
                                 <View style={{flex:2}}>
                                     <Text style={{marginLeft:5, fontSize:13}}>Giờ ra</Text>
-                                    <Text style={{marginLeft:5, fontSize:13}}>30/3/2021</Text>
-                                    <Text style={{marginLeft:5, fontSize:13}}>16:30</Text>
+                                    <Text style={{marginLeft:5, fontSize:13}}>{ticketcurrent.Timeout}</Text>
+                                    {/* <Text style={{marginLeft:5, fontSize:13}}>{ticketcurrent.Timeout.split(" ")[0]}</Text> */}
                                 </View>
+
                             </View>
                             <View style={{flexDirection:'row'}}>
                                 <MaterialCommunityIcons name="qrcode-scan" size={20} color="gray" style={{marginRight:10, marginTop:10}} />
                                 <Text style={{fontSize:16, fontWeight:'bold',  marginTop:10,fontFamily:'sans-serif-light'}}>Mã QR</Text>
                             </View>
                             <View style={{justifyContent:'center', alignItems:'center', marginBottom:20, marginTop:10}}>
-                                <Image
-                                source={require('../assets/images/QRcode.jpg')}
-                                resizeMode="cover"
-                                style={styles.image}
-                                ></Image>
+                            <QRCodeGen
+                                value={ticketcurrent.QRCode}
+                                size={200}
+                                logoBackgroundColor='transparent'
+                            />
                             </View>
                         </View>
                     </ScrollView>

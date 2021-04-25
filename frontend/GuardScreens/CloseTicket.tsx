@@ -60,13 +60,13 @@ export default class Map extends React.Component{
             <ScrollView style={{flex:1, borderBottomColor:"#CCCCCC"}}>
                 <View style={{flex:7, marginLeft:5, marginTop:-5}}>
                     <View style={{justifyContent:'center', alignItems:'center'}}>
-                        <Text style={styles.namecar}>Bãi đỗ xe Duy Tân 2</Text>
+                        <Text style={styles.namecar}>Bãi đỗ xe - {user.parkingname}</Text>
                     </View>
 
                     <View style={{justifyContent:'center', alignItems:'center'}}>
                         <View style={{flexDirection:'row', alignItems:'center'}}>
                             <Feather name="map-pin" size={14} color="gray" style={{ marginLeft:8}}/>
-                            <Text style={styles.textcar}>Ngõ 12, phố Duy Tân, Cầu Giấy, Hà Nội</Text>
+                            <Text style={styles.textcar}>{user.parkingaddress}</Text>
                         </View>
                     </View>
                     <View style={{marginTop:10, marginLeft:-15,width:width, alignItems:'center'}}>

@@ -33,7 +33,27 @@ router.post('/api/guard/transaction', validateGuardAPI, async(req, res) => {
         }).returning('transactionid');
 
 
-        if (!transactionid) return res.status(400).json({ success: false, msg: 'Tạo vé giao dịch thất bại' });
+        if (!transactionid) return res.json({ success: false, msg: 'Tạo vé giao dịch thất bại' });
+        const parkinglt = await knex('parking').where({ parkingid });
+        if(transaction.type == 'motobike') {
+            var UsedPackingMotoBike = parseInt(parkinglt.UsedPackingMotoBike) +1 ;
+            if(UsedPackingMotoBike > parseInt(parkinglt.TotalParkingMotoBike)) {
+                return res.json({ success: false, msg: 'Số chỗ dành cho xe máy đã đầy' });
+            }
+            await knex('parking').update({ UsedPackingMotoBike }).where({parkingid});
+        } else if(transaction.type == 'car') {
+            var UsedPackingCar =parseInt(parkinglt.UsedPackingCar) + 1;
+            if(UsedPackingCar > parseInt(parkinglt.TotalParkingCar)) {
+                return res.json({ success: false, msg: 'Số chỗ dành cho ô tô đã đầy' });
+            }
+            await knex('parking').update({ UsedPackingCar }).where({parkingid});
+        } else if(transaction.type == 'bike') {
+            var UsedPackingBike =parseInt(parkinglt.UsedPackingBike) + 1;
+            if(UsedPackingBike > parseInt(parkinglt.TotalParkingBike)) {
+                return res.json({ success: false, msg: 'Số chỗ dành cho xe đạp đã đầy' });
+            }
+            await knex('parking').update({ UsedPackingBike }).where({parkingid});
+        }
         return res.status(200).json({ success: true, msg: 'Tạo vé giao dịch thành công' });
     } catch (err) {
         handleAPIError(err, res);
@@ -91,14 +111,14 @@ router.post('/api/guard/transaction/close', validateGuardAPI, async(req, res) =>
         if(!transaction.typetimeticket) {
             amount=transaction.priceticket;
         }
-        else if(transaction.typetimeticket == 1) { // day
+        else if(transaction.typetimeticket == 1 || transaction.typetimeticket=='1') { // day
             var dayout = moment(Timeout, "hh:mm DD/MM/YYYY");
             var dayin = moment(transaction.Timein, "hh:mm DD/MM/YYYY");
             var duration = dayout.diff(dayin,'days');
             if(parseInt(duration)>1){
                 amount = transaction.priceticket*parseInt(duration);
             } else amount =transaction.priceticket;
-        } else if(transaction.typetimeticket == 2) { // hours
+        } else if(transaction.typetimeticket == 2  || transaction.typetimeticket=='2') { // hours
             var dayout = moment(Timeout, "hh:mm DD/MM/YYYY");
             var dayin = moment(transaction.Timein, "hh:mm DD/MM/YYYY");
             var duration = dayout.diff(dayin,'hours');
@@ -112,6 +132,20 @@ router.post('/api/guard/transaction/close', validateGuardAPI, async(req, res) =>
         }).where({vehicleid, parkingid, guarid}).returning('*');
 
         if (!transactionid) return res.json({ success: false, msg: 'Trả vé giao dịch thất bại' });
+        const parking = await knex('parking').where({ parkingid });
+        if(transaction.type == 'motobike') {
+            var UsedPackingMotoBike =parseInt(parking.UsedPackingMotoBike) - 1 ;
+            UsedPackingMotoBike = UsedPackingMotoBike>=0 ? UsedPackingMotoBike : 0;
+            await knex('parking').update({ UsedPackingMotoBike }).where({parkingid});
+        } else if(transaction.type == 'car') {
+            var UsedPackingCar =parseInt(parking.UsedPackingCar) - 1 ;
+            UsedPackingCar = UsedPackingCar>=0 ? UsedPackingCar : 0;
+            await knex('parking').update({ UsedPackingCar }).where({parkingid});
+        } else if(transaction.type == 'bike') {
+            var UsedPackingBike =parseInt(parking.UsedPackingBike) - 1 ;
+            UsedPackingBike = UsedPackingBike>=0 ? UsedPackingBike : 0;
+            await knex('parking').update({ UsedPackingBike }).where({parkingid});
+        }
         return res.status(200).json({ success: true, msg: 'Trả vé giao dịch thành công',data:transactionid });
     } catch (err) {
         handleAPIError(err, res);

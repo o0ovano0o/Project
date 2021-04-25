@@ -85,7 +85,8 @@ const Customer_APIS = [
  ];
 
 const Guard_APIS = [
-    'transaction'
+    'transaction',
+    'parking'
  ];
 
 
