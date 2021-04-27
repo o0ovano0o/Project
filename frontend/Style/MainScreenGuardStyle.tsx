@@ -31,7 +31,7 @@ var height = Dimensions.get('window').height; //full height
             fontSize:12, 
             marginTop:5,
             marginLeft:10,
-            color:'gray'
+            color:'black'
         },
         box:{
             flex:1, 
@@ -63,7 +63,7 @@ var height = Dimensions.get('window').height; //full height
         backgoundheader:{
             height:130, 
             position:'absolute', 
-            backgroundColor:'#CCCCCC', 
+            backgroundColor:"#16f198", 
             width:width,
         }
           

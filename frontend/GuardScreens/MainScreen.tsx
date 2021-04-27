@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View,Image,Text ,Dimensions,SafeAreaView,StatusBar,ScrollView  } from "react-native";
+import { StyleSheet, View,TouchableOpacity,Text ,Dimensions,SafeAreaView,StatusBar,ScrollView  } from "react-native";
 import { EvilIcons,Feather,MaterialIcons ,MaterialCommunityIcons,AntDesign   } from '@expo/vector-icons'; 
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
 import styles from '../Style/MainScreenGuardStyle';
@@ -91,7 +91,11 @@ function MainScreen({ navigation: { navigate } }) {
                                 </View>    
                           </View>
                           
-                          
+                          <TouchableOpacity
+                                style={{height:20,width:200}}
+                            >
+                                <Text>Press Here</Text>
+                            </TouchableOpacity>
                       </ScrollView>  
                     </View>
                 </View>

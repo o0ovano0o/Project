@@ -10,6 +10,7 @@ import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import styles from '../Style/MapStyle';
 import axios from 'axios';
+import { SearchBar } from 'react-native-elements';
 const { Marker } = MapView;
 
 const parkings=[
@@ -165,17 +166,20 @@ export default class Map extends Component {
     renderHeader(){
         return(
             <View style={styles.header}>
-                <View style={{ flex: 1, justifyContent: "center" }}>
-                    <Text style={styles.headerTitle}>Detected location</Text>
-                    <Text style={styles.headerLocation}>San Francisco, US</Text>
+                <View style={{ flex: 1, justifyContent: "center", alignItems:'center' }}>
+                  <SearchBar lightTheme={true} 
+                      containerStyle={styles.searchstyle} 
+                      inputContainerStyle={{height:30, backgroundColor:'white'}}
+                      placeholder="Tìm kiếm..."
+                  ></SearchBar>
                 </View>
-                <View
+                {/* <View
                 style={{ flex: 1, justifyContent: "center", alignItems: "flex-end" }}
                 >
                     <TouchableWithoutFeedback>
                         <Ionicons name="ios-menu" size={30} />
                     </TouchableWithoutFeedback>
-                </View>
+                </View> */}
             </View>
 
         );
@@ -347,7 +351,7 @@ export default class Map extends Component {
     render(){
         return (
           <View style={styles.container}>
-            {/* {this.renderHeader()} */}
+            {this.renderHeader()}
             <MapView initialRegion={this.state.region}
                     mapPadding={{ top: 0, right: 0, bottom: 500, left: 0 }}
                     onRegionChange={this.onRegionChange}
