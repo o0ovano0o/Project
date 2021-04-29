@@ -1,180 +1,286 @@
 import React, { Component,useState } from "react";
-import { StyleSheet, View,Text ,TouchableOpacity,Dimensions,SafeAreaView,StatusBar,ScrollView ,useWindowDimensions } from "react-native";
-import { AntDesign,Feather,FontAwesome ,MaterialCommunityIcons,Ionicons,Fontisto    } from '@expo/vector-icons'; 
+import { StyleSheet, View,Text ,TouchableOpacity,Dimensions,SafeAreaView,StatusBar,ScrollView ,useWindowDimensions, AsyncStorage, RefreshControl } from "react-native";
+import { AntDesign,Feather,FontAwesome ,MaterialCommunityIcons,Ionicons,Fontisto    } from '@expo/vector-icons';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import Modal from "react-native-modal";
-function Item(){
-    const [visiable, setCount] = useState(0);
-    return(
-        <View>
-            <TouchableOpacity onPress={()=> setCount(1)}>
-                <View style={styles.item}>
-                    <View style={styles.itemimage}>
-                        <View style={styles.circle}>
-                            <FontAwesome name="car" size={40} color="gray" />
-                        </View>
-                    </View>
-                    <View style={{flex:4}}>
-                        <Text style={styles.namecar}>Xe ô tô VinFast</Text>
-                        <Text style={styles.textcar}>Biển số: 25-36-6969</Text>
-                        <Text style={styles.textcar}>Chủ xe: Bùi Hồng</Text>
-                    </View>
-                </View> 
-            </TouchableOpacity>
-            <Modal
-                isVisible={visiable===1}
-                useNativeDriver
-                style={{margin: 0,
-                        justifyContent: 'center', height:200, alignItems:'center'}}
-                backdropColor={"#CCCCCC"}
-                onBackButtonPress={() => true}
-                onBackdropPress={() => true}
-                onSwipeComplete={() => true}
-            >
-                <View style={{height:200, backgroundColor:'white', borderRadius:20}}>
-                    <View style={{alignItems:'flex-end', marginRight:10, marginTop:10}}>
-                        <TouchableOpacity onPress={()=> setCount(0)}>
-                            <View style={{height:20, width:20, borderColor:'#CCCCCC', borderWidth:1, justifyContent:'center', alignItems:'center'}}>
-                                <Text>x</Text>
-                            </View> 
-                        </TouchableOpacity>
-                    </View>
-                    <ModalView></ModalView>
-                </View>
-            </Modal>
-        </View>
-    );
-}
-function ItemBike(){
-    const [visiable, setCount] = useState(0);
-    return(
-        <View>
-            <TouchableOpacity onPress={()=> setCount(1)}>
-                <View style={styles.item}>
-                        <View style={styles.itemimage}>
-                            <View style={styles.circle}>
-                                <MaterialCommunityIcons name="bike" size={40} color="gray" />
-                            </View>                      
-                        </View>
-                        <View style={{flex:4}}>
-                            <Text style={styles.namecar}>Xe đạp mini Nhật</Text>
-                            <Text style={styles.textcar}>Biển số: </Text>
-                            <Text style={styles.textcar}>Chủ xe: Bùi Hồng</Text>
-                        </View>
-                </View> 
-            </TouchableOpacity>
-            <Modal
-                isVisible={visiable===1}
-                useNativeDriver
-                style={{margin: 0,
-                        justifyContent: 'center', height:200, alignItems:'center'}}
-                backdropColor={"#CCCCCC"}
-                onBackButtonPress={() => true}
-                onBackdropPress={() => true}
-                onSwipeComplete={() => true}
-            >
-                <View style={{height:200, backgroundColor:'white', borderRadius:20}}>
-                    <View style={{alignItems:'flex-end', marginRight:10, marginTop:10}}>
-                        <TouchableOpacity onPress={()=> setCount(0)}>
-                            <View style={{height:20, width:20, borderColor:'#CCCCCC', borderWidth:1, justifyContent:'center', alignItems:'center'}}>
-                                <Text>x</Text>
-                            </View> 
-                        </TouchableOpacity>
-                    </View>
-                    <ModalView></ModalView>
-                </View>
-            </Modal>
-        </View>
-    );
-}
-function ItemMoto(){
-    const [visiable, setCount] = useState(0);
-    return(
-        <View>
-            <TouchableOpacity onPress={()=> setCount(1)}>
-                <View style={styles.item}>
-                    <View style={styles.itemimage}>
-                        <View style={styles.circle}>
-                            <Fontisto name="motorcycle" size={40} color="gray" />
-                        </View>
-                    </View>
-                    <View style={{flex:4}}>
-                        <Text style={styles.namecar}>Xe máy SH</Text>
-                        <Text style={styles.textcar}>Biển số: 25-36-6969</Text>
-                        <Text style={styles.textcar}>Chủ xe: Bùi Hồng</Text>
-                    </View>
-                </View>  
-            </TouchableOpacity>
-            <Modal
-                isVisible={visiable===1}
-                useNativeDriver
-                style={{margin: 0,
-                        justifyContent: 'center', height:200, alignItems:'center'}}
-                backdropColor={"#CCCCCC"}
-                onBackButtonPress={() => true}
-                onBackdropPress={() => true}
-                onSwipeComplete={() => true}
-            >
-                <View style={{height:200, backgroundColor:'white', borderRadius:20}}>
-                    <View style={{alignItems:'flex-end', marginRight:10, marginTop:10}}>
-                        <TouchableOpacity onPress={()=> setCount(0)}>
-                            <View style={{height:20, width:20, borderColor:'#CCCCCC', borderWidth:1, justifyContent:'center', alignItems:'center'}}>
-                                <Text>x</Text>
-                            </View> 
-                        </TouchableOpacity>
-                    </View>
-                    <ModalView></ModalView>
-                </View>
-            </Modal>
-        </View>
-    );
-}
+import axios from "axios";
+import ListVehicle from "../CustomerScreens/ListVehicle";
+
 function InScreen(){
+    const [refreshPage, setRefreshPage] = useState(true);
+    const [transaction, setTransaction] = useState({});
+    const [NotPaidtransactions, setNotPaidtransactions] = useState([]);
+    const [visiable, setCount] = useState(0);
+    const [user, setUser] = React.useState('');
+    React.useEffect(() => {
+        getTransactions();
+        getUser();
+        },[]);
+    const getUser = async () => {
+        let value = await AsyncStorage.getItem('user');
+        setUser(JSON.parse(value));
+    }
+    const getTransactions = async () => {
+        await axios
+        .get('https://project3na.herokuapp.com/api/guard/transactions')
+        .then(async function (response) {
+            if(response.data.success)
+           {
+               setNotPaidtransactions(response.data.transactionNotPaid);
+
+           }
+            else alert(response.data.msg)
+            setRefreshPage(false);
+            alert(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+                alert(error);
+        })
+        .finally(function () {
+        });
+    }
+    const refresh = () =>{
+        setRefreshPage(true);
+        getTransactions();
+    }
+    const openModel = (item:any) => {
+        setTransaction(item);
+        setCount(1);
+    }
     return(
-        <ScrollView style={{height:height-120, borderBottomColor:"#CCCCCC", marginBottom:10, marginTop:10}}>
-            <Item></Item>
-            <ItemBike></ItemBike>
-            <ItemMoto></ItemMoto>
-            <Item></Item>  
-            <ItemBike></ItemBike>         
+        <ScrollView style={{height:height-120, borderBottomColor:"#CCCCCC", marginBottom:10, marginTop:10}}
+        refreshControl={
+            <RefreshControl
+              refreshing={refreshPage}
+              onRefresh={()=>refresh()}
+            />}>
+            {
+                NotPaidtransactions.map((item) => {
+                    return (
+                        <View>
+                            <TouchableOpacity onPress={()=> openModel(item)}>
+                                <View style={styles.item}>
+                                    <View style={styles.itemimage}>
+                                        <View style={styles.circle}>
+                                        {
+                                            item.type == 'car' && <FontAwesome name="car" size={40} color="gray" />
+                                        }
+                                        {
+                                            item.type == 'bike' && <MaterialCommunityIcons name="bike" size={40} color="gray" />
+                                        }
+                                        {
+                                            item.type == 'motobike' && <Fontisto name="motorcycle" size={40} color="gray" />
+                                        }
+
+                                        </View>
+                                    </View>
+                                    <View style={{flex:4}}>
+                                        {
+                                            item.type == 'car' && <Text style={styles.namecar}>Xe ô tô {item.brand} {item.color} </Text>
+                                        }
+                                        {
+                                            item.type == 'bike' && <Text style={styles.namecar}>Xe đạp {item.brand} {item.color} </Text>
+                                        }
+                                        {
+                                            item.type == 'motobike' && <Text style={styles.namecar}>Xe máy {item.brand} {item.color} </Text>
+                                        }
+
+                                        <Text style={styles.textcar}>Biển số: {item.code}</Text>
+                                        <Text style={styles.textcar}>Chủ xe: {item.username}</Text>
+                                    </View>
+                                    <View style={{flex:2}}>
+                                        <Text style={styles.textcar}>{item.Timein}</Text>
+
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    );
+                })
+            }
+            <Modal
+                isVisible={visiable===1}
+                useNativeDriver
+                style={{margin: 0,
+                        justifyContent: 'center', height:200, alignItems:'center'}}
+                backdropColor={"#CCCCCC"}
+                onBackButtonPress={() => true}
+                onBackdropPress={() => true}
+                onSwipeComplete={() => true}
+            >
+                <View style={{height:200, backgroundColor:'white', borderRadius:20}}>
+                    <View style={{alignItems:'flex-end', marginRight:10, marginTop:10}}>
+                        <TouchableOpacity onPress={()=> setCount(0)}>
+                            <View style={{height:20, width:20, borderColor:'#CCCCCC', borderWidth:1, justifyContent:'center', alignItems:'center'}}>
+                                <Text style={{fontSize:20}}>x</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                    <ModalView item={transaction}></ModalView>
+                </View>
+            </Modal>
         </ScrollView>
     );
 }
 function OutScreen(){
+    const [refreshPage, setRefreshPage] = useState(true);
+    const [transaction, setTransaction] = useState({});
+    const [PaidTransaction, setPaidTransaction] = useState([]);
+    const [visiable, setCount] = useState(0);
+    const [user, setUser] = React.useState('');
+    React.useEffect(() => {
+        getTransactions();
+        getUser();
+        },[]);
+    const getUser = async () => {
+        let value = await AsyncStorage.getItem('user');
+        setUser(JSON.parse(value));
+    }
+    const getTransactions = async () => {
+        await axios
+        .get('https://project3na.herokuapp.com/api/guard/transactions')
+        .then(async function (response) {
+            if(response.data.success)
+           {
+            //    var list = new Array();
+            //    list.push(response.data.transactionPaid);
+                setPaidTransaction(response.data.transactionPaid);
+
+           }
+            else alert(response.data.msg)
+            setRefreshPage(false);
+            alert(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+                alert(error);
+        })
+        .finally(function () {
+        });
+    }
+    const refresh = () =>{
+        setRefreshPage(true);
+        getTransactions();
+    }
+    const openModel = (item:any) => {
+        setTransaction(item);
+        setCount(1);
+    }
     return(
-        <ScrollView style={{height:height-120, borderBottomColor:"#CCCCCC", marginBottom:10, marginTop:10}}>
-            <Item></Item>   
-            <ItemBike></ItemBike>
-            <ItemMoto></ItemMoto>
-            <Item></Item>  
-            <ItemBike></ItemBike>           
+        <ScrollView style={{height:height-120, borderBottomColor:"#CCCCCC", marginBottom:10, marginTop:10}}
+        refreshControl={
+            <RefreshControl
+              refreshing={refreshPage}
+              onRefresh={()=>refresh()}
+            />}>
+            {
+                PaidTransaction.map((item) => {
+                    return (
+                        <View>
+                            <TouchableOpacity onPress={()=> openModel(item)}>
+                                <View style={styles.item}>
+                                    <View style={styles.itemimage}>
+                                        <View style={styles.circle}>
+                                        {
+                                            item.type == 'car' && <FontAwesome name="car" size={40} color="gray" />
+                                        }
+                                        {
+                                            item.type == 'bike' && <MaterialCommunityIcons name="bike" size={40} color="gray" />
+                                        }
+                                        {
+                                            item.type == 'motobike' && <Fontisto name="motorcycle" size={40} color="gray" />
+                                        }
+
+                                        </View>
+                                    </View>
+                                    <View style={{flex:4}}>
+                                        {
+                                            item.type == 'car' && <Text style={styles.namecar}>Xe ô tô {item.brand} {item.color} </Text>
+                                        }
+                                        {
+                                            item.type == 'bike' && <Text style={styles.namecar}>Xe đạp {item.brand} {item.color} </Text>
+                                        }
+                                        {
+                                            item.type == 'motobike' && <Text style={styles.namecar}>Xe máy {item.brand} {item.color} </Text>
+                                        }
+
+                                        <Text style={styles.textcar}>Biển số: {item.code}</Text>
+                                        <Text style={styles.textcar}>Chủ xe: {item.username}</Text>
+                                    </View>
+                                    <View style={{flex:2}}>
+                                        <Text style={styles.textcar}>{item.Timein}</Text>
+
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    );
+                })
+            }
+            <Modal
+                isVisible={visiable===1}
+                useNativeDriver
+                style={{margin: 0,
+                        justifyContent: 'center', height:200, alignItems:'center'}}
+                backdropColor={"#CCCCCC"}
+                onBackButtonPress={() => true}
+                onBackdropPress={() => true}
+                onSwipeComplete={() => true}
+            >
+                <View style={{height:200, backgroundColor:'white', borderRadius:20}}>
+                    <View style={{alignItems:'flex-end', marginRight:10, marginTop:10}}>
+                        <TouchableOpacity onPress={()=> setCount(0)}>
+                            <View style={{height:20, width:20, borderColor:'#CCCCCC', borderWidth:1, justifyContent:'center', alignItems:'center'}}>
+                                <Text style={{fontSize:20}}>x</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                    <ModalView  item={transaction}></ModalView>
+                </View>
+            </Modal>
         </ScrollView>
     );
 }
-function ModalView() {
+function ModalView({item}) {
     return(
         <View style={{height:160, width:width-50, backgroundColor:'white', justifyContent:'center', alignItems:'center', borderRadius:20}}>
             <View style={{flex:1, flexDirection:'row', marginTop:-10}}>
-                <View style={{  flex:2, 
+                <View style={{  flex:2,
                                 marginTop:20,
                                 marginLeft:10,
                                 alignItems:'center',}}>
                     <View style={styles.circle}>
-                        <FontAwesome name="car" size={40} color="gray" />
+                    {
+                        item.type == 'car' && <FontAwesome name="car" size={40} color="gray" />
+                    }
+                    {
+                        item.type == 'bike' && <MaterialCommunityIcons name="bike" size={40} color="gray" />
+                    }
+                    {
+                        item.type == 'motobike' && <Fontisto name="motorcycle" size={40} color="gray" />
+                    }
                     </View>
                 </View>
                 <View style={{flex:4, marginRight:15}}>
-                    <Text style={styles.namecar}>Xe ô tô VinFast</Text>
-                    <Text style={styles.textcar}>Biển số: 25-36-6969</Text>
-                    <Text style={styles.textcar}>Chủ xe: Bùi Hồng</Text>
-                    <Text style={styles.textcar}>Điện thoại: 0987123314</Text>
-                    <Text style={styles.textcar}>Mô tả: Viết xước 10cm đầu xe</Text>
-                </View>  
-            </View>  
-        </View>  
+                {
+                    item.type == 'car' && <Text style={styles.namecar}>Xe ô tô {item.brand} {item.color} </Text>
+                }
+                {
+                    item.type == 'bike' && <Text style={styles.namecar}>Xe đạp {item.brand} {item.color} </Text>
+                }
+                {
+                    item.type == 'motobike' && <Text style={styles.namecar}>Xe máy {item.brand} {item.color} </Text>
+                }
+
+                < Text style={styles.textcar}>Biển số: {item.code}</Text>
+                <Text style={styles.textcar}>Chủ xe: {item.username}</Text>
+                <Text style={styles.textcar}>Điện thoại: {item.phonenumber}</Text>
+                <Text style={styles.textcar}>Mô tả: {item.description}</Text>
+                </View>
+            </View>
+        </View>
     );
 }
-function ListVehicleInOut({ navigation: { navigate } }) {
+function ListVehicleInOut({ navigation }) {
     const layout = useWindowDimensions();
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
@@ -185,16 +291,18 @@ function ListVehicleInOut({ navigation: { navigate } }) {
         first: InScreen,
         second: OutScreen,
       });
-    
+      const goToList = () => {
+        navigation.push("MainScreen");
+    }
   return (
     <SafeAreaView  style={styles.container}>
         <StatusBar
         animated={true}
         hidden={true} />
       <View style={styles.tabback}>
-            <View style={{flex:1, alignItems:'center'}}>
+            <TouchableOpacity onPress={() => goToList()} style={{flex:1, alignItems:'center'}}>
                 <AntDesign name="left" size={24} color="gray" />
-            </View>
+            </TouchableOpacity>
             <View style={{flex:5, alignItems:'center'}}>
                 <Text style={{fontSize:16, fontWeight:'bold'}}>Danh sách phương tiện vào/ra</Text>
             </View>
@@ -208,10 +316,9 @@ function ListVehicleInOut({ navigation: { navigate } }) {
                 onIndexChange={setIndex}
                 initialLayout={{ width: width, height:height-50}}
             />
-              
-            
-            {/* Khoảng cho menubar */}
-            <View style={{height:50, backgroundColor:"gray"}}></View>
+
+
+
       </View>
     </SafeAreaView>
   );
@@ -221,7 +328,7 @@ var height = Dimensions.get('window').height; //full height
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white"   
+    backgroundColor: "white"
   },
   tabback:{
       height: 50,
@@ -235,53 +342,53 @@ const styles = StyleSheet.create({
   },
   profile:{
       height: height-50,
-      width: width,     
+      width: width,
   },
   image:{
     height:70,
     width:70,
     borderRadius:70,
-    marginLeft:20,   
+    marginLeft:20,
   },
   item:{
     height:100,
-    flexDirection:'row', 
-    borderColor:"#CCCCCC", 
-    borderWidth:1, 
-    borderRadius:20, 
-    marginHorizontal:20, 
+    flexDirection:'row',
+    borderColor:"#CCCCCC",
+    borderWidth:1,
+    borderRadius:20,
+    marginHorizontal:20,
     justifyContent:'center' ,
     marginBottom:10
   },
   itemimage:{
-    flex:2, 
-    justifyContent:'center', 
+    flex:2,
+    justifyContent:'center',
     alignItems:'center',
   },
   namecar:{
-    fontWeight:'bold', 
-    fontSize:16, 
-    marginTop:10, 
+    fontWeight:'bold',
+    fontSize:16,
+    marginTop:10,
     marginLeft:10
   },
   textcar:{
-    fontWeight:'normal', 
-    fontSize:14, 
+    fontWeight:'normal',
+    fontSize:14,
     marginTop:5,
     marginLeft:10
   },
   icondelete:{
-    position:'absolute', 
-    right:10, 
+    position:'absolute',
+    right:10,
     top:10
   },
   circle:{
-    height:60, 
-    width:60, 
-    borderWidth:1, 
-    borderRadius:60, 
-    justifyContent:'center', 
-    alignItems:'center', 
+    height:60,
+    width:60,
+    borderWidth:1,
+    borderRadius:60,
+    justifyContent:'center',
+    alignItems:'center',
     borderColor:'gray'
   }
 

@@ -29,6 +29,7 @@ import ScanQRCode from '../OwnerScreens/ScanQRCode';
 import { AsyncStorage } from 'react-native';
 import MainScreen from '../GuardScreens/MainScreen';
 import AcceptTicket from '../CustomerScreens/AcceptTicket';
+import AddTicketByHand from '../GuardScreens/AddTicketByHand';
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -84,6 +85,7 @@ async function getUser() {
       <Stack.Screen name="SuccessScreen" component={SuccessScreen} />
       <Stack.Screen name="MainScreen" component={MainScreen} />
       <Stack.Screen name="EditProfileOwner" component={EditProfileOwner} />
+      <Stack.Screen name="AddTicketByHand" component={AddTicketByHand} />
       <Stack.Screen name="ScanQRCode" component={ScanQRCode} />
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />

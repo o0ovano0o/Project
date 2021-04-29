@@ -89,10 +89,27 @@ function MainScreen({ navigation}) {
                             </View>
                         </View>
                     </View>
+
+                    <View style={{flexDirection:'row'}}>
+                                <TouchableOpacity  onPress={() => goToList()}>
+                                <MaterialIcons name="list" size={40} color="#CCCCCC" style={{marginRight:15}} />
+                                <View>
+                                    <Text style={{marginBottom:5}}>Xe vào/ra</Text>
+                                </View>
+                                </TouchableOpacity>
+
+                            <TouchableOpacity  onPress={() => goToList()}>
+                                <MaterialIcons name="list" size={40} color="#CCCCCC" style={{marginRight:15}} />
+                                <View>
+                                    <Text style={{marginBottom:5}}>Tạo vé tay</Text>
+                                </View>
+                            </TouchableOpacity>
+                    </View>
+
+
                     <View style={{flex:1}}>
-                      <ScrollView style={{flex:1}}>
                           {parking.TotalParkingMotoBike &&
-                          <TouchableHighlight  onPress={() => goToList()}>
+                          <TouchableOpacity  onPress={() => goToList()}>
                           <View style={styles.item} key='1'>
 
 
@@ -101,11 +118,11 @@ function MainScreen({ navigation}) {
                                     <View
                                     style={styles.circle}
 
-                              ><TouchableHighlight  onPress={() => goToList()}>
+                              >
                                         {/* <View > */}
                                             <MaterialCommunityIcons name="motorbike" size={70} color="#CCCCCC" />
                                         {/* </View> */}
-                                        </TouchableHighlight>
+
                                         </View>
                                     </View>
                                     <View style={{flex:3}}>
@@ -113,8 +130,10 @@ function MainScreen({ navigation}) {
                                         <Text style={{fontSize:40}}>{parking.UsedPackingMotoBike}/{parking.TotalParkingMotoBike}</Text>
                                     </View>
                                 </View>
-                          </View> </TouchableHighlight>}
+                          </View> </TouchableOpacity>}
+
                           {parking.TotalParkingBike &&
+
                           <View style={styles.item}>
                                 <View style={{flexDirection:'row'}}>
                                     <View style={{flex:2, justifyContent:'center', alignItems:'center'}}>
@@ -128,8 +147,10 @@ function MainScreen({ navigation}) {
                                     </View>
                                 </View>
                           </View>
+
                         }
                          {parking.TotalParkingCar &&
+                        //  <TouchableOpacity  onPress={() => goToList()}>
                           <View style={styles.item}>
                                 <View style={{flexDirection:'row'}}>
                                     <View style={{flex:2, justifyContent:'center', alignItems:'center'}}>
@@ -143,10 +164,11 @@ function MainScreen({ navigation}) {
                                     </View>
                                 </View>
                           </View>
+                        //   </TouchableOpacity>
                         }
 
 
-                      </ScrollView>
+
                     </View>
                 </View>
             </View>

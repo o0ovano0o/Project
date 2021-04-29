@@ -9,6 +9,13 @@ const DEVICE_HEIGHT = Dimensions.get('window').height;
             backgroundColor: '#fff'
 
         },
+        searchstyle:{
+            height:45, 
+            borderRadius:10,
+            backgroundColor:'white', 
+            borderColor:'white', 
+            width:DEVICE_WIDTH-20
+          },
         headerTitle: {
             color: "gray"
         },
