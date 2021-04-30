@@ -1,10 +1,10 @@
 import React, { Component, useState } from "react";
-import { StyleSheet, View, Text, Image, Dimensions, SafeAreaView, StatusBar, ScrollView, TextInput, TouchableHighlight } from "react-native";
-import { AntDesign, Feather, Foundation, MaterialIcons, Ionicons, EvilIcons, Fontisto } from '@expo/vector-icons';
+import { StyleSheet,TouchableOpacity, View, Text, Image, Dimensions, SafeAreaView, StatusBar, ScrollView, TextInput, TouchableHighlight } from "react-native";
+import { AntDesign, Feather, Foundation, MaterialIcons, SimpleLineIcons, EvilIcons, Fontisto } from '@expo/vector-icons';
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
 import { AsyncStorage } from 'react-native';
 import axios from "axios";
-
+// const image = { uri: "https://123anhdep.net/wp-content/uploads/2016/04/tuyen-chon-hinh-nen-dep-nhat-cho-iphone-de-thuong-ca-tinh-lung-linh-sac-mau-2.jpg" };
 function EditProfileOwner({ navigation }) {
     const [username, setusername] = useState('');
 
@@ -32,9 +32,10 @@ function EditProfileOwner({ navigation }) {
                 <StatusBar
                     animated={true}
                     hidden={true} />
+                {/* <ImageBackground source={image} style={styles.imagebg}> */}
                 <View style={styles.tabback}>
                     <TouchableHighlight  onPress={() => navigation.push('Root', {screen :"profile"})}   style={{ flex: 1, alignItems: 'center' }}>
-                        <AntDesign name="left" size={24} color="gray" />
+                        <AntDesign name="left" size={24} color="black" />
                     </TouchableHighlight>
                     <View style={{ flex: 5, alignItems: 'center' }}>
                         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Cập nhật thông tin</Text>
@@ -45,49 +46,65 @@ function EditProfileOwner({ navigation }) {
                 <View style={styles.profile}>
                     <View style={styles.avatar}>
                         <Image
-                            source={require('../assets/images/start.png')}
+                            source={require('../assets/images/ava.jpg')}
                             resizeMode="cover"
                             style={styles.image}
                         ></Image>
                     </View>
-                    <ScrollView style={{ height: height - 120, borderBottomColor: "#CCCCCC" }}>
-                        <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1 }}>
+                    <ScrollView style={{ height: height - 120 }}>
+                        <View style={{ height: 70 }}>
                             <View style={{ flexDirection: 'row', paddingTop: 10, marginBottom: 5 }}>
-                                <AntDesign name="user" size={20} color="gray" style={{ marginRight: 10, marginLeft: 20 }} />
-                                <Text style={{}}>Tên đăng nhập:</Text>
+                                <AntDesign  name="user" 
+                                            size={20} 
+                                            color="#222222" 
+                                            style={styles.iconstyle} />
+                                <Text style={styles.textsize}>Tên đăng nhập</Text>
                             </View>
-                            <TextInput style={styles.btn} placeholder="Nhập tên đăng nhập..."  onChangeText={username => setusername(username)}
-                   defaultValue={username} />
+                            <TextInput  style={styles.btn} 
+                                        placeholder="Nhập tên đăng nhập..."  
+                                        onChangeText={username => setusername(username)}
+                                        defaultValue={username} />
                         </View>
-                        <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1 }}>
+                        <View style={{ height: 70}}>
                             <View style={{ flexDirection: 'row', paddingTop: 10, marginBottom: 5 }}>
-                                <EvilIcons name="user" size={24} color="gray" style={{ marginRight: 10, marginLeft: 20 }} />
-                                <Text style={{}}>Địa chỉ:</Text>
+                                <AntDesign  name="enviromento" 
+                                            size={20} 
+                                            color="#222222" 
+                                            style={styles.iconstyle} />
+                                <Text style={styles.textsize}>Địa chỉ</Text>
                             </View>
-                            <TextInput style={styles.btn} placeholder="Nhập họ và tên..."                 onChangeText={address => setaddress(address)}
-                defaultValue={address} />
-
-                        </View>
-
-                        <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1 }}>
-                            <View style={{ flexDirection: 'row', paddingTop: 10, marginBottom: 5 }}>
-                                <Foundation name="telephone" size={20} color="gray" style={{ marginRight: 10, marginLeft: 20 }} />
-                                <Text style={{}}>Số điện thoại:</Text>
-                            </View>
-                            <TextInput style={styles.btn} placeholder="Nhập số điện thoại..."  onChangeText={phonenumber => setphonenumber(phonenumber)}
-                 keyboardType = 'numeric'
-                 defaultValue={phonenumber}/>
-                        </View>
-                        <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1 }}>
-                            <View style={{ flexDirection: 'row', paddingTop: 10, marginBottom: 5 }}>
-                                <MaterialIcons name="alternate-email" size={20} color="gray" style={{ marginRight: 10, marginLeft: 20 }} />
-                                <Text style={{}}>Email:</Text>
-                            </View>
-                            <TextInput style={styles.btn} placeholder="Nhập email..." onChangeText={email => setemail(email)}
-                defaultValue={email} />
+                            <TextInput  style={styles.btn} 
+                                        placeholder="Nhập địa chỉ..."                 
+                                        onChangeText={address => setaddress(address)}
+                                        defaultValue={address} />
                         </View>
 
-                        <View style={{ height: 60, borderBottomColor: "#CCCCCC", borderBottomWidth: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+                        <View style={{ height: 70 }}>
+                            <View style={{ flexDirection: 'row', paddingTop: 10, marginBottom: 5 }}>
+                                <SimpleLineIcons name="earphones" 
+                                            size={20} 
+                                            color="#222222" 
+                                            style={styles.iconstyle} />
+                                <Text style={styles.textsize}>Số điện thoại</Text>
+                            </View>
+                            <TextInput  style={styles.btn} 
+                                        placeholder="Nhập số điện thoại..."  
+                                        onChangeText={phonenumber => setphonenumber(phonenumber)}
+                                        keyboardType = 'numeric'
+                                        defaultValue={phonenumber}/>
+                        </View>
+                        <View style={{ height: 70 }}>
+                            <View style={{ flexDirection: 'row', paddingTop: 10, marginBottom: 5 }}>
+                                <MaterialIcons name="alternate-email" size={20} color="#222222" style={styles.iconstyle} />
+                                <Text style={styles.textsize}>Email</Text>
+                            </View>
+                            <TextInput  style={styles.btn} 
+                                        placeholder="Nhập email..." 
+                                        onChangeText={email => setemail(email)}
+                                        defaultValue={email} />
+                        </View>
+
+                        <View style={{ height: 60, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                             <View style={{ marginRight: 10 }}>
                                 <MaterialButtonViolet
                                     onPress={() => navigation.push('Root', {screen :"profile"})}
@@ -102,16 +119,20 @@ function EditProfileOwner({ navigation }) {
                                 title="Xác nhận"
                             ></MaterialButtonViolet>
                         </View>
-                        <View style={{ height: 60, borderBottomColor: "#CCCCCC", borderBottomWidth: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
-                        <MaterialButtonViolet
-                               onPress={() => navigation.push('ChangePassword')}
-                                style={styles.change}
-                                title="Đổi mật khẩu"
-                            ></MaterialButtonViolet>
-                    </View>
+                        <View style={{ height: 60,  justifyContent: 'flex-end',marginRight:20,  flexDirection: 'row' }}>
+                            <TouchableOpacity onPress={() => navigation.push('ChangePassword')} >
+                                <Text style={{color:"#0066FF",textDecorationLine: 'underline',fontStyle: 'italic'}}>Đổi mật khẩu</Text>
+                            </TouchableOpacity>
+                            {/* <MaterialButtonViolet
+                                onPress={() => navigation.push('ChangePassword')}
+                                    style={styles.change}
+                                    title="Đổi mật khẩu"
+                                ></MaterialButtonViolet> */}
+                        </View>
                     </ScrollView>
                     {/* Khoảng cho menubar */}
                 </View>
+                {/* </ImageBackground> */}
             </SafeAreaView>
         );
     }
@@ -151,33 +172,42 @@ async function editProfile(navigation:any, username: string,phonenumber :string,
     const styles = StyleSheet.create({
         container: {
             flex: 1,
-            backgroundColor: "white"
+            backgroundColor: "#16f198",
+            
         },
+        imagebg: {
+            flex: 1,
+            resizeMode: "cover",
+            justifyContent: "center"
+          },
         tabback: {
             height: 50,
-            width: width,
-            backgroundColor: "#16f198",
+            width: width,            
             justifyContent: 'center',
             alignItems: 'center',
-            borderBottomWidth: 1,
-            borderBottomColor: "#CCCCCC",
             flexDirection: 'row'
+        },
+        iconstyle:{
+            marginRight: 10, 
+            marginLeft: 40
+        },
+        textsize:{
+            fontSize:16,
+            color:"#222222"
         },
         profile: {
             height: height - 50,
             width: width,
         },
         image: {
-            height: 70,
-            width: 70,
-            borderRadius: 70,
+            height: 150,
+            width: 150,
+            borderRadius: 20,
             marginLeft: 20,
         },
-        avatar: {
-            borderBottomWidth: 1,
-            borderBottomColor: "#CCCCCC",
+        avatar: {            
             justifyContent: "center",
-            height: 100,
+            height: 200,
             alignItems: 'center'
         },
         username: {
@@ -186,7 +216,7 @@ async function editProfile(navigation:any, username: string,phonenumber :string,
         btn: {
             height: 30,
             width: 200,
-            marginLeft: 20
+            marginLeft: 60,
         },
         cancel: {
             height: 40,
@@ -203,21 +233,6 @@ async function editProfile(navigation:any, username: string,phonenumber :string,
             shadowOpacity: 0.33,
             shadowRadius: 10,
             backgroundColor: 'red'
-        },
-        change:{
-            height: 40,
-            width: 160,
-            borderWidth: 1,
-            borderColor: "rgba(35,225,142,1)",
-            borderRadius: 6,
-            shadowColor: "rgba(0,0,0,1)",
-            shadowOffset: {
-                width: 0,
-                height: 3
-            },
-            elevation: 30,
-            shadowOpacity: 0.33,
-            shadowRadius: 10,
         },
         accept: {
             height: 40,
