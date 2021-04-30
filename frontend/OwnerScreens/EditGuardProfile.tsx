@@ -35,35 +35,35 @@ function AddGuard() {
                             <AntDesign name="user" size={20} color="gray" style={{ marginRight: 10, marginLeft: 20 }} />
                             <Text style={{}}>Tên đăng nhập:</Text>
                         </View>
-                        <TextInput style={styles.btn} placeholder="Nhập tên đăng nhập..." value="_minan_99" />
+                        <TextInput style={styles.btn} placeholder="Tên đăng nhập..." value="baove1" />
                     </View>
                     <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1 }}>
                         <View style={{ flexDirection: 'row', paddingTop: 10, marginBottom: 5 }}>
                             <EvilIcons name="user" size={24} color="gray" style={{ marginRight: 10, marginLeft: 20 }} />
                             <Text style={{}}>Họ và tên:</Text>
                         </View>
-                        <TextInput style={styles.btn} placeholder="Nhập họ và tên..." value="Đỗ Minh Anh" />
+                        <TextInput style={styles.btn} placeholder="Họ và tên..." value="Nguyễn Văn A" />
                     </View>
                     <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1 }}>
                         <View style={{ flexDirection: 'row', paddingTop: 10, marginBottom: 5 }}>
                             <Fontisto name="date" size={20} color="gray" style={{ marginRight: 10, marginLeft: 20 }} />
                             <Text style={{}}>Ngày tháng năm sinh:</Text>
                         </View>
-                        <TextInput style={styles.btn} placeholder="Nhập ngày tháng năm sinh..." value="" />
+                        <TextInput style={styles.btn} placeholder="Ngày tháng năm sinh..." value="" />
                     </View>
                     <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1 }}>
                         <View style={{ flexDirection: 'row', paddingTop: 10, marginBottom: 5 }}>
                             <Foundation name="telephone" size={20} color="gray" style={{ marginRight: 10, marginLeft: 20 }} />
                             <Text style={{}}>Số điện thoại:</Text>
                         </View>
-                        <TextInput style={styles.btn} placeholder="Nhập số điện thoại..." value="" />
+                        <TextInput style={styles.btn} placeholder="Số điện thoại..." value="0123456789" />
                     </View>
                     <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1 }}>
                         <View style={{ flexDirection: 'row', paddingTop: 10, marginBottom: 5 }}>
                             <MaterialIcons name="alternate-email" size={20} color="gray" style={{ marginRight: 10, marginLeft: 20 }} />
                             <Text style={{}}>Email:</Text>
                         </View>
-                        <TextInput style={styles.btn} placeholder="Nhập email..." value="" />
+                        <TextInput style={styles.btn} placeholder="Email..." value="" />
                     </View>
                     <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1 }}>
                         <View style={{ flexDirection: 'row', paddingTop: 10, marginBottom: 5 }}>
@@ -71,9 +71,12 @@ function AddGuard() {
                             <Text style={{}}>Mật khẩu:</Text>
                         </View>
                     </View>
-                    <MaterialButtonViolet
-                        title="Cập nhật thông tin"
-                    ></MaterialButtonViolet>
+                    <View style={{ height: 50, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
+                        <MaterialButtonViolet
+                            style={styles.button}
+                            title="Cập nhật"
+                        ></MaterialButtonViolet>
+                    </View>
                 </ScrollView>
                 {/* Khoảng cho menubar */}
                 <View style={{ height: 50, backgroundColor: "gray" }}></View>
@@ -123,36 +126,12 @@ const styles = StyleSheet.create({
         width: 200,
         marginLeft: 20
     },
-    cancel: {
+    button: {
         height: 40,
-        width: 120,
-        borderWidth: 1,
-        borderColor: "red",
-        borderRadius: 6,
-        shadowColor: "rgba(0,0,0,1)",
-        shadowOffset: {
-            width: 0,
-            height: 3
-        },
-        elevation: 30,
-        shadowOpacity: 0.33,
-        shadowRadius: 10,
-        backgroundColor: 'red'
-    },
-    accept: {
-        height: 40,
-        width: 120,
+        width: 150,
         borderWidth: 1,
         borderColor: "rgba(35,225,142,1)",
         borderRadius: 6,
-        shadowColor: "rgba(0,0,0,1)",
-        shadowOffset: {
-            width: 0,
-            height: 3
-        },
-        elevation: 30,
-        shadowOpacity: 0.33,
-        shadowRadius: 10,
     }
 
 });
