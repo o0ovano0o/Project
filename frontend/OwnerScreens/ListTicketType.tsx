@@ -9,7 +9,7 @@ const AVATAR_SIZE = 70;
 const BG_IMG = 'https://images.pexels.com/photos/5326901/pexels-photo-5326901.jpeg?auto=compress&cs=tinysrgb&h=650&w=940';
 const ITEM_SIZE = AVATAR_SIZE + SPACING * 3;
 
-function ListGuard() {
+function ListTicketType() {
     const scrollY = React.useRef(new Animated.Value(0)).current;
 
     const DATA = [{
@@ -163,4 +163,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default ListGuard;
+export default ListTicketType;

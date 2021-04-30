@@ -44,7 +44,7 @@ function ListGuard() {
                     <AntDesign name="left" size={24} color="gray" />
                 </TouchableHighlight>
                 <View style={{ flex: 5, alignItems: 'center' }}>
-                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Danh sách phương tiện</Text>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Danh sách bảo vệ</Text>
                 </View>
                 <View style={{ flex: 1 }}>
                 </View>
