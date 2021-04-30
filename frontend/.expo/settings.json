@@ -1,9 +1,9 @@
 {
   "hostType": "tunnel",
   "lanType": "ip",
-  "dev": false,
-  "minify": true,
-  "urlRandomness": "pg-9ap",
+  "dev": true,
+  "minify": false,
+  "urlRandomness": "xz-fcg",
   "https": false,
   "scheme": null,
   "devClient": false

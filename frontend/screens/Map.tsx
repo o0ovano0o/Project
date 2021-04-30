@@ -375,9 +375,9 @@ export default class Map extends Component {
                             onPress={() => this.setState({ active: parking.parkingid })}
                         >
                             <View style={[styles.marker, this.state.active === parking.parkingid ? styles.active : null]}>
-                            <Text style={styles.markerPrice}>{parking.parkingname}</Text>
-                            <Text style={styles.markerStatus}>{"Xe ô tô "}({parking.TotalParkingCar}/{parking.UsedPackingCar})</Text>
-                            <Text style={styles.markerStatus}>{"Xe máy/đạp "}({parking.TotalParkingBike}/{parking.UsedPackingBike})</Text>
+                            <Text style={styles.markerPrice}>{parking.parkingname}{" "}</Text>
+                            <Text style={styles.markerStatus}>{" "}({parking.TotalParkingCar+parking.TotalParkingBike}/{parking.UsedPackingCar+parking.UsedPackingBike})</Text>
+                            {/* <Text style={styles.markerStatus}>{"Xe máy/đạp "}({parking.TotalParkingBike}/{parking.UsedPackingBike})</Text> */}
                             </View>
                         </TouchableWithoutFeedback>
                     </Marker>
