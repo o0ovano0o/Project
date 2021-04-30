@@ -3,18 +3,6 @@ import { StatusBar, FlatList, Image, Animated, Text, View, Dimensions, StyleShee
 import { AntDesign, Ionicons, Fontisto } from '@expo/vector-icons';
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
 const { width, height } = Dimensions.get('screen');
-import faker from 'faker';
-
-faker.seed(10);
-const DATA = [...Array(10).keys()].map((_, i) => {
-    return {
-        key: faker.random.uuid(),
-        image: `https://randomuser.me/api/portraits/${faker.helpers.randomize(['men'])}/${faker.random.number(60)}.jpg`,
-        name: faker.name.findName(),
-        jobTitle: faker.name.jobTitle(),
-        email: faker.internet.email(),
-    };
-});
 
 const SPACING = 16;
 const AVATAR_SIZE = 70;
@@ -23,6 +11,35 @@ const ITEM_SIZE = AVATAR_SIZE + SPACING * 3;
 
 function ListGuard() {
     const scrollY = React.useRef(new Animated.Value(0)).current;
+
+    const DATA = [{
+        id: '0',
+        ticketTypeName: "Vé ngày cho xe máy",
+        vehicleType: "Xe máy",
+        cost: "20000",
+        timeUnit: "Ngày",
+        parkingName: "Bãi gửi xe Duy Tân"
+    },
+    {
+        id: '1',
+        ticketTypeName: "Vé ngày cho ô tô",
+        vehicleType: "Ô tô",
+        cost: "50000",
+        timeUnit: "Ngày",
+        parkingName: "Bãi gửi xe Duy Tân"
+    },
+    {
+        id: '2',
+        ticketTypeName: "Vé giờ cho xe máy",
+        vehicleType: "Xe máy",
+        cost: "5000",
+        timeUnit: "Giờ",
+        parkingName: "Bãi gửi xe Duy Tân"
+    }
+    ];
+
+    const vehicleTYpe = ["Ô tô", "Xe máy"];
+    const timeUnit = ["Giờ", "Ngày"];
 
     return (
         <SafeAreaView
@@ -40,11 +57,11 @@ function ListGuard() {
                 animated={true}
                 hidden={true} />
             <View style={styles.tabback}>
-                <TouchableHighlight style={{ flex: 1, alignItems: 'center' }}>
+                <View style={{ flex: 1, alignItems: 'center' }}>
                     <AntDesign name="left" size={24} color="gray" />
-                </TouchableHighlight>
+                </View>
                 <View style={{ flex: 5, alignItems: 'center' }}>
-                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Danh sách phương tiện</Text>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Danh sách loại vé</Text>
                 </View>
                 <View style={{ flex: 1 }}>
                 </View>
@@ -58,7 +75,7 @@ function ListGuard() {
                     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
                     { useNativeDriver: true }
                 )}
-                keyExtractor={item => item.key}
+                keyExtractor={item => item.id}
                 contentContainerStyle={{
                     padding: SPACING,
                     paddingTop: 20
@@ -105,21 +122,15 @@ function ListGuard() {
                                 alignContent: "space-between",
                             }}
                         >
-                            <View style={{ flex: 1, marginRight: AVATAR_SIZE / 2 }}>
-                                <Image
-                                    source={{ uri: item.image }}
-                                    style={{
-                                        width: AVATAR_SIZE,
-                                        height: AVATAR_SIZE,
-                                        borderRadius: AVATAR_SIZE,
-                                    }}
-                                />
-                            </View>
+                            <View style={{ flex: 4 }}>
+                                <Text numberOfLines={1} style={{ fontSize: 18, fontWeight: '700', flex: 1 }}>{item.ticketTypeName}</Text>
+                                <Text numberOfLines={1} style={{ fontSize: 14, opacity: 0.7, flex: 1 }}>Bãi gửi xe: {item.parkingName}</Text>
 
-                            <View style={{ flex: 3 }}>
-                                <Text numberOfLines={1} style={{ fontSize: 18, fontWeight: '700', flex: 1 }}>{item.name}</Text>
-                                <Text numberOfLines={1} style={{ fontSize: 14, opacity: 0.7, flex: 1 }}>{item.jobTitle}</Text>
-                                <Text numberOfLines={1} style={{ fontSize: 12, opacity: 0.8, color: '#0099cc', flex: 1 }}>{item.email}</Text>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text numberOfLines={1} style={{ fontSize: 13, opacity: 0.7, flex: 1 }}>Loại xe: {item.vehicleType.toString()}</Text>
+                                    <Text numberOfLines={1} style={{ fontSize: 13, opacity: 0.7, flex: 1, color: '#0099cc' }}>Giá vé: {item.cost.toString() + "/" + item.timeUnit.toString()}</Text>
+                                </View>
+
                             </View>
                             <View style={{ flex: 1, justifyContent: "center", alignContent: "center" }}>
                                 <AntDesign name='delete' size={25} style={styles.icondelete} />
