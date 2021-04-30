@@ -104,7 +104,49 @@ async function getUser() {
                         <AntDesign name="car" size={20} color="gray" style={{marginRight:10, marginLeft:20}}/>
                         <Text style={{ }}>Danh sách xe:</Text>
                     </View>
-                    <TouchableHighlight  onPress={() => navigation.navigate('ListVehicle')} style={{flex:1, paddingTop:10,position:'absolute', right:5}}>
+                    <TouchableHighlight  onPress={() => navigation.push('ListVehicle')} style={{flex:1, paddingTop:10,position:'absolute', right:5}}>
+                        <EvilIcons  name="chevron-right" size={30} color="gray" />
+                    </TouchableHighlight>
+
+                </View>
+                }
+
+                {
+                    user.role==2 &&
+                    <View style={{height:50, borderColor:"#CCCCCC", borderBottomWidth:1,flexDirection:'row',marginTop:10, borderTopWidth:1}}>
+                    <View style={{flex:6,flexDirection:'row', alignItems:'center'}}>
+                        <AntDesign name="car" size={20} color="gray" style={{marginRight:10, marginLeft:20}}/>
+                        <Text style={{ }}>Bãi:</Text>
+                    </View>
+                    <TouchableHighlight  onPress={() => navigation.push('ListGuard')} style={{flex:1, paddingTop:10,position:'absolute', right:5}}>
+                        <EvilIcons  name="chevron-right" size={30} color="gray" />
+                    </TouchableHighlight>
+
+                </View>
+                }
+
+                {
+                    user.role==2 &&
+                    <View style={{height:50, borderColor:"#CCCCCC", borderBottomWidth:1,flexDirection:'row',marginTop:10, borderTopWidth:1}}>
+                    <View style={{flex:6,flexDirection:'row', alignItems:'center'}}>
+                        <AntDesign name="car" size={20} color="gray" style={{marginRight:10, marginLeft:20}}/>
+                        <Text style={{ }}>Bảo vệ:</Text>
+                    </View>
+                    <TouchableHighlight  onPress={() => navigation.push('ListGuard')} style={{flex:1, paddingTop:10,position:'absolute', right:5}}>
+                        <EvilIcons  name="chevron-right" size={30} color="gray" />
+                    </TouchableHighlight>
+
+                </View>
+                }
+
+                {
+                    user.role==2 &&
+                    <View style={{height:50, borderColor:"#CCCCCC", borderBottomWidth:1,flexDirection:'row',marginTop:10, borderTopWidth:1}}>
+                    <View style={{flex:6,flexDirection:'row', alignItems:'center'}}>
+                        <AntDesign name="car" size={20} color="gray" style={{marginRight:10, marginLeft:20}}/>
+                        <Text style={{ }}>Loại vé:</Text>
+                    </View>
+                    <TouchableHighlight  onPress={() => navigation.push('ListTicketAddNew')} style={{flex:1, paddingTop:10,position:'absolute', right:5}}>
                         <EvilIcons  name="chevron-right" size={30} color="gray" />
                     </TouchableHighlight>
 
@@ -123,8 +165,7 @@ async function getUser() {
                 </View>
 
             </ScrollView>
-            {/* Khoảng cho menubar */}
-            <View style={{height:50, backgroundColor:"gray"}}></View>
+
       </View>
     </SafeAreaView>
   );

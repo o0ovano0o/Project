@@ -1,11 +1,16 @@
 import * as React from 'react';
-import { StatusBar, FlatList, Image, Animated, Text, View, Dimensions, StyleSheet, TouchableHighlight, Easing, SafeAreaViewBase, SafeAreaView } from 'react-native';
+import { StatusBar, FlatList, Image, Animated, Text, View, Dimensions,TouchableHighlight
+    , StyleSheet, Easing, SafeAreaViewBase, SafeAreaView, Button } from 'react-native';
 import { AntDesign, Ionicons, Fontisto } from '@expo/vector-icons';
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
-const { width, height } = Dimensions.get('screen');
+var width = Dimensions.get('window').width; //full width
+var height = Dimensions.get('window').height; //full height
 import faker from 'faker';
+import axios from 'axios';
+import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 faker.seed(10);
+
 const DATA = [...Array(10).keys()].map((_, i) => {
     return {
         key: faker.random.uuid(),
@@ -21,43 +26,67 @@ const AVATAR_SIZE = 70;
 const BG_IMG = 'https://images.pexels.com/photos/5326901/pexels-photo-5326901.jpeg?auto=compress&cs=tinysrgb&h=650&w=940';
 const ITEM_SIZE = AVATAR_SIZE + SPACING * 3;
 
-function ListGuard() {
+function ListGuard({ navigation }) {
     const scrollY = React.useRef(new Animated.Value(0)).current;
+    const [guards, setGuards] = React.useState([]);
+    React.useEffect(() => {
+        getGuardList();
+    },[]);
+    const getGuardList = async () => {
+        await axios
+        .get('https://project3na.herokuapp.com/api/owner/guards')
+        .then(async function (response) {
+            setGuards(response.data.data);
+        });
+    }
+    const deleteGuard = async (userid :any) => {
+        alert('1');
+        try {
+            await axios
+            .delete(`https://project3na.herokuapp.com/api/owner/guard/${userid}`)
+            .then(async function (response) {
+                alert(response.data.msg);
+                getGuardList();
+            });
+        } catch (error) {
 
+        }
+
+    }
     return (
         <SafeAreaView
             style={{
                 flex: 1,
-                backgroundColor: '#fff',
+                backgroundColor: '#e3e3e3',
             }}>
             <StatusBar
                 animated={true}
                 hidden={true} />
             <View style={styles.tabback}>
-                <TouchableHighlight style={{ flex: 1, alignItems: 'center' }}>
+                <TouchableHighlight onPress={() => navigation.push('CustomerProfile')} style={{ flex: 1, alignItems: 'center' }}>
                     <AntDesign name="left" size={24} color="gray" />
                 </TouchableHighlight>
                 <View style={{ flex: 5, alignItems: 'center' }}>
-                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Danh sách phương tiện</Text>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Danh sách bảo vệ</Text>
                 </View>
                 <View style={{ flex: 1 }}>
                 </View>
             </View>
-            <Image
+            {/* <Image
                 source={{ uri: BG_IMG }}
                 style={StyleSheet.absoluteFillObject}
                 blurRadius={80}
-            />
-            <View style={{ flexDirection: 'row', justifyContent: "flex-end", marginRight: 10, marginBottom: 10 }}>
+            /> */}
+            <TouchableOpacity onPress={() => navigation.push('AddGuard')} style={{ flexDirection: 'row', justifyContent: "flex-end", marginRight: 10, marginBottom: 10 }}>
                 <Ionicons name="add-circle-outline" size={35} color="black" />
-            </View>
+            </TouchableOpacity>
             <Animated.FlatList
-                data={DATA}
+                data={guards}
                 onScroll={Animated.event(
                     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
                     { useNativeDriver: true }
                 )}
-                keyExtractor={item => item.key}
+                keyExtractor={item => item.userid}
                 contentContainerStyle={{
                     padding: SPACING,
                     paddingTop: 20
@@ -92,6 +121,8 @@ function ListGuard() {
                                 backgroundColor: 'rgba(255, 255, 255, 0.8)',
                                 borderRadius: 20,
                                 shadowColor: "#000",
+
+
                                 shadowOffset: {
                                     width: 0,
                                     height: 10
@@ -106,7 +137,7 @@ function ListGuard() {
                         >
                             <View style={{ flex: 1, marginRight: AVATAR_SIZE / 2 }}>
                                 <Image
-                                    source={{ uri: item.image }}
+                                    source={{ uri: "https://cdn1.iconfinder.com/data/icons/avatar-3/512/Security-512.png" }}
                                     style={{
                                         width: AVATAR_SIZE,
                                         height: AVATAR_SIZE,
@@ -116,22 +147,31 @@ function ListGuard() {
                             </View>
 
                             <View style={{ flex: 3 }}>
-                                <Text numberOfLines={1} style={{ fontSize: 18, fontWeight: '700', flex: 1 }}>{item.name}</Text>
-                                <Text numberOfLines={1} style={{ fontSize: 14, opacity: 0.7, flex: 1 }}>{item.jobTitle}</Text>
-                                <Text numberOfLines={1} style={{ fontSize: 12, opacity: 0.8, color: '#0099cc', flex: 1 }}>{item.email}</Text>
+                                <Text numberOfLines={1} style={{ fontSize: 18, fontWeight: '700', flex: 1 }}>{item.username}</Text>
+                                <Text numberOfLines={1} style={{ fontSize: 14, opacity: 0.7, flex: 1 }}>{item.phonenumber}</Text>
+                                <Text numberOfLines={1} style={{ fontSize: 12, opacity: 0.8, color: '#0099cc', flex: 1 }}>{item.parkingname} - {item.parkingaddress}</Text>
                             </View>
-                            <View style={{ flex: 1, justifyContent: "center", alignContent: "center" }}>
-                                <AntDesign name='delete' size={25} style={styles.icondelete} />
-                            </View>
+                            <Button
+        title="Xóa"
+        color='#FF6347'
+        onPress={() => deleteGuard(item.userid)}
+      />
+
+                                {/* <TouchableHighlight onPress={() =>alert('1')}>
+                                <Animated.View style={{ flex: 1, justifyContent: "center", alignContent: "center" }}>
+                                                                <AntDesign  name='delete' size={25} style={styles.icondelete} />
+                                                                </Animated.View>
+                                </TouchableHighlight> */}
+
 
                         </Animated.View>
                     )
                 }}
             />
-            <MaterialButtonViolet
+            {/* <MaterialButtonViolet
                 title="Thêm tài khoản"
             ></MaterialButtonViolet>
-            <View style={{ height: 50, backgroundColor: "gray" }}></View>
+            <View style={{ height: 50, backgroundColor: "gray" }}></View> */}
 
         </SafeAreaView>
     );
