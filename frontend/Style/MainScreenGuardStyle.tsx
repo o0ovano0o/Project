@@ -8,45 +8,41 @@ var height = Dimensions.get('window').height; //full height
             flex: 1,
             backgroundColor: "white"   
         },
-        item:{
-            height:150,  
-            borderRadius:20,
-            borderColor:'#CCCCCC', 
-            borderWidth:1, 
-            margin:10, 
-            justifyContent:'center', 
-            alignItems:'center'
-        }, 
-        circle:{
-            height:85, 
-            width:85, 
-            borderWidth:1, 
-            borderColor:'#CCCCCC', 
-            borderRadius:80, 
-            justifyContent:'center', 
-            alignItems:'center'
+        image: {
+            height: 50,
+            width: 50,
+            borderRadius: 40,
+            marginLeft: 20,
+            marginRight:10
         },
+        imageparking: {
+            height: height/3,
+            width: width,
+        },
+        item:{
+            flexDirection:'row',
+            justifyContent:'center', 
+            alignItems:'center',             
+            height:40, width:width-60, 
+            marginBottom:5,                         
+            borderRadius:10, 
+            backgroundColor:"#F4D03F"
+        }, 
         textcar:{
             fontWeight:'normal', 
             fontSize:12, 
-            marginTop:5,
+            marginTop:2,
             marginLeft:10,
             color:'black'
         },
         box:{
-            flex:1, 
-            borderWidth:0.5, 
-            borderColor:'#CCCCCC',
-            backgroundColor:'white', 
-            marginLeft:20, 
-            marginBottom:20, 
-            marginRight:20
+            flex:1,
+            marginTop:20 
         },
         boxmain:{
             height:100, 
-            flexDirection:'row', 
-            borderBottomWidth:1, 
-            borderBottomColor:'#CCCCCC'
+            alignItems:'center',
+            marginTop:10
         },
         boxprice:{
             flex:3, 
@@ -61,7 +57,7 @@ var height = Dimensions.get('window').height; //full height
             alignItems:'center'
         },
         backgoundheader:{
-            height:130, 
+            height:height/3, 
             position:'absolute', 
             backgroundColor:"#16f198", 
             width:width,
