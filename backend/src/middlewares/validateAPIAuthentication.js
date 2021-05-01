@@ -49,7 +49,8 @@ function validateCustomerAPI(req, res, next) {
 
 function validateGuardAPI(req, res, next) {
   const validateRes = validateGuard(req);
-  if (validateRes.success) return next();
+  const validate = validateOwner(req);
+  if (validateRes.success || validate.success) return next();
   return res.status(401).json(validateRes);
 }
 
