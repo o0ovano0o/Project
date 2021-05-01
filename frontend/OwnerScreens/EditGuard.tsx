@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import { StyleSheet, View, Text, Image, Dimensions, SafeAreaView, StatusBar, ScrollView, TextInput, AsyncStorage, TouchableHighlight } from "react-native";
+import { StyleSheet, View, Text, Image, Dimensions, SafeAreaView, StatusBar, ScrollView, TextInput, AsyncStorage, TouchableHighlight, Button } from "react-native";
 import { AntDesign, Feather, Foundation, MaterialIcons, Ionicons, EvilIcons, Fontisto } from '@expo/vector-icons';
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
 import faker from 'faker';
@@ -9,11 +9,11 @@ import axios from "axios";
 
 faker.seed(10);
 const item_img = `https://randomuser.me/api/portraits/${faker.helpers.randomize(['women', 'men'])}/${faker.random.number(60)}.jpg`;
-function AddGuard({navigation,route}) {
+function EditGuard({navigation,route}) {
     const [user, setUser] = React.useState('');
     const [parkings, setParkings] =  React.useState([]);
     const [username, setusername] = useState('');
-    const [password, setpassword] = useState('');
+    const [userid, setuserid] = useState('');
     const [repassword, setrepassword] = useState('');
     const [phonenumber, setphonenumber] = useState('');
     const [address, setaddress] = useState('');
@@ -24,32 +24,37 @@ function AddGuard({navigation,route}) {
     React.useEffect(() => {
         getUser();
         getParking();
+        var data = route.params.data;
+        setusername(data.username);
+        setuserid(data.userid);
+        setrepassword(data.password);
+        setphonenumber(data.phonenumber);
+        setaddress(data.address);
+        setemail(data.email);
+        SetParkingID(data.parkingid);
+
+
       },[]);
-    const createGuard = async () => {
+    const editGuard = async () => {
         try{
             const ownerid = user.userid;
-            if(password != repassword) {
-              return alert('Mật khẩu không khớp. Vui lòng nhập lại.');
-            }
+
             alert(JSON.stringify({
-                username,
-                password,
-                phonenumber,
-                address,
-                email,
-                ownerid,parkingid
+              username,
+
+              phonenumber,address,email,ownerid,parkingid
             }
 
             ));
             await axios
-            .post('https://project3na.herokuapp.com/api/owner/guard', {
+            .put(`https://project3na.herokuapp.com/api/owner/guard/${userid}`, {
                   username,
-                  password,
+
                   phonenumber,address,email,ownerid,parkingid
                 })
             .then(async function (response) {
 
-                // alert(response.data.msg);
+                alert(response.data.msg);
               if(response.data.success) {
 
                 navigation.push('ListGuard');
@@ -171,7 +176,7 @@ function AddGuard({navigation,route}) {
                         <TextInput style={styles.btn} placeholder="Nhập email..."  onChangeText={email => setemail(email)}
                    defaultValue={email} />
                     </View>
-                    <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1 }}>
+                    {/* <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1 }}>
                         <View style={{ flexDirection: 'row', paddingTop: 10, marginBottom: 5 }}>
                             <Feather name="key" size={20} color="gray" style={{ marginRight: 10, marginLeft: 20 }} />
                             <Text style={{}}>Mật khẩu:</Text>
@@ -203,13 +208,14 @@ function AddGuard({navigation,route}) {
                                 <Feather name="eye-off" size={24} color="gray" style={{ position: 'absolute', right: 10 }} />
                             </View>
                         </View>
-                    </View>
-                    <View style={{ height: 50, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
-                        <MaterialButtonViolet
-                        onPress={()=>createGuard()}
-                            style={styles.buttonAdd}
-                            title="Thêm tài khoản"
-                        ></MaterialButtonViolet>
+                    </View> */}
+                    <Button title="Đổi mật khẩu" color="#0496bf" onPress={() => navigation.push("ChangePassword")}/>
+                    <View style={{ height: 100, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
+                        <Button
+                        onPress={()=>editGuard()}
+                           color="#04bf8b"
+                            title="Sửa tài khoản"
+                        ></Button>
                     </View>
                 </ScrollView>
                 {/* Khoảng cho menubar */}
@@ -284,4 +290,4 @@ const styles = StyleSheet.create({
       },
 });
 
-export default AddGuard;
+export default EditGuard;

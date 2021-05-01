@@ -36,7 +36,42 @@ router.post('/api/owner/register',async (req, res) => {
     }
     const rows = await knex('user').where({ phonenumber }).count('*', { as: 'count' });
     if (rows[0].count > 0) return res.json({ success: false, msg: 'Tài khoản đã tồn tại' });
-    const result = await knex('user').insert({ username, phonenumber, password: sha1(password),address,email, role });
+    const [result] = await knex('user').insert({ username, phonenumber, password: sha1(password),address,email, role }).returning("*");
+    console.log(result);
+    await knex('ticket').insert(
+      [
+        {
+          typeverhicle:1,
+          isSystem:1,
+          name:"vé lượt",
+          price:5000,
+          typetime:0,
+          drescription:"Vé mặc định",
+          ownerid:result.userid,
+          isDefault:0
+        },
+        {
+          typeverhicle:3,
+          isSystem:1,
+            name:"vé lượt",
+            price:3000,
+            typetime:0,
+            drescription:"Vé mặc định",
+            ownerid:result.userid,
+            isDefault:0
+        },
+        {
+          typeverhicle:2,
+          isSystem:1,
+            name:"vé lượt",
+            price:10000,
+            typetime:0,
+            drescription:"Vé mặc định",
+            ownerid:result.userid,
+            isDefault:0
+        }
+      ]
+    );
     if (!result) return res.json({ success: false, msg: 'Đăng ký tài khoản thất bại' });
     return res.status(200).json({ success: true, msg: 'Đăng ký tài khoản thành công' });
   } catch (err) {

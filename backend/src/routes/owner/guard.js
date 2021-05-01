@@ -48,18 +48,15 @@ router.put('/api/owner/guard/:userid', validateOwnerAPI, async(req, res) => {
     try {
         const { userid } = req.params;
         const ownerid = req.session.userid;
-        const { username, password, phonenumber,address,email,parkingid } = req.body;
+        const { username, phonenumber,address,email,parkingid } = req.body;
         const role = Enum.Role.guard;
-        if (!username || !password || !phonenumber || !parkingid || !ownerid) {
+        if (!username  || !phonenumber || !parkingid || !ownerid) {
           return res.json({ success: false, msg: 'Thiếu thông tin bắt buộc' });
-        }
-        if (password.length < 8) {
-          return res.json({ success: false, msg: 'Mật khẩu phải dài hơn 6 ký tự' });
         }
         const rows = await knex('user').where({ phonenumber }).count('*', { as: 'count' });
         if (rows[0].count == 0) return res.json({ success: false, msg: 'Tài khoản không tồn tại' });
-        const result = await knex('user').update({ username, phonenumber, password: sha1(password),address,email, role, parkingid }).where({ userid, ownerid });
-        if (!result) return res.json({ success: true, msg: 'Sửa thông tin tài khoản bảo vệ thất bại' });
+        const result = await knex('user').update({ username, phonenumber,address,email, role, parkingid }).where({ userid, ownerid });
+        if (!result) return res.json({ success: false, msg: 'Sửa thông tin tài khoản bảo vệ thất bại' });
         return res.status(200).json({ success: true, msg: 'Sửa thông tin tài khoản bảo vệ thành công' });
     } catch (err) {
         handleAPIError(err, res);

@@ -152,6 +152,13 @@ function ListGuard({ navigation }) {
                                 <Text numberOfLines={1} style={{ fontSize: 12, opacity: 0.8, color: '#0099cc', flex: 1 }}>{item.parkingname} - {item.parkingaddress}</Text>
                             </View>
                             <Button
+        title="Sửa"
+
+        color='#FFD700'
+        onPress={() => navigation.push('EditGuard', {data: item})}
+      />
+    <View style={{width:10}}></View>
+                            <Button
         title="Xóa"
         color='#FF6347'
         onPress={() => deleteGuard(item.userid)}

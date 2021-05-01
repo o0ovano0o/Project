@@ -32,6 +32,7 @@ import AcceptTicket from '../CustomerScreens/AcceptTicket';
 import AddTicketByHand from '../GuardScreens/AddTicketByHand';
 import ListGuard from '../OwnerScreens/ListGuard';
 import AddGuard from '../OwnerScreens/AddGuard';
+import EditGuard from '../OwnerScreens/EditGuard';
 import AddParking from '../OwnerScreens/AddParking';
 import EditGuardProfile from '../OwnerScreens/EditGuardProfile';
 // If you are not familiar with React Navigation, we recommend going through the
@@ -89,6 +90,7 @@ async function getUser() {
       <Stack.Screen name="SuccessScreen" component={SuccessScreen} />
       <Stack.Screen name="MainScreen" component={MainScreen} />
       <Stack.Screen name="EditProfileOwner" component={EditProfileOwner} />
+      <Stack.Screen name="EditGuard" component={EditGuard} />
       <Stack.Screen name="AddTicketByHand" component={AddTicketByHand} />
       <Stack.Screen name="ScanQRCode" component={ScanQRCode} />
       <Stack.Screen name="ListGuard" component={ListGuard} />

@@ -19,7 +19,7 @@ router.post('/api/owner/ticket', validateOwnerAPI, async(req, res) => {
         else isDefault = true;
         const result = await knex('ticket')
         .insert({ name, price,typetime,typeverhicle, drescription,isDefault,ownerid});
-        if (!result) return res.json({ success: true, msg: 'Tạo thông tin vé xe thất bại' });
+        if (!result) return res.json({ success: false, msg: 'Tạo thông tin vé xe thất bại' });
         return res.status(200).json({ success: true, msg: 'Tạo thông tin vé xe thành công' });
     } catch (err) {
         handleAPIError(err, res);
@@ -37,7 +37,7 @@ router.post('/api/owner/ticket/default/:ticketid', validateOwnerAPI, async(req, 
         let isDefault = true;
         const result = await knex('ticket')
         .update({ isDefault}).where({ ownerid, ticketid });
-        if (!result) return res.json({ success: true, msg: 'Sửa thông tin vé xe thất bại' });
+        if (!result) return res.json({ success: false, msg: 'Sửa thông tin vé xe thất bại' });
         return res.status(200).json({ success: true, msg: 'Sửa thông tin vé xe thành công' });
     } catch (err) {
         handleAPIError(err, res);
@@ -84,7 +84,7 @@ router.put('/api/owner/ticket/:ticketid', validateOwnerAPI, async(req, res) => {
         else isDefault = true;
         const result = await knex('ticket')
         .update({ name, price,typetime,typeverhicle, drescription,isDefault}).where({ ticketid, ownerid });
-        if (!result) return res.json({ success: true, msg: 'Sửa thông tin vé xe thất bại' });
+        if (!result) return res.json({ success: false, msg: 'Sửa thông tin vé xe thất bại' });
         return res.status(200).json({ success: true, msg: 'Sửa thông tin vé xe thành công' });
     } catch (err) {
         handleAPIError(err, res);
@@ -94,10 +94,24 @@ router.put('/api/owner/ticket/:ticketid', validateOwnerAPI, async(req, res) => {
 router.get('/api/owner/tickets',validateOwnerAPI, async(req, res) => {
     try {
         const ownerid = req.session.userid;
-        const tickets = await knex('ticket').select().where({ ownerid }).orderBy('ticketid', "desc");
+        let tickets = await knex('ticket').select().where({ ownerid }).orderBy('ticketid', "desc");
+        tickets =tickets.map(item => {
+            var typeverhicle = 'motobike';
+            if(item.typeverhicle == 1)
+            typeverhicle = 'motobike';
+            if(item.typeverhicle == 2)
+            typeverhicle = 'car';
+            if(item.typeverhicle == 3)
+            typeverhicle = 'bike';
+            return Object.assign(item, { typeverhicle});
+        })
+        let ticketSystem = tickets.filter(item => item.isSystem == 1);
+        let ticketNormal = tickets.filter(item => item.isSystem != 1);
         return res.status(200).json({
             success: true,
             data: tickets,
+            ticketSystem,
+            ticketNormal
         });
     } catch (err) {
         handleAPIError(err, res);

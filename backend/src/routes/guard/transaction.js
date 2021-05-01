@@ -251,14 +251,14 @@ router.get('/api/default-ticket/:type',validateGuardAPI, async(req, res) => {
         const owner = await knex('user').first().where({ userid });
         let tickets = await knex('ticket')
             .where({ typeverhicle, ownerid: owner.ownerid  });
-        let priceex = type=='car' ? 10000:5000;
-        if(!tickets||!tickets.length) tickets.push({
-            typeverhicle,
-            ticketid:1,
-            name:"vé lượt",
-            price:priceex,
-            typetime:0,
-            drescription:"Vé mặc định"
+        tickets =tickets.map(item => {
+            if(typeverhicle == 1)
+            typeverhicle = 'motobike';
+            if(typeverhicle == 2)
+            typeverhicle = 'car';
+            if(typeverhicle == 3)
+            typeverhicle = 'bike';
+            return Object.assign(item, { typeverhicle});
         })
         return res.status(200).json({
             success: true,

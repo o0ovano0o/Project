@@ -6,7 +6,7 @@ const Role =
 }
 
 const TypeTime = {
-        hour: 0,
+        hour: 2,
         day:1
 }
 const TypeVehicle = {

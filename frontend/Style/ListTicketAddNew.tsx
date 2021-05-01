@@ -6,7 +6,7 @@ var height = Dimensions.get('window').height; //full height
     export default StyleSheet.create({
         container: {
             flex: 1,
-            backgroundColor: "white"   
+            backgroundColor: "white"
           },
           tabback:{
               height: 50,
@@ -19,58 +19,58 @@ var height = Dimensions.get('window').height; //full height
               flexDirection:'row'
           },
           searchstyle:{
-            height:45, 
+            height:45,
             borderRadius:10,
-            backgroundColor:'white', 
-            borderColor:'white', 
+            backgroundColor:'white',
+            borderColor:'white',
             width:width-20
           },
           profile:{
               height: height-50,
-              width: width,     
+              width: width,
           },
           image:{
             height:70,
             width:70,
             borderRadius:70,
-            marginLeft:20,   
+            marginLeft:20,
           },
           item:{
-            height:80,
-            borderColor:"#CCCCCC", 
-            borderWidth:1, 
-            borderRadius:20, 
-            marginHorizontal:10, 
+            height:120,
+            borderColor:"#CCCCCC",
+            borderWidth:1,
+            borderRadius:20,
+            marginHorizontal:10,
             marginBottom:10,
-            width:160,
+            width:width- 50,
             flex:1
           },
           itemimage:{
-            flex:2, 
-            justifyContent:'center', 
+            flex:2,
+            justifyContent:'center',
             alignItems:'center',
           },
           namecar:{
-            fontWeight:'bold', 
-            fontSize:14, 
-            marginTop:10, 
+            fontWeight:'bold',
+            fontSize:14,
+            marginTop:10,
             marginLeft:10
           },
           textcar:{
-            fontWeight:'normal', 
-            fontSize:12, 
+            fontWeight:'normal',
+            fontSize:12,
             marginTop:5,
             marginLeft:10
           },
           icondelete:{
-            position:'absolute', 
-            right:10, 
+            position:'absolute',
+            right:10,
             top:10
           },
           circle:{
-            height:50, 
-            width:50,  
-            justifyContent:'center', 
-            alignItems:'center' 
+            height:50,
+            width:50,
+            justifyContent:'center',
+            alignItems:'center'
           }
     });
