@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View,Image,Text ,Dimensions,SafeAreaView,StatusBar,ScrollView, AsyncStorage  } from "react-native";
-import { AntDesign,Feather,MaterialIcons    } from '@expo/vector-icons';
+import { AntDesign,Feather,Ionicons ,MaterialIcons   } from '@expo/vector-icons';
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
 import styles from '../Style/ListTicketStyle';
 import Dropdown from "react-native-modal-dropdown";
@@ -116,33 +116,39 @@ export default class Map extends React.Component{
                             ></Image>
                         </View>
                         <View style={{position:'absolute'}}>
-                            <View style={{marginLeft:60}}>
-                                <View style={{marginTop:10}}>
-                                    <Text>Chủ xe: {this.props.route.params.data.username} </Text>
+                            <View style={{marginLeft:60, marginTop:10}}>
+                                <View style={{ flexDirection:'row'}}>
+                                    <MaterialIcons name="local-parking" size={45} color="black" />
+                                    <View style={{marginTop:10}}>
+                                        <Text style={{fontSize:16}}>Bãi đỗ xe Duy Tân </Text>
+                                    </View>
                                 </View>
-                                <View style={{marginTop:10}}>
+                                <View style={{marginTop:5}}>
+                                    <Text style={{}}>Chủ xe: {this.props.route.params.data.username} </Text>
+                                </View>
+                                <View style={{marginTop:5}}>
                                     <Text>Số điện thoại: {this.props.route.params.data.phonenumber} </Text>
                                 </View>
-                                <View style={{marginTop:10}}>
-                                    <Text>Địa chỉ: {this.props.route.params.data.addressuser} </Text>
-                                </View>
-                                <View style={{marginTop:10}}>
+                                <View style={{marginTop:5}}>
                                     <Text>Biển số: {this.props.route.params.data.code} </Text>
                                 </View>
-                                <View style={{marginTop:10, flexDirection:'row'}}>
+                                <View style={{marginTop:5, flexDirection:'row'}}>
                                     <Text>Hãng: {this.props.route.params.data.brand}</Text>
-                                    {this.props.route.params.data.type=='motobike' &&<Text style={{marginLeft:20}}>Loại xe: Xe máy </Text> }
-                                    {this.props.route.params.data.type=='car' &&<Text style={{marginLeft:20}}>Loại xe: Ô tô</Text> }
                                 </View>
-                                <View style={{marginTop:10}}>
+                                <View style={{marginTop:5}}>
+                                    {this.props.route.params.data.type=='motobike' &&<Text >Loại xe: Xe máy </Text> }
+                                    {this.props.route.params.data.type=='car' &&<Text >Loại xe: Ô tô</Text> }
+                                </View>
+                                <View style={{marginTop:5}}>
                                     <Text>Màu xe:  {this.props.route.params.data.color} </Text>
                                 </View>
-                                <View style={{marginTop:10}}>
+                                <View style={{marginTop:5}}>
                                     <Text>Mô tả:  {this.props.route.params.data.description} </Text>
                                 </View>
                             </View>
-                        
-                            <View style={{marginLeft:60, marginTop:(height-150)/5}}>
+                        </View>
+                        <View style={{position:'absolute',marginTop:(height-150)/3*2-10}}>
+                            <View style={{marginLeft:60}}>
                                 <View style={{justifyContent:'center', alignItems:'center'}}>
                                     <Text style={{fontSize:16}}>THÔNG TIN VÉ</Text>
                                 </View>
@@ -151,23 +157,21 @@ export default class Map extends React.Component{
                                 </View>
                                 <View style={{marginTop:10}}>
                                     <Text>Thời gian vào: {this.props.route.params.data.Timein} </Text>
-                                    <Text style={{marginLeft:20}}>Thời gian ra: {this.state.now} {this.state.today} </Text>
+                                </View>
+                                <View style={{marginTop:10}}>
+                                    <Text style={{}}>Thời gian ra: {this.state.now} {this.state.today} </Text>
                                 </View>
                                 <View style={{marginTop:10}}>
                                 <Text>Tổng tiền: {this.props.route.params.data.Amount} </Text>
                                 </View>
                             </View>
-                        </View>
-                        
-                        
+                        </View>         
                     </View>
-                    
-                    
                 </View>
                 <View style={styles.button}>
                     {this.state.success == false && (
                        <View style={{alignItems:'center', justifyContent:'center'}}>
-                       <View style={{height:60, backgroundColor:'white',flexDirection:'row', marginTop:10}}>
+                       <View style={{height:60, backgroundColor:'white',flexDirection:'row'}}>
                            <MaterialButtonViolet
                                onPress={() =>
                                    this.props.navigation.push("ScanQRCode")

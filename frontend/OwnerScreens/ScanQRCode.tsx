@@ -3,7 +3,7 @@ import { StyleSheet, View,Text ,Image,Dimensions,SafeAreaView,StatusBar,ScrollVi
 import {Camera} from 'expo-camera'
 import styles from '../Style/ListTicketStyle';
 import * as Permissions from 'expo-permissions';
-import { TouchableOpacity } from "react-native-gesture-handler";
+import Dropdown from "react-native-modal-dropdown";
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import axios from "axios";
@@ -76,7 +76,6 @@ export default class ScanQRCode extends React.Component{
                     <View style={{justifyContent:'center', alignItems:'center'}}>
                         <Text style={styles.namecar}>Bãi đỗ xe Duy Tân 2</Text>
                     </View>
-
                     <View style={{justifyContent:'center', alignItems:'center'}}>
                         <View style={{flexDirection:'row', alignItems:'center'}}>
                             <Feather name="map-pin" size={14} color="gray" style={{ marginLeft:8}}/>
@@ -90,10 +89,8 @@ export default class ScanQRCode extends React.Component{
                             style={{height:180, width:180}}
                         ></Image>
                     </View>
-
                     <View style={{alignItems:'center', justifyContent:'center'}}>
                         <View style={{height:60, backgroundColor:'white',flexDirection:'row', marginTop:10}}>
-
                             <MaterialButtonViolet
                                 // onPress={() =>
 
@@ -103,7 +100,6 @@ export default class ScanQRCode extends React.Component{
                             ></MaterialButtonViolet>
                         </View>
                     </View>
-
                 </View>
             </ScrollView>
         );
@@ -118,8 +114,19 @@ export default class ScanQRCode extends React.Component{
         } else {
             return(
                 <View style={{flex:1, justifyContent:'center', alignItems:'center', backgroundColor:'#283747'}}>
+                    <View style={{width:width}}>
+                        <Text style={{marginBottom:5, fontSize:14, color:'white', marginLeft:30}}>Chọn bãi đỗ</Text>
+                    </View>
+                    <Dropdown
+                        defaultIndex={0}
+                        textstyle={{color:"white"}}
+                        style={styles.hoursDropdownScan}
+                        defaultValue={ 'Bãi xe Duy Tân'}
+                        dropdownStyle={styles.hoursDropdownStyleScan}
+                        options={['Bãi xe Duy Tân','Bãi xe Mỹ Đình']}
+                    />
                     <Text style={{marginBottom:20, fontSize:16, color:'white'}}>Quét mã tại đây</Text>
-                    <Camera style={{ height:250, width:width-40}} type={this.state.type}
+                    <Camera style={{ height:400, width:width-40}} type={this.state.type}
                             flashMode = {Camera.Constants.FlashMode.auto}
                             whiteBalance = {Camera.Constants.WhiteBalance.auto}
                             zoom = {0}
@@ -138,7 +145,7 @@ export default class ScanQRCode extends React.Component{
                             <View style={{flex:9}}>
                                 <View style={{marginLeft:20, marginTop:15}}>
                                     <View style={{justifyContent:'center', alignItems:'center'}}>
-                                        <Text style={{fontSize:16}}>THÔNG TIN XE 2</Text>
+                                        <Text style={{fontSize:16}}>THÔNG TIN XE</Text>
                                     </View>
                                     <View style={{marginTop:10}}>
                                         <Text>Điện thoại:  {this.state.data?.phonenumber} </Text>
