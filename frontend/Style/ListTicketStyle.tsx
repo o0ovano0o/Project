@@ -96,8 +96,6 @@ var height = Dimensions.get('window').height; //full height
           },
           button:{
             flex:4,
-            borderTopWidth:1,
-            borderColor:'gray',
             flexDirection: "column",
             padding: 10 ,
             backgroundColor: "white",

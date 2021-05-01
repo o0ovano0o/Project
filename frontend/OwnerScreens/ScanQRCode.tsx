@@ -138,7 +138,7 @@ export default class ScanQRCode extends React.Component{
                             <View style={{flex:9}}>
                                 <View style={{marginLeft:20, marginTop:15}}>
                                     <View style={{justifyContent:'center', alignItems:'center'}}>
-                                        <Text style={{fontSize:16}}>THÔNG TIN XE 2</Text>
+                                        <Text style={{fontSize:16}}>THÔNG TIN XE</Text>
                                     </View>
                                     <View style={{marginTop:10}}>
                                         <Text>Điện thoại:  {this.state.data?.phonenumber} </Text>
