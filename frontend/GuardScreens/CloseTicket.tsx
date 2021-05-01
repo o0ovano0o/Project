@@ -116,21 +116,15 @@ export default class Map extends React.Component{
                             ></Image>
                         </View>
                         <View style={{position:'absolute'}}>
-                            <View style={{justifyContent:'center', alignItems:'center'}}>
-                                <Text style={{fontSize:16}}>THÔNG TIN CHỦ XE</Text>
-                            </View>
-                            <View style={{marginTop:10}}>
-                                <Text>Chủ xe: {this.props.route.params.data.username} </Text>
-                            </View>
-                            <View style={{marginTop:10}}>
-                                <Text>Số điện thoại: {this.props.route.params.data.phonenumber} </Text>
-                            </View>
-                            <View style={{marginTop:10}}>
-                                <Text>Địa chỉ: {this.props.route.params.data.addressuser} </Text>
-                            </View>
-                            <View style={{marginLeft:20, marginTop:15}}>
-                                <View style={{justifyContent:'center', alignItems:'center'}}>
-                                    <Text style={{fontSize:16}}>THÔNG TIN XE</Text>
+                            <View style={{marginLeft:60}}>
+                                <View style={{marginTop:10}}>
+                                    <Text>Chủ xe: {this.props.route.params.data.username} </Text>
+                                </View>
+                                <View style={{marginTop:10}}>
+                                    <Text>Số điện thoại: {this.props.route.params.data.phonenumber} </Text>
+                                </View>
+                                <View style={{marginTop:10}}>
+                                    <Text>Địa chỉ: {this.props.route.params.data.addressuser} </Text>
                                 </View>
                                 <View style={{marginTop:10}}>
                                     <Text>Biển số: {this.props.route.params.data.code} </Text>
@@ -147,7 +141,8 @@ export default class Map extends React.Component{
                                     <Text>Mô tả:  {this.props.route.params.data.description} </Text>
                                 </View>
                             </View>
-                            <View style={{marginLeft:20, marginTop:15}}>
+                        
+                            <View style={{marginLeft:60, marginTop:(height-150)/5}}>
                                 <View style={{justifyContent:'center', alignItems:'center'}}>
                                     <Text style={{fontSize:16}}>THÔNG TIN VÉ</Text>
                                 </View>
