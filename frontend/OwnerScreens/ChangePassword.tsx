@@ -24,7 +24,7 @@ function ChangePassword({ navigation }) {
                     hidden={true} />
                 <View style={styles.tabback}>
                     <TouchableHighlight  onPress={() => navigation.push("EditProfileOwner")}   style={{ flex: 1, alignItems: 'center' }}>
-                        <AntDesign name="left" size={24} color="gray" />
+                        <AntDesign name="left" size={24} color="black" />
                     </TouchableHighlight>
                     <View style={{ flex: 5, alignItems: 'center' }}>
                         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Đổi mật khẩu</Text>
@@ -35,17 +35,17 @@ function ChangePassword({ navigation }) {
                 <View style={styles.profile}>
                     <View style={styles.avatar}>
                         <Image
-                            source={require('../assets/images/start.png')}
+                            source={require('../assets/images/ava.jpg')}
                             resizeMode="cover"
                             style={styles.image}
                         ></Image>
                     </View>
                     <ScrollView style={{ height: height - 120, borderBottomColor: "#CCCCCC" }}>
 
-                        <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1 }}>
+                        <View style={{ height: 70 }}>
                             <View style={{ flexDirection: 'row', paddingTop: 10, marginBottom: 5 }}>
-                                <Feather name="key" size={20} color="gray" style={{ marginRight: 10, marginLeft: 20 }} />
-                                <Text style={{}}>Mật khẩu:</Text>
+                                <Feather name="key" size={20} color="#222222" style={styles.iconstyle} />
+                                <Text style={styles.textsize}>Mật khẩu</Text>
                             </View>
                             <View style={{ flexDirection: 'row' }}>
                                 <View style={{ flex: 6 }}>
@@ -53,16 +53,16 @@ function ChangePassword({ navigation }) {
                   defaultValue={password} />
                                 </View>
                                 <View style={{ flex: 1 }}>
-                                    <Feather name="eye" size={24} color="gray" style={{ position: 'absolute', right: 10 }} />
-                                    <Feather name="eye-off" size={24} color="gray" style={{ position: 'absolute', right: 10 }} />
+                                    <Feather name="eye" size={20} color="#222222" style={{ position: 'absolute', right: 30 }} />
+                                    <Feather name="eye-off" size={20} color="#222222" style={{ position: 'absolute', right: 30 }} />
                                 </View>
                             </View>
 
                         </View>
-                        <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1 }}>
+                        <View style={{ height: 70}}>
                             <View style={{ flexDirection: 'row', paddingTop: 10, marginBottom: 5 }}>
-                                <Feather name="key" size={20} color="gray" style={{ marginRight: 10, marginLeft: 20 }} />
-                                <Text style={{}}>Nhập lại mật khẩu:</Text>
+                                <Feather name="key" size={20} color="#222222" style={styles.iconstyle} />
+                                <Text style={styles.textsize}>Nhập lại mật khẩu</Text>
                             </View>
                             <View style={{ flexDirection: 'row' }}>
                                 <View style={{ flex: 6 }}>
@@ -70,12 +70,12 @@ function ChangePassword({ navigation }) {
                  defaultValue={repassword}  />
                                 </View>
                                 <View style={{ flex: 1 }}>
-                                    <Feather name="eye" size={24} color="gray" style={{ position: 'absolute', right: 10 }} />
-                                    <Feather name="eye-off" size={24} color="gray" style={{ position: 'absolute', right: 10 }} />
+                                    <Feather name="eye" size={20} color="#222222" style={{ position: 'absolute', right: 30 }} />
+                                    <Feather name="eye-off" size={20} color="#222222" style={{ position: 'absolute', right: 30 }} />
                                 </View>
                             </View>
                         </View>
-                        <View style={{ height: 60, borderBottomColor: "#CCCCCC", borderBottomWidth: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+                        <View style={{ marginTop:20,height: 60, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                             <View style={{ marginRight: 10 }}>
                                 <MaterialButtonViolet
                                     onPress={() => navigation.push('Root', {screen :"profile"})}
@@ -137,16 +137,21 @@ async function editPassword(navigation:any,  password: string,repassword :string
     const styles = StyleSheet.create({
         container: {
             flex: 1,
-            backgroundColor: "white"
+            backgroundColor: "#16f198"
+        },
+        iconstyle:{
+            marginRight: 10, 
+            marginLeft: 40
+        },
+        textsize:{
+            fontSize:16,
+            color:"#222222"
         },
         tabback: {
             height: 50,
             width: width,
-            backgroundColor: "#16f198",
             justifyContent: 'center',
             alignItems: 'center',
-            borderBottomWidth: 1,
-            borderBottomColor: "#CCCCCC",
             flexDirection: 'row'
         },
         profile: {
@@ -154,16 +159,14 @@ async function editPassword(navigation:any,  password: string,repassword :string
             width: width,
         },
         image: {
-            height: 70,
-            width: 70,
-            borderRadius: 70,
+            height: 150,
+            width: 150,
+            borderRadius: 20,
             marginLeft: 20,
         },
         avatar: {
-            borderBottomWidth: 1,
-            borderBottomColor: "#CCCCCC",
             justifyContent: "center",
-            height: 100,
+            height: 200,
             alignItems: 'center'
         },
         username: {
@@ -172,7 +175,7 @@ async function editPassword(navigation:any,  password: string,repassword :string
         btn: {
             height: 30,
             width: 200,
-            marginLeft: 20
+            marginLeft: 60
         },
         cancel: {
             height: 40,
@@ -185,7 +188,7 @@ async function editPassword(navigation:any,  password: string,repassword :string
                 width: 0,
                 height: 3
             },
-            elevation: 30,
+            //elevation: 30,
             shadowOpacity: 0.33,
             shadowRadius: 10,
             backgroundColor: 'red'
@@ -201,7 +204,7 @@ async function editPassword(navigation:any,  password: string,repassword :string
                 width: 0,
                 height: 3
             },
-            elevation: 30,
+            //elevation: 30,
             shadowOpacity: 0.33,
             shadowRadius: 10,
         }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, TouchableHighlight, TouchableOpacity , View,Image,Text ,Dimensions,SafeAreaView,StatusBar,ScrollView, RefreshControl, AsyncStorage  } from "react-native";
-import { EvilIcons,Feather,MaterialIcons ,MaterialCommunityIcons,AntDesign   } from '@expo/vector-icons';
+import { EvilIcons,Feather,MaterialIcons ,MaterialCommunityIcons,FontAwesome5   } from '@expo/vector-icons';
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import styles from '../Style/MainScreenGuardStyle';
@@ -51,124 +51,118 @@ function MainScreen({ navigation}) {
                   refreshing={refreshPage}
                   onRefresh={()=>refresh()}
                 />}>
-            <View style={ styles.backgoundheader}></View>
-            <View style={{flex:1}}>
-                <View style={{justifyContent:'center', alignItems:'center', marginTop:20}}>
-                    <Text style={{fontSize:20}}>ĐIỂM GỬI XE - {parking.parkingname}</Text>
-                </View>
-                <View style={{justifyContent:'center', alignItems:'center'}}>
-                    <View style={{flexDirection:'row', alignItems:'center'}}>
-                        <Feather name="map-pin" size={14} color="gray" style={{ marginLeft:8}}/>
-                        <Text style={styles.textcar}>{parking.address}</Text>
+            <View style={ styles.backgoundheader}>
+                <Image
+                    source={require('../assets/images/parking.jpg')}
+                    resizeMode="cover"
+                    style={styles.imageparking}
+                ></Image>
+            </View>
+            <View style={{flex:3}}>
+                <View style={{flexDirection:'row', alignItems:'center', marginTop:20}}>
+                    <Image
+                        source={require('../assets/images/gu.jpg')}
+                        resizeMode="cover"
+                        style={styles.image}
+                    ></Image>
+                    <View style={{flexDirection:'column'}}>
+                        <View style={{flexDirection:'row'}}>
+                            <Text style={{ }}>Bảo vệ: {user.username}</Text>
+                        </View>
+                        
                     </View>
                 </View>
-                <View style={{flexDirection:'row', paddingTop:10, marginBottom:5}}>
-                    <EvilIcons name="user" size={24} color="gray" style={{marginRight:10, marginLeft:20}}/>
-                    <Text style={{ }}>Bảo vệ: {user.username}</Text>
+                <View style={{bottom:0, position:'absolute', left:20, }}>
+                    <Text style={{fontSize:14,color: "black"}}>ĐIỂM GỬI XE - {parking.parkingname}</Text>
+                    <View style={{flexDirection:'row', alignItems:'center'}}>
+                        <Feather name="map-pin" size={14} color="gray" style={{ }}/>
+                        <Text style={styles.textcar}>{parking.address}</Text>
+                    </View>
                 </View>
             </View>
             <View style={{flex:4}}>
                 <View style={styles.box}>
                     <View style={styles.boxmain}>
-                        <View style={styles.boxprice}>
-                            <View style={{flexDirection:'row'}}>
-                                <MaterialIcons name="attach-money" size={40} color="#CCCCCC" />
-                                <View>
-                                    <Text style={{marginBottom:5}}>Thu nhập</Text>
-                                    <Text style={{fontSize:20}}>{parking.totalamount}</Text>
-                                </View>
-                            </View>
+                        <View style={{  flexDirection:'row',justifyContent:'center', alignItems:'center',
+                                        height:40, width:width-60, marginBottom:5,
+                                        borderRadius:10, backgroundColor:'#F1EFEF'}}>
+                            <MaterialIcons name="attach-money" size={24} color="#00ff40" />
+                            <Text style={{marginBottom:5}}>Thu nhập</Text>
+                            <Text style={{fontSize:14, marginLeft:30}}>{parking.totalamount}</Text>
                         </View>
-                        <View style={styles.boxtime}>
-                            <View style={{flexDirection:'row'}}>
-                                <MaterialIcons name="timeline" size={40} color="#CCCCCC" style={{marginRight:15}} />
-                                <View>
-                                    <Text style={{marginBottom:5}}>Lượt</Text>
-                                    <Text style={{fontSize:20}}>{parking.totalticket}</Text>
-                                </View>
-                            </View>
+                        <View style={{  flexDirection:'row',justifyContent:'center', alignItems:'center',
+                                        height:40, width:width-60, marginBottom:5,
+                                        borderRadius:10, backgroundColor:'#F1EFEF'}}>
+                            <MaterialIcons name="timeline" size={24} color="#0080ff" style={{marginRight:15}} />
+                            <Text style={{marginBottom:5}}>Lượt</Text>
+                            <Text style={{fontSize:14, marginLeft:30}}>{parking.totalticket}</Text>
                         </View>
-                    </View>
-
-                    <View style={{flexDirection:'row'}}>
-                                <TouchableOpacity  onPress={() => goToList()}>
-                                <MaterialIcons name="list" size={40} color="#CCCCCC" style={{marginRight:15}} />
-                                <View>
-                                    <Text style={{marginBottom:5}}>Xe vào/ra</Text>
-                                </View>
-                                </TouchableOpacity>
-
-                            <TouchableOpacity  onPress={() => goToList()}>
-                                <MaterialIcons name="list" size={40} color="#CCCCCC" style={{marginRight:15}} />
-                                <View>
-                                    <Text style={{marginBottom:5}}>Tạo vé tay</Text>
+                        <View style={{  flexDirection:'row',justifyContent:'center', alignItems:'center',
+                                        height:40, width:width-60, marginBottom:5,
+                                        borderRadius:10, backgroundColor:"#23A67E"}}>
+                            <TouchableOpacity  onPress={() => goToList()} style={{height:40, width:width-60,justifyContent:'center', alignItems:'center',}}>
+                                <View style ={{flexDirection:'row',justifyContent:'center', alignItems:'center',}}>
+                                    <MaterialCommunityIcons name="ticket-confirmation-outline" size={24} color="white" />
+                                    <Text style={{color:'white',fontSize:14, marginLeft:30}}>Xe vào/ra</Text>
                                 </View>
                             </TouchableOpacity>
-                    </View>
-
-
-                    <View style={{flex:1}}>
-                          {parking.TotalParkingMotoBike &&
-                          <TouchableOpacity  onPress={() => goToList()}>
-                          <View style={styles.item} key='1'>
-
-
+                        </View>
+                        <View style={{  flexDirection:'row',justifyContent:'center', alignItems:'center',
+                                        height:40, width:width-60, marginBottom:5,
+                                        borderRadius:10, backgroundColor:"#23A67E"}}>
+                            <TouchableOpacity  onPress={() => goToList()} style={{height:40, width:width-60,justifyContent:'center', alignItems:'center',}}>
+                                <View style ={{flexDirection:'row',justifyContent:'center', alignItems:'center',}}>
+                                    <MaterialIcons name="add-a-photo" size={20} color="white" />
+                                    <Text style={{color:'white',fontSize:14, marginLeft:30}}>Tạo vé tay</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                        {parking.TotalParkingMotoBike &&
+                        <TouchableOpacity  onPress={() => goToList()}>
+                            <View style={styles.item} key='1'>
                                 <View style={{flexDirection:'row'}}>
-                                    <View style={{flex:2, justifyContent:'center', alignItems:'center'}}>
-                                    <View
-                                    style={styles.circle}
-
-                              >
-                                        {/* <View > */}
-                                            <MaterialCommunityIcons name="motorbike" size={70} color="#CCCCCC" />
-                                        {/* </View> */}
-
+                                    <View style={{ justifyContent:'center', alignItems:'center'}}>
+                                        <View style={{}}>
+                                            <MaterialCommunityIcons name="motorbike" size={20} color="#CCCCCC" />
                                         </View>
                                     </View>
-                                    <View style={{flex:3}}>
-                                        <Text style={{fontSize:20}}>Xe máy</Text>
-                                        <Text style={{fontSize:40}}>{parking.UsedPackingMotoBike}/{parking.TotalParkingMotoBike}</Text>
+                                    <View style={{marginLeft:10, flexDirection:'row'}}>
+                                        <Text style={{fontSize:14}}>Xe máy</Text>
+                                        <Text style={{fontSize:14, marginLeft:10}}>{parking.UsedPackingMotoBike}/{parking.TotalParkingMotoBike}</Text>
                                     </View>
                                 </View>
-                          </View> </TouchableOpacity>}
-
+                            </View> 
+                        </TouchableOpacity>}
                           {parking.TotalParkingBike &&
-
                           <View style={styles.item}>
                                 <View style={{flexDirection:'row'}}>
-                                    <View style={{flex:2, justifyContent:'center', alignItems:'center'}}>
-                                        <View style={styles.circle}>
-                                            <MaterialCommunityIcons name="bike" size={60} color="#CCCCCC" />
+                                    <View style={{ justifyContent:'center', alignItems:'center'}}>
+                                        <View style={{}}>
+                                            <MaterialCommunityIcons name="bike" size={20} color="black" />
                                         </View>
                                     </View>
-                                    <View style={{flex:3}}>
-                                        <Text style={{fontSize:20}}>Xe đạp</Text>
-                                        <Text style={{fontSize:40}}>{parking.UsedPackingBike}/{parking.TotalParkingBike}</Text>
+                                    <View style={{marginLeft:10, flexDirection:'row'}}>
+                                        <Text style={{fontSize:14}}>Xe đạp</Text>
+                                        <Text style={{fontSize:14, marginLeft:10}}>{parking.UsedPackingBike}/{parking.TotalParkingBike}</Text>
                                     </View>
                                 </View>
                           </View>
-
                         }
                          {parking.TotalParkingCar &&
-                        //  <TouchableOpacity  onPress={() => goToList()}>
                           <View style={styles.item}>
                                 <View style={{flexDirection:'row'}}>
-                                    <View style={{flex:2, justifyContent:'center', alignItems:'center'}}>
-                                        <View style={styles.circle}>
-                                            <AntDesign name="car" size={65} color="#CCCCCC" />
+                                    <View style={{ justifyContent:'center', alignItems:'center'}}>
+                                        <View style={{}}>
+                                            <FontAwesome5 name="car-side" size={20} color="black" />
                                         </View>
                                     </View>
-                                    <View style={{flex:3}}>
-                                        <Text style={{fontSize:20}}>Xe ô tô</Text>
-                                        <Text style={{fontSize:40}}>{parking.UsedPackingCar}/{parking.TotalParkingCar}</Text>
+                                    <View style={{marginLeft:10, flexDirection:'row'}}>
+                                        <Text style={{fontSize:14}}>Xe ô tô</Text>
+                                        <Text style={{fontSize:14, marginLeft:10}}>{parking.UsedPackingCar}/{parking.TotalParkingCar}</Text>
                                     </View>
                                 </View>
                           </View>
-                        //   </TouchableOpacity>
                         }
-
-
-
                     </View>
                 </View>
             </View>

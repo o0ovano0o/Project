@@ -45,7 +45,7 @@ router.post('/api/owner/register',async (req, res) => {
 });
 router.post('/api/guard/register',async (req, res) => {
   try {
-    const { username, password, phonenumber,address,email,parkingid } = req.body;
+    const { username, password, phonenumber,address,email,parkingid, ownerid } = req.body;
     const role = Enum.Role.guard;
     if (!username || !password || !phonenumber) {
       return res.json({ success: false, msg: 'Thiếu thông tin bắt buộc' });
@@ -55,7 +55,7 @@ router.post('/api/guard/register',async (req, res) => {
     }
     const rows = await knex('user').where({ phonenumber }).count('*', { as: 'count' });
     if (rows[0].count > 0) return res.json({ success: false, msg: 'Tài khoản đã tồn tại' });
-    const result = await knex('user').insert({ username, phonenumber, password: sha1(password),address,email, role, parkingid });
+    const result = await knex('user').insert({ username, phonenumber, password: sha1(password),address,email, role, parkingid,ownerid });
     if (!result) return res.json({ success: false, msg: 'Đăng ký tài khoản thất bại' });
     return res.status(200).json({ success: true, msg: 'Đăng ký tài khoản thành công' });
   } catch (err) {

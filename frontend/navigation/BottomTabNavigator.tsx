@@ -18,6 +18,7 @@ import GuardProfile from '../GuardScreens/GuardProfile';
 import ListTicket from '../CustomerScreens/ListTicket';
 import MainScreen from '../GuardScreens/MainScreen';
 import ScanQRCode from '../OwnerScreens/ScanQRCode';
+import OwnerProfile from '../OwnerScreens/OwnerProfile';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -272,7 +273,7 @@ function TabTwoNavigator() {
       <TabTwoStack.Navigator>
         <TabTwoStack.Screen
           name="TabTwoScreen"
-          component={NotFoundScreen}
+          component={ScanQRCode}
           options={{headerShown: false}}
         />
       </TabTwoStack.Navigator>
