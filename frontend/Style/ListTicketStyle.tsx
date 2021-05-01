@@ -53,6 +53,26 @@ var height = Dimensions.get('window').height; //full height
             width:200,
             height:40
           },
+          hoursDropdownScan: {
+            borderRadius: 15 / 2,
+            borderColor: "gray",
+            borderBottomWidth: 1,
+            paddingLeft:10,
+            paddingTop:10,
+            marginRight: 16 / 2,
+            width:300,
+            height:40,
+            color:'white',
+            marginBottom:20,
+            fontSize:14
+          },
+          hoursDropdownStyleScan: {
+            marginLeft: -10,
+            paddingHorizontal: 10 / 2,
+            marginVertical: -(10 + 1),            
+            width:300,
+            marginTop:10
+          },
           hoursDropdownStyle: {
             marginLeft: -10,
             paddingHorizontal: 10 / 2,
