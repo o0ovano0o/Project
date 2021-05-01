@@ -119,7 +119,7 @@ export default class ScanQRCode extends React.Component{
             return(
                 <View style={{flex:1, justifyContent:'center', alignItems:'center', backgroundColor:'#283747'}}>
                     <Text style={{marginBottom:20, fontSize:16, color:'white'}}>Quét mã tại đây</Text>
-                    <Camera style={{ height:400, width:width-40}} type={this.state.type}
+                    <Camera style={{ height:250, width:width-40}} type={this.state.type}
                             flashMode = {Camera.Constants.FlashMode.auto}
                             whiteBalance = {Camera.Constants.WhiteBalance.auto}
                             zoom = {0}
@@ -138,7 +138,7 @@ export default class ScanQRCode extends React.Component{
                             <View style={{flex:9}}>
                                 <View style={{marginLeft:20, marginTop:15}}>
                                     <View style={{justifyContent:'center', alignItems:'center'}}>
-                                        <Text style={{fontSize:16}}>THÔNG TIN XE</Text>
+                                        <Text style={{fontSize:16}}>THÔNG TIN XE 2</Text>
                                     </View>
                                     <View style={{marginTop:10}}>
                                         <Text>Điện thoại:  {this.state.data?.phonenumber} </Text>

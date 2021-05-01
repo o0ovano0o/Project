@@ -22,10 +22,8 @@ var height = Dimensions.get('window').height; //full height
         marginBottom: 5
       },
           container: {
-            height:240,            
-            width:width-40,
+            flex:1,
             borderRadius:20,
-            margin:40,
             backgroundColor: "white",
             position:'absolute'
           },

@@ -99,7 +99,7 @@ export default class Map extends React.Component{
                 <View style={{flex:16}}>
                     <View style={styles.tabback}>
                         <View style={{flex:1, alignItems:'center'}}>
-                            <AntDesign name="left" size={24} color="gray" />
+                            <AntDesign name="left" size={24} color="black" />
                         </View>
                         <View style={{flex:5, alignItems:'center'}}>
                             <Text style={{fontSize:16, fontWeight:'bold'}}>Thông tin vé xe</Text>
@@ -107,55 +107,67 @@ export default class Map extends React.Component{
                         <View style={{flex:1}}>
                         </View>
                     </View>
-                    <View style={{marginLeft:20, marginTop:15}}>
-                        <View style={{justifyContent:'center', alignItems:'center'}}>
-                            <Text style={{fontSize:16}}>THÔNG TIN CHỦ XE</Text>
+                    <View style={{marginTop:20 }}>
+                        <View style={ {justifyContent:'center', alignItems:'center'}}>
+                            <Image
+                                source={require('../assets/images/ticket.png')}
+                                resizeMode="cover"
+                                style={{height:height-150, width:width-60}}
+                            ></Image>
                         </View>
-                        <View style={{marginTop:10}}>
-                            <Text>Chủ xe: {this.props.route.params.data.username} </Text>
+                        <View style={{position:'absolute'}}>
+                            <View style={{justifyContent:'center', alignItems:'center'}}>
+                                <Text style={{fontSize:16}}>THÔNG TIN CHỦ XE</Text>
+                            </View>
+                            <View style={{marginTop:10}}>
+                                <Text>Chủ xe: {this.props.route.params.data.username} </Text>
+                            </View>
+                            <View style={{marginTop:10}}>
+                                <Text>Số điện thoại: {this.props.route.params.data.phonenumber} </Text>
+                            </View>
+                            <View style={{marginTop:10}}>
+                                <Text>Địa chỉ: {this.props.route.params.data.addressuser} </Text>
+                            </View>
+                            <View style={{marginLeft:20, marginTop:15}}>
+                                <View style={{justifyContent:'center', alignItems:'center'}}>
+                                    <Text style={{fontSize:16}}>THÔNG TIN XE</Text>
+                                </View>
+                                <View style={{marginTop:10}}>
+                                    <Text>Biển số: {this.props.route.params.data.code} </Text>
+                                </View>
+                                <View style={{marginTop:10, flexDirection:'row'}}>
+                                    <Text>Hãng: {this.props.route.params.data.brand}</Text>
+                                    {this.props.route.params.data.type=='motobike' &&<Text style={{marginLeft:20}}>Loại xe: Xe máy </Text> }
+                                    {this.props.route.params.data.type=='car' &&<Text style={{marginLeft:20}}>Loại xe: Ô tô</Text> }
+                                </View>
+                                <View style={{marginTop:10}}>
+                                    <Text>Màu xe:  {this.props.route.params.data.color} </Text>
+                                </View>
+                                <View style={{marginTop:10}}>
+                                    <Text>Mô tả:  {this.props.route.params.data.description} </Text>
+                                </View>
+                            </View>
+                            <View style={{marginLeft:20, marginTop:15}}>
+                                <View style={{justifyContent:'center', alignItems:'center'}}>
+                                    <Text style={{fontSize:16}}>THÔNG TIN VÉ</Text>
+                                </View>
+                                <View style={{marginTop:10}}>
+                                <Text>Tên vé: {this.props.route.params.data.nameticket} </Text>
+                                </View>
+                                <View style={{marginTop:10}}>
+                                    <Text>Thời gian vào: {this.props.route.params.data.Timein} </Text>
+                                    <Text style={{marginLeft:20}}>Thời gian ra: {this.state.now} {this.state.today} </Text>
+                                </View>
+                                <View style={{marginTop:10}}>
+                                <Text>Tổng tiền: {this.props.route.params.data.Amount} </Text>
+                                </View>
+                            </View>
                         </View>
-                        <View style={{marginTop:10}}>
-                            <Text>Số điện thoại: {this.props.route.params.data.phonenumber} </Text>
-                        </View>
-                        <View style={{marginTop:10}}>
-                            <Text>Địa chỉ: {this.props.route.params.data.addressuser} </Text>
-                        </View>
+                        
+                        
                     </View>
-                    <View style={{marginLeft:20, marginTop:15}}>
-                        <View style={{justifyContent:'center', alignItems:'center'}}>
-                            <Text style={{fontSize:16}}>THÔNG TIN XE</Text>
-                        </View>
-                        <View style={{marginTop:10}}>
-                            <Text>Biển số: {this.props.route.params.data.code} </Text>
-                        </View>
-                        <View style={{marginTop:10, flexDirection:'row'}}>
-                            <Text>Hãng: {this.props.route.params.data.brand}</Text>
-                            {this.props.route.params.data.type=='motobike' &&<Text style={{marginLeft:20}}>Loại xe: Xe máy </Text> }
-                            {this.props.route.params.data.type=='car' &&<Text style={{marginLeft:20}}>Loại xe: Ô tô</Text> }
-                        </View>
-                        <View style={{marginTop:10}}>
-                            <Text>Màu xe:  {this.props.route.params.data.color} </Text>
-                        </View>
-                        <View style={{marginTop:10}}>
-                            <Text>Mô tả:  {this.props.route.params.data.description} </Text>
-                        </View>
-                    </View>
-                    <View style={{marginLeft:20, marginTop:15}}>
-                        <View style={{justifyContent:'center', alignItems:'center'}}>
-                            <Text style={{fontSize:16}}>THÔNG TIN VÉ</Text>
-                        </View>
-                        <View style={{marginTop:10}}>
-                        <Text>Tên vé: {this.props.route.params.data.nameticket} </Text>
-                        </View>
-                        <View style={{marginTop:10}}>
-                            <Text>Thời gian vào: {this.props.route.params.data.Timein} </Text>
-                            <Text style={{marginLeft:20}}>Thời gian ra: {this.state.now} {this.state.today} </Text>
-                        </View>
-                        <View style={{marginTop:10}}>
-                        <Text>Tổng tiền: {this.props.route.params.data.Amount} </Text>
-                        </View>
-
-                    </View>
+                    
+                    
                 </View>
                 <View style={styles.button}>
                     {this.state.success == false && (
