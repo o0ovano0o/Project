@@ -58,7 +58,7 @@ function MainScreen({ navigation}) {
                     style={styles.imageparking}
                 ></Image>
             </View>
-            <View style={{flex:3}}>
+            <View style={{flex:4}}>
                 <View style={{flexDirection:'row', alignItems:'center', marginTop:20}}>
                     <Image
                         source={require('../assets/images/gu.jpg')}
@@ -80,7 +80,7 @@ function MainScreen({ navigation}) {
                     </View>
                 </View>
             </View>
-            <View style={{flex:4}}>
+            <View style={{flex:5}}>
                 <View style={styles.box}>
                     <View style={styles.boxmain}>
                         <View style={{  flexDirection:'row',justifyContent:'center', alignItems:'center',

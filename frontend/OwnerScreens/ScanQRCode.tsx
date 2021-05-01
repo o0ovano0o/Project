@@ -117,79 +117,55 @@ export default class ScanQRCode extends React.Component{
             return <Text>No access</Text>
         } else {
             return(
-                <View style={{flex:1}}>
-                    <Camera style={{flex:1}} type={this.state.type}
-                    flashMode = {Camera.Constants.FlashMode.auto}
-                    whiteBalance = {Camera.Constants.WhiteBalance.auto}
-                    zoom = {0}
-                    onBarCodeScanned={({ type, data }) => {
-                                // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-                                this.getdataTicket(data);
-                              }}
-
-                    >
-                        <View style={{height:80, width:width, flexDirection:'row', marginTop:height-100, justifyContent:'center'}}>
-                            <TouchableOpacity
-                                style={{
-                                    height:80,
-                                    width:80,
-                                    borderRadius:80,
-                                    borderWidth:1,
-                                    borderColor:'gray',
-                                    justifyContent:'center',
-                                    alignItems:'center',
-                                    backgroundColor:'gray',
-                                    flexDirection:'row'}}
-                                    onPress={()=>{
-                                        this.setState({
-                                            type: this.state.type === Camera.Constants.Type.back ? Camera.Constants.Type.front:Camera.Constants.Type.back,
-                                        });
+                <View style={{flex:1, justifyContent:'center', alignItems:'center', backgroundColor:'#283747'}}>
+                    <Text style={{marginBottom:20, fontSize:16, color:'white'}}>Quét mã tại đây</Text>
+                    <Camera style={{ height:400, width:width-40}} type={this.state.type}
+                            flashMode = {Camera.Constants.FlashMode.auto}
+                            whiteBalance = {Camera.Constants.WhiteBalance.auto}
+                            zoom = {0}
+                            onBarCodeScanned={({ type, data }) => {
+                                        // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+                                        this.getdataTicket(data);
                                     }}
                             >
-                                <Text
-                                    style={{fontSize:18, marginBottom:10, color:'white'}}
-                                >
-                                    {''}Scan{''}
-                                </Text>
-                            </TouchableOpacity>
-
-                        </View>
                     </Camera>
                         { this.state.data!=null
                         &&
                         <SafeAreaView  style={styles.container}>
-                        <StatusBar
-                        animated={true}
-                        hidden={true} />
-                        <View style={{flex:9}}>
-                            <View style={{marginLeft:20, marginTop:15}}>
-                                <View style={{justifyContent:'center', alignItems:'center'}}>
-                                    <Text style={{fontSize:16}}>THÔNG TIN XE</Text>
-                                </View>
-                                <View style={{marginTop:10}}>
-                                    <Text>Điện thoại:  {this.state.data?.phonenumber} </Text>
-                                </View>
-                                <View style={{marginTop:10}}>
-                                    <Text>Biển số: {this.state.data?.code} </Text>
-                                </View>
-                                <View style={{marginTop:10,marginBottom:20, flexDirection:'row'}}>
-                                    { this.state.data?.type == 'motobike'
-                                    && <Text style={{marginLeft:20}}>Loại xe: Xe máy </Text>
-                                    }
-                                     { this.state.data?.type == 'car'
-                                    && <Text style={{marginLeft:20}}>Loại xe: Ô tô </Text>
-                                    }
-                                    <Text>Bạn có muốn tạo vé cho xe này ?</Text>
-                                </View>
+                            <StatusBar
+                            animated={true}
+                            hidden={true} />
+                            <View style={{flex:9}}>
+                                <View style={{marginLeft:20, marginTop:15}}>
+                                    <View style={{justifyContent:'center', alignItems:'center'}}>
+                                        <Text style={{fontSize:16}}>THÔNG TIN XE</Text>
+                                    </View>
+                                    <View style={{marginTop:10}}>
+                                        <Text>Điện thoại:  {this.state.data?.phonenumber} </Text>
+                                    </View>
+                                    <View style={{marginTop:10}}>
+                                        <Text>Biển số: {this.state.data?.code} </Text>
+                                    </View>
+                                    <View style={{marginTop:10,marginBottom:20}}>
+                                        { this.state.data?.type == 'motobike'
+                                        && <Text style={{}}>Loại xe: Xe máy </Text>
+                                        }
+                                        { this.state.data?.type == 'car'
+                                        && <Text style={{}}>Loại xe: Ô tô </Text>
+                                        }
+                                        <View style={{marginTop:15, width:width-40, justifyContent:'center', alignItems:'center'}}>
+                                            <Text style={{}}>Bạn có muốn tạo vé cho xe này ?</Text>
+                                        </View>
+                                    </View>
 
-                                <MaterialButtonViolet
-                                    title="Xác nhận"
-                                    style={styles.materialButtonViolet1}
-                                    onPress={() =>this.createTicket()}
-                                ></MaterialButtonViolet>
+                                    <MaterialButtonViolet
+                                        title="Xác nhận"
+                                        style={styles.materialButtonViolet1}
+                                        onPress={() =>this.createTicket()}
+                                    ></MaterialButtonViolet>
+                                </View>
                             </View>
-                        </View>
-                    </SafeAreaView>
+                        </SafeAreaView>
                         }
                 </View>
             );
