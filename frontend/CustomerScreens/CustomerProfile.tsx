@@ -5,6 +5,7 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamList } from "../types";
 import { AsyncStorage } from 'react-native';
 import { TouchableOpacity } from "react-native-gesture-handler";
+import MaterialButtonViolet from "../components/MaterialButtonViolet";
 async function getUser() {
     const value = await AsyncStorage.getItem('user');
     if(value)
@@ -104,7 +105,7 @@ async function getUser() {
                         <AntDesign name="car" size={20} color="gray" style={{marginRight:10, marginLeft:20}}/>
                         <Text style={{ }}>Bãi:</Text>
                     </View>
-                    <TouchableHighlight  onPress={() => navigation.push('ListGuard')} style={{flex:1, paddingTop:10,position:'absolute', right:5}}>
+                    <TouchableHighlight  onPress={() => navigation.push('ListParking')} style={{flex:1, paddingTop:10,position:'absolute', right:5}}>
                         <EvilIcons  name="chevron-right" size={30} color="gray" />
                     </TouchableHighlight>
 
@@ -132,7 +133,7 @@ async function getUser() {
                         <AntDesign name="car" size={20} color="gray" style={{marginRight:10, marginLeft:20}}/>
                         <Text style={{ }}>Loại vé:</Text>
                     </View>
-                    <TouchableHighlight  onPress={() => navigation.push('ListTicketAddNew')} style={{flex:1, paddingTop:10,position:'absolute', right:5}}>
+                    <TouchableHighlight  onPress={() => navigation.push('ListTicketType')} style={{flex:1, paddingTop:10,position:'absolute', right:5}}>
                         <EvilIcons  name="chevron-right" size={30} color="gray" />
                     </TouchableHighlight>
 
@@ -149,9 +150,16 @@ async function getUser() {
                         <EvilIcons name="chevron-right" size={30} color="#222222" />
                     </View>
                 </View>
-
+                <View style={{ height: 60, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+                    <View style={{ }}>
+                        <MaterialButtonViolet
+                            onPress={() => navigation.push('Root', {screen :"profile"})}
+                            style={styles.cancel}
+                            title="Đăng xuất"
+                        ></MaterialButtonViolet>
+                    </View>
+                </View>
             </ScrollView>
-
       </View>
     </SafeAreaView>
   );
@@ -163,6 +171,22 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#16f198"
   },
+  cancel: {
+    height: 40,
+    width: 250,
+    borderWidth: 1,
+    borderColor: "red",
+    borderRadius: 6,
+    shadowColor: "rgba(0,0,0,1)",
+    shadowOffset: {
+        width: 0,
+        height: 3
+    },
+    //elevation: 30,
+    shadowOpacity: 0.33,
+    shadowRadius: 10,
+    backgroundColor: 'red'
+},
   tabback:{
       height: 50,
       width:width,

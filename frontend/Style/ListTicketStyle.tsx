@@ -21,9 +21,11 @@ var height = Dimensions.get('window').height; //full height
         alignSelf: 'center',
         marginBottom: 5
       },
-        container: {
-            flex: 1,
-            backgroundColor: "white"
+          container: {
+            flex:1,
+            borderRadius:20,
+            backgroundColor: "white",
+            position:'absolute'
           },
           find:{
             marginTop:-10,

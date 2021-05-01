@@ -34,7 +34,11 @@ import ListGuard from '../OwnerScreens/ListGuard';
 import AddGuard from '../OwnerScreens/AddGuard';
 import EditGuard from '../OwnerScreens/EditGuard';
 import AddParking from '../OwnerScreens/AddParking';
+import ListTicketType from '../OwnerScreens/ListTicketType';
 import EditGuardProfile from '../OwnerScreens/EditGuardProfile';
+import ListParking from '../OwnerScreens/ListParking';
+import AddTicketType from '../OwnerScreens/AddTicketType';
+import EditTicketType from '../OwnerScreens/EditTicketType';
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -97,7 +101,12 @@ async function getUser() {
       <Stack.Screen name="EditGuardProfile" component={EditGuardProfile} />
       <Stack.Screen name="AddGuard" component={AddGuard} />
       <Stack.Screen name="AddParking" component={AddParking} />
+      <Stack.Screen name="ListTicketType" component={ListTicketType} />
+      <Stack.Screen name="AddTicketType" component={AddTicketType} />
+      <Stack.Screen name="EditTicketType" component={EditTicketType} />
+      <Stack.Screen name="ListParking" component={ListParking} />
       <Stack.Screen name="Root" component={BottomTabNavigator} />
+
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>
   );

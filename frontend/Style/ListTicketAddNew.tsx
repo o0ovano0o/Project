@@ -50,6 +50,11 @@ var height = Dimensions.get('window').height; //full height
             justifyContent:'center',
             alignItems:'center',
           },
+          itemimage1:{
+            flex:1,
+            justifyContent:'center',
+            alignItems:'center',
+          },
           namecar:{
             fontWeight:'bold',
             fontSize:14,

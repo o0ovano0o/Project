@@ -1,7 +1,7 @@
 import React, { Component,useState } from "react";
-import { StyleSheet, View,Text ,TouchableOpacity,Dimensions,SafeAreaView,StatusBar,ScrollView ,useWindowDimensions, AsyncStorage, RefreshControl } from "react-native";
+import { StyleSheet,Image, View,Text ,TouchableOpacity,Dimensions,SafeAreaView,StatusBar,ScrollView ,useWindowDimensions, AsyncStorage, RefreshControl } from "react-native";
 import { AntDesign,Feather,FontAwesome ,MaterialCommunityIcons,Ionicons,Fontisto    } from '@expo/vector-icons';
-import { TabView, SceneMap } from 'react-native-tab-view';
+import { TabView, SceneMap,TabBar } from 'react-native-tab-view';
 import Modal from "react-native-modal";
 import axios from "axios";
 import ListVehicle from "../CustomerScreens/ListVehicle";
@@ -48,7 +48,7 @@ function InScreen(){
         setCount(1);
     }
     return(
-        <ScrollView style={{height:height-120, borderBottomColor:"#CCCCCC", marginBottom:10, marginTop:10}}
+        <ScrollView style={{height:height-120, marginBottom:10, marginTop:10}}
         refreshControl={
             <RefreshControl
               refreshing={refreshPage}
@@ -63,13 +63,25 @@ function InScreen(){
                                     <View style={styles.itemimage}>
                                         <View style={styles.circle}>
                                         {
-                                            item.type == 'car' && <FontAwesome name="car" size={40} color="gray" />
+                                            item.type == 'car' && <Image
+                                                                        source={require('../assets/images/car.png')}
+                                                                        resizeMode="cover"
+                                                                        style={styles.image}
+                                                                    ></Image>
                                         }
                                         {
-                                            item.type == 'bike' && <MaterialCommunityIcons name="bike" size={40} color="gray" />
+                                            item.type == 'bike' && <Image
+                                                                        source={require('../assets/images/bike.jpg')}
+                                                                        resizeMode="cover"
+                                                                        style={styles.image}
+                                                                    ></Image>
                                         }
                                         {
-                                            item.type == 'motobike' && <Fontisto name="motorcycle" size={40} color="gray" />
+                                            item.type == 'motobike' && <Image
+                                                                            source={require('../assets/images/moto.png')}
+                                                                            resizeMode="cover"
+                                                                            style={styles.image}
+                                                                        ></Image>
                                         }
 
                                         </View>
@@ -84,13 +96,15 @@ function InScreen(){
                                         {
                                             item.type == 'motobike' && <Text style={styles.namecar}>Xe máy {item.brand} {item.color} </Text>
                                         }
-
                                         <Text style={styles.textcar}>Biển số: {item.code}</Text>
-                                        <Text style={styles.textcar}>Chủ xe: {item.username}</Text>
+                                        <Text style={styles.textcar}>{item.Timein}</Text>
                                     </View>
                                     <View style={{flex:2}}>
-                                        <Text style={styles.textcar}>{item.Timein}</Text>
-
+                                        <Image
+                                            source={require('../assets/images/unoaid.png')}
+                                            resizeMode="cover"
+                                            style={{height:100, width:200, position:'absolute', right:-20, bottom:15}}
+                                        ></Image>
                                     </View>
                                 </View>
                             </TouchableOpacity>
@@ -111,8 +125,8 @@ function InScreen(){
                 <View style={{height:200, backgroundColor:'white', borderRadius:20}}>
                     <View style={{alignItems:'flex-end', marginRight:10, marginTop:10}}>
                         <TouchableOpacity onPress={()=> setCount(0)}>
-                            <View style={{height:20, width:20, borderColor:'#CCCCCC', borderWidth:1, justifyContent:'center', alignItems:'center'}}>
-                                <Text style={{fontSize:20}}>x</Text>
+                            <View style={{height:20, width:20,  justifyContent:'center', alignItems:'center'}}>
+                                <Ionicons name="close" size={20} color="black" />
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -166,7 +180,7 @@ function OutScreen(){
         setCount(1);
     }
     return(
-        <ScrollView style={{height:height-120, borderBottomColor:"#CCCCCC", marginBottom:10, marginTop:10}}
+        <ScrollView style={{height:height-120, marginBottom:10, marginTop:10}}
         refreshControl={
             <RefreshControl
               refreshing={refreshPage}
@@ -181,13 +195,25 @@ function OutScreen(){
                                     <View style={styles.itemimage}>
                                         <View style={styles.circle}>
                                         {
-                                            item.type == 'car' && <FontAwesome name="car" size={40} color="gray" />
+                                            item.type == 'car' && <Image
+                                                                        source={require('../assets/images/car.png')}
+                                                                        resizeMode="cover"
+                                                                        style={styles.image}
+                                                                    ></Image>
                                         }
                                         {
-                                            item.type == 'bike' && <MaterialCommunityIcons name="bike" size={40} color="gray" />
+                                            item.type == 'bike' && <Image
+                                                                        source={require('../assets/images/bike.jpg')}
+                                                                        resizeMode="cover"
+                                                                        style={styles.image}
+                                                                    ></Image>
                                         }
                                         {
-                                            item.type == 'motobike' && <Fontisto name="motorcycle" size={40} color="gray" />
+                                            item.type == 'motobike' && <Image
+                                                                            source={require('../assets/images/moto.png')}
+                                                                            resizeMode="cover"
+                                                                            style={styles.image}
+                                                                        ></Image>
                                         }
 
                                         </View>
@@ -202,13 +228,13 @@ function OutScreen(){
                                         {
                                             item.type == 'motobike' && <Text style={styles.namecar}>Xe máy {item.brand} {item.color} </Text>
                                         }
-
                                         <Text style={styles.textcar}>Biển số: {item.code}</Text>
-                                        <Text style={styles.textcar}>Chủ xe: {item.username}</Text>
-                                    </View>
-                                    <View style={{flex:2}}>
                                         <Text style={styles.textcar}>{item.Timein}</Text>
-
+                                        {/* <Text style={styles.textcar}>Chủ xe: {item.username}</Text> */}
+                                    </View>
+                                    <View style={{flex:2, justifyContent:'center'}}>
+                                        <Text style={{fontSize:12, marginLeft:10}}>Giá</Text>
+                                        <Text style={{color:'#00ff40', fontSize:14, marginLeft:10}}>$20.000</Text>
                                     </View>
                                 </View>
                             </TouchableOpacity>
@@ -229,8 +255,8 @@ function OutScreen(){
                 <View style={{height:200, backgroundColor:'white', borderRadius:20}}>
                     <View style={{alignItems:'flex-end', marginRight:10, marginTop:10}}>
                         <TouchableOpacity onPress={()=> setCount(0)}>
-                            <View style={{height:20, width:20, borderColor:'#CCCCCC', borderWidth:1, justifyContent:'center', alignItems:'center'}}>
-                                <Text style={{fontSize:20}}>x</Text>
+                            <View style={{height:20, width:20,   justifyContent:'center', alignItems:'center'}}>
+                                <Ionicons name="close" size={20} color="black" />
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -242,40 +268,58 @@ function OutScreen(){
 }
 function ModalView({item}) {
     return(
-        <View style={{height:160, width:width-50, backgroundColor:'white', justifyContent:'center', alignItems:'center', borderRadius:20}}>
-            <View style={{flex:1, flexDirection:'row', marginTop:-10}}>
+        <View style={{height:160, width:width-50, backgroundColor:'white',  borderRadius:20}}>
+            <View style={{flex:1, flexDirection:'row', marginTop:-20}}>
                 <View style={{  flex:2,
                                 marginTop:20,
                                 marginLeft:10,
                                 alignItems:'center',}}>
                     <View style={styles.circle}>
                     {
-                        item.type == 'car' && <FontAwesome name="car" size={40} color="gray" />
+                        item.type == 'car' && <Image
+                                                    source={require('../assets/images/car.png')}
+                                                    resizeMode="cover"
+                                                    style={styles.image}
+                                                ></Image>
                     }
                     {
-                        item.type == 'bike' && <MaterialCommunityIcons name="bike" size={40} color="gray" />
+                        item.type == 'bike' && <Image
+                                                    source={require('../assets/images/bike.jpg')}
+                                                    resizeMode="cover"
+                                                    style={styles.image}
+                                                ></Image>
                     }
                     {
-                        item.type == 'motobike' && <Fontisto name="motorcycle" size={40} color="gray" />
+                        item.type == 'motobike' && <Image
+                                                        source={require('../assets/images/moto.png')}
+                                                        resizeMode="cover"
+                                                        style={styles.image}
+                                                    ></Image>
                     }
                     </View>
                 </View>
-                <View style={{flex:4, marginRight:15}}>
-                {
-                    item.type == 'car' && <Text style={styles.namecar}>Xe ô tô {item.brand} {item.color} </Text>
-                }
-                {
-                    item.type == 'bike' && <Text style={styles.namecar}>Xe đạp {item.brand} {item.color} </Text>
-                }
-                {
-                    item.type == 'motobike' && <Text style={styles.namecar}>Xe máy {item.brand} {item.color} </Text>
-                }
-
-                < Text style={styles.textcar}>Biển số: {item.code}</Text>
-                <Text style={styles.textcar}>Chủ xe: {item.username}</Text>
-                <Text style={styles.textcar}>Điện thoại: {item.phonenumber}</Text>
-                <Text style={styles.textcar}>Mô tả: {item.description}</Text>
+                <View style={{flex:4, marginRight:15, justifyContent:'center'}}>
+                    {
+                        item.type == 'car' && <Text style={styles.namecar}>Xe ô tô {item.brand} {item.color} </Text>
+                    }
+                    {
+                        item.type == 'bike' && <Text style={styles.namecar}>Xe đạp {item.brand} {item.color} </Text>
+                    }
+                    {
+                        item.type == 'motobike' && <Text style={styles.namecar}>Xe máy {item.brand} {item.color} </Text>
+                    }
+                    <Text style={styles.textcar}>Chủ xe: {item.username}</Text>
                 </View>
+            </View>
+            <View style={{flex:1, marginLeft:20}}> 
+                <Text style={styles.textcar}>Biển số: {item.code}</Text>
+                <Text style={styles.textcar}>Điện thoại: {item.phonenumber}</Text>
+                <Text style={styles.textcar}>Mô tả: {item.description}</Text>  
+                <Image
+                    source={require('../assets/images/paided.png')}
+                    resizeMode="cover"
+                    style={{height:100, width:200, position:'absolute', right:15, bottom:15}}
+                ></Image>  
             </View>
         </View>
     );
@@ -301,7 +345,7 @@ function ListVehicleInOut({ navigation }) {
         hidden={true} />
       <View style={styles.tabback}>
             <TouchableOpacity onPress={() => goToList()} style={{flex:1, alignItems:'center'}}>
-                <AntDesign name="left" size={24} color="gray" />
+                <AntDesign name="left" size={24} color="black" />
             </TouchableOpacity>
             <View style={{flex:5, alignItems:'center'}}>
                 <Text style={{fontSize:16, fontWeight:'bold'}}>Danh sách phương tiện vào/ra</Text>
@@ -310,15 +354,23 @@ function ListVehicleInOut({ navigation }) {
             </View>
       </View>
       <View style={styles.profile}>
-            <TabView
+            <TabView 
+                renderTabBar={props => (
+                    <TabBar
+                      {...props}
+                      renderLabel={({ route, color }) => (
+                        <Text style={{ color: 'black'}}>
+                          {route.title}
+                        </Text>
+                      )}
+                      style={{backgroundColor: "#16f198", height:40}}
+                    />
+                  )}
                 navigationState={{ index, routes }}
                 renderScene={renderScene}
                 onIndexChange={setIndex}
                 initialLayout={{ width: width, height:height-50}}
             />
-
-
-
       </View>
     </SafeAreaView>
   );
@@ -336,8 +388,6 @@ const styles = StyleSheet.create({
       backgroundColor: "#16f198"   ,
       justifyContent:'center',
       alignItems:'center',
-      borderBottomWidth:1,
-      borderBottomColor:"#CCCCCC",
       flexDirection:'row'
   },
   profile:{
@@ -353,10 +403,7 @@ const styles = StyleSheet.create({
   item:{
     height:100,
     flexDirection:'row',
-    borderColor:"#CCCCCC",
-    borderWidth:1,
-    borderRadius:20,
-    marginHorizontal:20,
+    
     justifyContent:'center' ,
     marginBottom:10
   },
@@ -367,15 +414,16 @@ const styles = StyleSheet.create({
   },
   namecar:{
     fontWeight:'bold',
-    fontSize:16,
+    fontSize:14,
     marginTop:10,
     marginLeft:10
   },
   textcar:{
     fontWeight:'normal',
-    fontSize:14,
+    fontSize:12,
     marginTop:5,
-    marginLeft:10
+    marginLeft:10,
+    color:'gray'
   },
   icondelete:{
     position:'absolute',
@@ -385,8 +433,6 @@ const styles = StyleSheet.create({
   circle:{
     height:60,
     width:60,
-    borderWidth:1,
-    borderRadius:60,
     justifyContent:'center',
     alignItems:'center',
     borderColor:'gray'

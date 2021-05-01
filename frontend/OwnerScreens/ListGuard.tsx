@@ -1,6 +1,8 @@
 import * as React from 'react';
-import { StatusBar, FlatList, Image, Animated, Text, View, Dimensions,TouchableHighlight
-    , StyleSheet, Easing, SafeAreaViewBase, SafeAreaView, Button } from 'react-native';
+import {
+    StatusBar, FlatList, Image, Animated, Text, View, Dimensions, TouchableHighlight
+    , StyleSheet, Easing, SafeAreaViewBase, SafeAreaView, Button
+} from 'react-native';
 import { AntDesign, Ionicons, Fontisto } from '@expo/vector-icons';
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
 var width = Dimensions.get('window').width; //full width
@@ -31,23 +33,23 @@ function ListGuard({ navigation }) {
     const [guards, setGuards] = React.useState([]);
     React.useEffect(() => {
         getGuardList();
-    },[]);
+    }, []);
     const getGuardList = async () => {
         await axios
-        .get('https://project3na.herokuapp.com/api/owner/guards')
-        .then(async function (response) {
-            setGuards(response.data.data);
-        });
+            .get('https://project3na.herokuapp.com/api/owner/guards')
+            .then(async function (response) {
+                setGuards(response.data.data);
+            });
     }
-    const deleteGuard = async (userid :any) => {
+    const deleteGuard = async (userid: any) => {
         alert('1');
         try {
             await axios
-            .delete(`https://project3na.herokuapp.com/api/owner/guard/${userid}`)
-            .then(async function (response) {
-                alert(response.data.msg);
-                getGuardList();
-            });
+                .delete(`https://project3na.herokuapp.com/api/owner/guard/${userid}`)
+                .then(async function (response) {
+                    alert(response.data.msg);
+                    getGuardList();
+                });
         } catch (error) {
 
         }
@@ -59,6 +61,12 @@ function ListGuard({ navigation }) {
                 flex: 1,
                 backgroundColor: '#e3e3e3',
             }}>
+
+            <Image
+                source={{ uri: BG_IMG }}
+                style={StyleSheet.absoluteFillObject}
+                blurRadius={80}
+            />
             <StatusBar
                 animated={true}
                 hidden={true} />
@@ -171,14 +179,11 @@ function ListGuard({ navigation }) {
                                 </TouchableHighlight> */}
 
 
-                        </Animated.View>
-                    )
-                }}
-            />
-            {/* <MaterialButtonViolet
-                title="Thêm tài khoản"
-            ></MaterialButtonViolet>
-            <View style={{ height: 50, backgroundColor: "gray" }}></View> */}
+                    </Animated.View>
+                )
+            }}
+        />
+        <View style={{ height: 50, backgroundColor: "gray" }}></View>
 
         </SafeAreaView>
     );

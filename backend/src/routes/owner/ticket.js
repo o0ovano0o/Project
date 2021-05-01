@@ -6,19 +6,17 @@ const { validateOwnerAPI, validateAppAPI } = require('../../middlewares/validate
 
 router.post('/api/owner/ticket', validateOwnerAPI, async(req, res) => {
     try {
-        let { name, price, typetime,typeverhicle,drescription,isDefault } = req.body;
+        let { name, price, typetime,typeverhicle,drescription,isDefault,isSystem } = req.body;
         const ownerid = req.session.userid;
-        if (!name || !price || !typetime || !typeverhicle ) {
+        if (!name || !typeverhicle ) {
           return res.json({ success: false, msg: 'Thiếu thông tin bắt buộc' });
         }
-        typetime = typetime == Enum.TypeTime.hour ?  Enum.TypeTime.hour :  Enum.TypeTime.day;
-        typeverhicle = typeverhicle == Enum.TypeVehicle.car ?  Enum.TypeVehicle.car :  Enum.TypeVehicle.bike;
         // reset lại giá trị default
         if(isDefault)
-        await knex('ticket').update({ isDefault : false });
-        else isDefault = true;
+        await knex('ticket').update({ isDefault : 0 });
+        else isDefault = 1;
         const result = await knex('ticket')
-        .insert({ name, price,typetime,typeverhicle, drescription,isDefault,ownerid});
+        .insert({ name, price,typetime,typeverhicle, drescription,isDefault,ownerid,isSystem});
         if (!result) return res.json({ success: false, msg: 'Tạo thông tin vé xe thất bại' });
         return res.status(200).json({ success: true, msg: 'Tạo thông tin vé xe thành công' });
     } catch (err) {
@@ -50,14 +48,14 @@ router.delete('/api/owner/ticket/:ticketid',validateOwnerAPI, async(req, res) =>
         const ownerid = req.session.userid;
         if (!ownerid || !ticketid) return res.json({ success: false, msg: 'Thông tin bắt buộc bị thiếu' });
         const checkTransaction = await knex('transaction').select().where({
-            ticketid
+            ticketID:ticketid
         });
         if(checkTransaction && checkTransaction.length > 0) {
             return res.json({ success: false, msg: 'Loại vé vẫn đang có giao dịch chưa hoàn thành. Không thể xóa !' });
         }
         const check = await knex('ticket')
             .delete()
-            .where({ userid, ticketid });
+            .where({ ownerid, ticketid });
         if (!check) return res.json({ success: false, msg: 'Xóa vé thất bại' });
         return res.status(200).json({
             success: true,
@@ -70,20 +68,18 @@ router.delete('/api/owner/ticket/:ticketid',validateOwnerAPI, async(req, res) =>
 
 router.put('/api/owner/ticket/:ticketid', validateOwnerAPI, async(req, res) => {
     try {
-        let { name, price, typetime,typeverhicle,drescription,isDefault } = req.body;
+        let { name, price, typetime,typeverhicle,drescription,isDefault, isSystem } = req.body;
         let { ticketid } = req.params;
         const ownerid = req.session.userid;
-        if (!name || !price || !typetime || !typeverhicle ) {
+        if (!name || !typetime || !typeverhicle ) {
           return res.json({ success: false, msg: 'Thiếu thông tin bắt buộc' });
         }
-        typetime = typetime == Enum.TypeTime.hour ?  Enum.TypeTime.hour :  Enum.TypeTime.day;
-        typeverhicle = typeverhicle == Enum.TypeVehicle.car ?  Enum.TypeVehicle.car :  Enum.TypeVehicle.bike;
         // reset lại giá trị default
         if(isDefault)
-        await knex('ticket').update({ isDefault : false });
-        else isDefault = true;
+        await knex('ticket').update({ isDefault : 0 });
+        else isDefault = 1;
         const result = await knex('ticket')
-        .update({ name, price,typetime,typeverhicle, drescription,isDefault}).where({ ticketid, ownerid });
+        .update({ name, price,typetime,typeverhicle, drescription,isDefault, isSystem}).where({ ticketid, ownerid });
         if (!result) return res.json({ success: false, msg: 'Sửa thông tin vé xe thất bại' });
         return res.status(200).json({ success: true, msg: 'Sửa thông tin vé xe thành công' });
     } catch (err) {

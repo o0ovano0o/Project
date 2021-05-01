@@ -259,7 +259,7 @@ function InScreen() {
         </View>
     );
 }
-function OutScreen({navigation}) {
+function OutScreen() {
     const [refreshPage, setRefreshPage] = useState(true);
     const [normal, setnormal] = useState([]);
     const [total, settotal] = useState(0);
@@ -439,7 +439,7 @@ function ListTicket_AddNew(props) {
             <View style={styles.profile}>
                 <TabView
                     navigationState={{ index, routes }}
-                    renderScene={renderScene1}
+                    renderScene={renderScene}
                     onIndexChange={setIndex}
                     initialLayout={{ width: width, height: height - 50 }}
                 />
