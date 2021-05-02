@@ -33,6 +33,7 @@
     "expo-splash-screen": "~0.10.2",
     "expo-status-bar": "~1.0.4",
     "expo-web-browser": "~9.1.0",
+    "geocoder": "^0.2.3",
     "moment": "^2.29.1",
     "native-base": "^2.15.2",
     "react": "16.13.1",
