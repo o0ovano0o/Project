@@ -39,6 +39,7 @@ import EditGuardProfile from '../OwnerScreens/EditGuardProfile';
 import ListParking from '../OwnerScreens/ListParking';
 import AddTicketType from '../OwnerScreens/AddTicketType';
 import EditTicketType from '../OwnerScreens/EditTicketType';
+import FindAddress from '../OwnerScreens/FindAddress';
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -104,6 +105,7 @@ async function getUser() {
       <Stack.Screen name="ListTicketType" component={ListTicketType} />
       <Stack.Screen name="AddTicketType" component={AddTicketType} />
       <Stack.Screen name="EditTicketType" component={EditTicketType} />
+      <Stack.Screen name="FindAddress" component={FindAddress} />
       <Stack.Screen name="ListParking" component={ListParking} />
       <Stack.Screen name="Root" component={BottomTabNavigator} />
 
