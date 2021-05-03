@@ -52,12 +52,15 @@
     "react-native-pager-view": "5.0.12",
     "react-native-qrcode": "^0.2.7",
     "react-native-qrcode-svg": "^6.1.1",
+    "react-native-router-flux": "^4.3.1",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.0.0",
     "react-native-svg": "12.1.0",
     "react-native-tab-view": "^3.0.1",
     "react-native-vector-icons": "^8.1.0",
     "react-native-web": "~0.13.12",
+    "react-redux": "^7.2.4",
+    "redux": "^4.1.0",
     "unimodules-permissions-interface": "~6.1.0"
   },
   "devDependencies": {

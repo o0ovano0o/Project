@@ -8,6 +8,7 @@ const { Marker } = MapView;
 export default class FindAddress extends Component {
     state={
         region: {
+            
             latitude: 	21.027763,
             longitude:	105.834160,
             latitudeDelta: 0.0122,
