@@ -8,7 +8,23 @@ import { Actions } from 'react-native-router-flux';
 import file  from '../assets/cityVN.json';
 import Dropdown from "react-native-modal-dropdown";
 import { Entypo,AntDesign } from '@expo/vector-icons';
+import { showLocation } from 'react-native-map-link'
 // menu slidebar
+showLocation({
+    latitude: 	21.016723992306602,
+    longitude:	105.82653438672423,
+    sourceLatitude: 21.033152872552428,  // optionally specify starting location for directions
+    sourceLongitude: 105.8396621234715,  // not optional if sourceLatitude is specified
+    title: 'Bãi đỗ xe Duy Tân 2',  // optional
+    googleForceLatLon: true,  // optionally force GoogleMaps to use the latlon for the query instead of the title
+    googlePlaceId: 'ChIJGVtI4by3t4kRr51d_Qm_x58',  // optionally specify the google-place-id
+    alwaysIncludeGoogle: true, // optional, true will always add Google Maps to iOS and open in Safari, even if app is not installed (default: false)
+    dialogTitle: 'This is the dialog Title', // optional (default: 'Open in Maps')
+    dialogMessage: 'This is the amazing dialog Message', // optional (default: 'What app would you like to use?')
+    cancelText: 'This is the cancel button text', // optional (default: 'Cancel')
+    appsWhiteList: ['google-maps'], // optionally you can set which apps to show (default: will show all supported apps installed on device)
+    naverCallerName: 'com.example.myapp' // to link into Naver Map You should provide your appname which is the bundle ID in iOS and applicationId in android.   
+  })
 export default class Test extends Component {
 
   constructor(props) {
@@ -49,7 +65,6 @@ export default class Test extends Component {
       loading: false
     });
   }
-
   renderHeader = () => {
     const availableHours = ["Gần tôi", "Xa nhất"];
       return <View>
