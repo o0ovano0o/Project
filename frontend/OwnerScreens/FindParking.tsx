@@ -10,22 +10,22 @@ import Dropdown from "react-native-modal-dropdown";
 import { Entypo,AntDesign } from '@expo/vector-icons';
 import { showLocation } from 'react-native-map-link'
 // menu slidebar
-showLocation({
-    latitude: 	21.016723992306602,
-    longitude:	105.82653438672423,
-    sourceLatitude: 21.033152872552428,  // optionally specify starting location for directions
-    sourceLongitude: 105.8396621234715,  // not optional if sourceLatitude is specified
-    title: 'Bãi đỗ xe Duy Tân 2',  // optional
-    googleForceLatLon: true,  // optionally force GoogleMaps to use the latlon for the query instead of the title
-    googlePlaceId: 'ChIJGVtI4by3t4kRr51d_Qm_x58',  // optionally specify the google-place-id
-    alwaysIncludeGoogle: true, // optional, true will always add Google Maps to iOS and open in Safari, even if app is not installed (default: false)
-    dialogTitle: 'This is the dialog Title', // optional (default: 'Open in Maps')
-    dialogMessage: 'This is the amazing dialog Message', // optional (default: 'What app would you like to use?')
-    cancelText: 'This is the cancel button text', // optional (default: 'Cancel')
-    appsWhiteList: ['google-maps'], // optionally you can set which apps to show (default: will show all supported apps installed on device)
-    naverCallerName: 'com.example.myapp' // to link into Naver Map You should provide your appname which is the bundle ID in iOS and applicationId in android.   
-  })
-export default class Test extends Component {
+// showLocation({
+//     latitude: 	21.054677,
+//     longitude:	105.786557,
+//     sourceLatitude: 21.070220,  // optionally specify starting location for directions
+//     sourceLongitude: 105.801886,  // not optional if sourceLatitude is specified
+//     title: 'Ngõ 38 Xuân La, Xuân Đỉnh, Tây Hồ, Hà Nội, Việt Nam',  // optional
+//     googleForceLatLon: true,  // optionally force GoogleMaps to use the latlon for the query instead of the title
+//     googlePlaceId: 'ChIJGVtI4by3t4kRr51d_Qm_x58',  // optionally specify the google-place-id
+//     alwaysIncludeGoogle: true, // optional, true will always add Google Maps to iOS and open in Safari, even if app is not installed (default: false)
+//     dialogTitle: 'This is the dialog Title', // optional (default: 'Open in Maps')
+//     dialogMessage: 'This is the amazing dialog Message', // optional (default: 'What app would you like to use?')
+//     cancelText: 'This is the cancel button text', // optional (default: 'Cancel')
+//     appsWhiteList: ['google-maps'], // optionally you can set which apps to show (default: will show all supported apps installed on device)
+//     naverCallerName: 'com.example.myapp' // to link into Naver Map You should provide your appname which is the bundle ID in iOS and applicationId in android.   
+//   })
+export default class FindParking extends Component {
 
   constructor(props) {
     super(props);
@@ -100,7 +100,78 @@ export default class Test extends Component {
             });
         });
   };
+  gotoGooogleMap(lat, lng, address){
+    var latcurr, lngcurr;
+    navigator.geolocation.getCurrentPosition((data) => {
+      me.setState({currentregion :data.coords});
+      me.setState({     
+          latcurr: me.state.currentregion.latitude,
+          lngcurr: me.state.currentregion.longitude               
+      });     
+    }, ((error) => {   
+      alert('Lấy vị trí hiện tại thất bại')   
+    }))
+    showLocation({
+      latitude: 	lat,
+      longitude:	lng,
+      sourceLatitude: latcurr,  // optionally specify starting location for directions
+      sourceLongitude: lngcurr,  // not optional if sourceLatitude is specified
+      title: address,  // optional
+      googleForceLatLon: true,  // optionally force GoogleMaps to use the latlon for the query instead of the title
+      googlePlaceId: 'ChIJGVtI4by3t4kRr51d_Qm_x58',  // optionally specify the google-place-id
+      alwaysIncludeGoogle: true, // optional, true will always add Google Maps to iOS and open in Safari, even if app is not installed (default: false)
+      dialogTitle: 'This is the dialog Title', // optional (default: 'Open in Maps')
+      dialogMessage: 'This is the amazing dialog Message', // optional (default: 'What app would you like to use?')
+      cancelText: 'This is the cancel button text', // optional (default: 'Cancel')
+      appsWhiteList: ['google-maps'], // optionally you can set which apps to show (default: will show all supported apps installed on device)
+      naverCallerName: 'com.example.myapp' // to link into Naver Map You should provide your appname which is the bundle ID in iOS and applicationId in android.   
+    })
+  }
+  currenlocation() {
+    const me = this;
+    navigator.geolocation.getCurrentPosition((data) => {
+      me.setState({currentregion :data.coords});
+      me.setState({
+        region: {
+          latitude: me.state.currentregion.latitude,
+          longitude: me.state.currentregion.longitude,
+          longitudeDelta:longitudeDeltaE,
+          latitudeDelta:latitudeDeltaE,
+          active:true
+        }
+      });
+      // alert(JSON.stringify(region));
+      me.state.ref.animateToRegion(
+        // (new Array()).push(me.state.region),
+        me.state.region,
+        true, // not animated
+      );
+      me.setState({region});
+    }, ((error) => {
+      var me = this;
+      var region = me.state.region;
+      // alert(JSON.stringify(me.state));
+      region=Object.assign(region,);
+      // alert(JSON.stringify(region));
+      me.setState({
+        region: {
+          latitude: me.state.currentregion.latitude,
+          longitude: me.state.currentregion.longitude,
+          longitudeDelta:longitudeDeltaE,
+          latitudeDelta:latitudeDeltaE,
+          active:true
+        }
+      });
+      me.state.ref.animateToRegion(
+        // (new Array()).push(me.state.region),
+        me.state.region,
+        1000, // not animated
+      );
+      // alert('Lấy vị trí hiện tại thất bại');
 
+    }))
+      me.setState({ active: 'current' })
+  }
   render() {
     return (
       this.state.loading ?
@@ -131,16 +202,23 @@ export default class Test extends Component {
                     resizeMode="cover"
                     style={styles.image}
                 ></Image>
-                <View style={{}}>
+                <View style={{flexDirection:'column'}}>
                   <Text style={{fontSize:16, fontWeight:'bold'}}>{item.name}</Text>
-                  <Text style={{fontSize:12, color:'gray'}}>{item.address}</Text>
+                  <View style={{width:DEVICE_WIDTH/2+30}}>
+                      <Text style={{fontSize:12, color:'gray'}}>{item.address}</Text>
+                  </View>
+                  
                   <View style={{flexDirection:'row'}}>
-                    <View style={{flex:6,flexDirection:'row'}}>
+                    <View style={{flex:7,flexDirection:'row'}}>
                       <Entypo name="dot-single" size={20} color="gray" />
                       <Text style={{fontSize:12, color:'gray'}}>0.7km</Text>
                     </View>
-                    <View style={{flex:1, marginTop:10}}>
-                      <TouchableOpacity >
+                    <View style={{flex:2}}>
+                      <TouchableOpacity onPress={
+                                                  ()=> {
+                                                    this.gotoGooogleMap(item.vt.lat, item.vt.lon, item.address)
+                                                  }
+                                                }  >
                           <AntDesign name="enviroment" size={20} color="#4da6ff" />
                       </TouchableOpacity>
                     </View>

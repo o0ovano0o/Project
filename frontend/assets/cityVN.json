@@ -1,38 +1,38 @@
 [
   {
-    "name": "Bãi đỗ xe Duy Tân",
+    "name": "Bãi đỗ xe Võ Trí Công",
     "id": 1560349,
-    "address":"Ngõ 16, Phố Duy Tân, Cầu Giấy, Hà Nội",
+    "address":"Võ Chí Công, Xuân La, Tây Hồ, Hà Nội, Việt Nam",
     "vt": {
-      "lon": 104.866669,
-      "lat": 21.700001
+      "lon": 105.807781,
+      "lat": 21.068357
     }
   },
   {
-    "name": "Bãi đỗ xe Hoàng Quốc Việt",
+    "name": "Bãi đỗ xe Tân Trọng",
     "id": 1562414,
-    "address":"Ngõ 16, Phố Duy Tân, Cầu Giấy, Hà Nội",
+    "address":"4 Ngõ 195 - Trần Cung, Cổ Nhuế, Từ Liêm, Hà Nội, Việt Nam",
     "vt": {
-      "lon": 107.084259,
-      "lat": 10.34599
+      "lon": 105.786557,
+      "lat": 21.054677
     }
   },
   {
     "name": "Bãi đỗ Duy Học",
     "id": 1562548,
-    "address":"Ngõ 16, Phố Duy Tân, Cầu Giấy, Hà Nội",
+    "address":"Ngõ 38 Xuân La, Xuân Đỉnh, Tây Hồ, Hà Nội, Việt Nam",
     "vt": {
-      "lon": 105.596672,
-      "lat": 21.309999
+      "lon": 105.804080,
+      "lat": 21.067957
     }
   },
   {
-    "name": "Vinh Long",
+    "name": "Bãi đỗ xe Phạm Hùng",
     "id": 1562693,
-    "address":"Ngõ 16, Phố Duy Tân, Cầu Giấy, Hà Nội",
+    "address":"Ngõ 7 Phạm Hùng, Dịch Vọng Hậu, Cầu Giấy, Hà Nội, Việt Nam",
     "vt": {
-      "lon": 105.966667,
-      "lat": 10.25
+      "lon": 105.781052,
+      "lat": 21.032983
     }
   },
   {

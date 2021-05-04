@@ -4,7 +4,7 @@
   "packagerPort": 19000,
   "expoServerNgrokUrl": "https://vj-e64.anonymous.frontend.exp.direct",
   "packagerNgrokUrl": "https://packager.vj-e64.anonymous.frontend.exp.direct",
-  "ngrokPid": 7680,
+  "ngrokPid": 672,
   "packagerPid": null,
   "webpackServerPort": null
 }
