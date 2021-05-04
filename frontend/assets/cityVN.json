@@ -1,0 +1,200 @@
+[
+  {
+    "name": "Bãi đỗ xe Võ Trí Công",
+    "id": 1560349,
+    "address":"Võ Chí Công, Xuân La, Tây Hồ, Hà Nội, Việt Nam",
+    "vt": {
+      "lon": 105.807781,
+      "lat": 21.068357
+    }
+  },
+  {
+    "name": "Bãi đỗ xe Tân Trọng",
+    "id": 1562414,
+    "address":"4 Ngõ 195 - Trần Cung, Cổ Nhuế, Từ Liêm, Hà Nội, Việt Nam",
+    "vt": {
+      "lon": 105.786557,
+      "lat": 21.054677
+    }
+  },
+  {
+    "name": "Bãi đỗ Duy Học",
+    "id": 1562548,
+    "address":"Ngõ 38 Xuân La, Xuân Đỉnh, Tây Hồ, Hà Nội, Việt Nam",
+    "vt": {
+      "lon": 105.804080,
+      "lat": 21.067957
+    }
+  },
+  {
+    "name": "Bãi đỗ xe Phạm Hùng",
+    "id": 1562693,
+    "address":"Ngõ 7 Phạm Hùng, Dịch Vọng Hậu, Cầu Giấy, Hà Nội, Việt Nam",
+    "vt": {
+      "lon": 105.781052,
+      "lat": 21.032983
+    }
+  },
+  {
+    "name": "Vinh",
+    "id": 1562798,
+    "address":"Ngõ 16, Phố Duy Tân, Cầu Giấy, Hà Nội",
+    "vt": {
+      "lon": 105.666672,
+      "lat": 18.66667
+    }
+  },
+  {
+    "name": "Viet Tri",
+    "id": 1562820,
+    "address":"Ngõ 16, Phố Duy Tân, Cầu Giấy, Hà Nội",
+    "vt": {
+      "lon": 105.430832,
+      "lat": 21.301941
+    }
+  },
+  {
+    "name": "Uong Bi",
+    "id": 1563241,
+    "address":"Ngõ 16, Phố Duy Tân, Cầu Giấy, Hà Nội",
+    "vt": {
+      "lon": 106.783333,
+      "lat": 21.033331
+    }
+  },
+  {
+    "name": "Tuy Hoa",
+    "id": 1563281,
+    "address":"Ngõ 16, Phố Duy Tân, Cầu Giấy, Hà Nội",
+    "vt": {
+      "lon": 109.300003,
+      "lat": 13.08333
+    }
+  },
+  {
+    "name": "Tuyen Quang",
+    "id": 1563287,
+    "address":"Ngõ 16, Phố Duy Tân, Cầu Giấy, Hà Nội",
+    "vt": {
+      "lon": 105.218063,
+      "lat": 21.82333
+    }
+  },
+  {
+    "name": "Tra Vinh",
+    "id": 1563926,
+    "address":"Ngõ 16, Phố Duy Tân, Cầu Giấy, Hà Nội",
+    "vt": {
+      "lon": 106.345284,
+      "lat": 9.93472
+    }
+  },
+  {
+    "name": "Thu Dau Mot",
+    "id": 1565022,
+    "address":"Ngõ 16, Phố Duy Tân, Cầu Giấy, Hà Nội",
+    "vt": {
+      "lon": 106.650002,
+      "lat": 10.96667
+    }
+  },
+  {
+    "name": "Thanh pho Ho Chi Minh",
+    "id": 1566083,
+    "address":"Ngõ 16, Phố Duy Tân, Cầu Giấy, Hà Nội",
+    "vt": {
+      "lon": 106.666672,
+      "lat": 10.75
+    }
+  },
+  {
+    "name": "Thanh Hoa",
+    "id": 1566166,
+    "address":"Ngõ 16, Phố Duy Tân, Cầu Giấy, Hà Nội",
+    "vt": {
+      "lon": 105.76667,
+      "lat": 19.799999
+    }
+  },
+  {
+    "name": "Thai Nguyen",
+    "id": 1566319,
+    "address":"Ngõ 16, Phố Duy Tân, Cầu Giấy, Hà Nội",
+    "vt": {
+      "lon": 105.84417,
+      "lat": 21.592779
+    }
+  },
+  {
+    "name": "Thai Binh",
+    "id": 1566346,
+    "address":"Ngõ 16, Phố Duy Tân, Cầu Giấy, Hà Nội",
+    "vt": {
+      "lon": 106.333328,
+      "lat": 20.450001
+    }
+  },
+  {
+    "name": "Tay Ninh",
+    "id": 1566559,
+    "address":"Ngõ 16, Phố Duy Tân, Cầu Giấy, Hà Nội",
+    "vt": {
+      "lon": 106.099998,
+      "lat": 11.3
+    }
+  },
+  {
+    "name": "Tan An",
+    "id": 1567069,
+    "address":"Ngõ 16, Phố Duy Tân, Cầu Giấy, Hà Nội",
+    "vt": {
+      "lon": 106.416672,
+      "lat": 10.53333
+    }
+  },
+  {
+    "name": "Tam Ky",
+    "id": 1567148,
+    "address":"Ngõ 16, Phố Duy Tân, Cầu Giấy, Hà Nội",
+    "vt": {
+      "lon": 108.48333,
+      "lat": 15.56667
+    }
+  },
+  {
+    "name": "Son Tay",
+    "id": 1567621,
+    "address":"Ngõ 16, Phố Duy Tân, Cầu Giấy, Hà Nội",
+    "vt": {
+      "lon": 105.504997,
+      "lat": 21.137779
+    }
+  },
+  {
+    "name": "Son La",
+    "id": 1567681,
+    "address":"Ngõ 16, Phố Duy Tân, Cầu Giấy, Hà Nội",
+    "vt": {
+      "lon": 103.900002,
+      "lat": 21.316669
+    }
+  },
+  {
+    "name": "Quy Nhon",
+    "id": 1568574,
+    "address":"Ngõ 16, Phố Duy Tân, Cầu Giấy, Hà Nội",
+    "vt": {
+      "lon": 109.23333,
+      "lat": 13.76667
+    }
+  },
+  {
+    "name": "Bac Kan",
+    "id": 1591538,
+    "address":"Ngõ 16, Phố Duy Tân, Cầu Giấy, Hà Nội",
+    "vt": {
+      "lon": 105.833328,
+      "lat": 22.133329
+    }
+  }
+]
