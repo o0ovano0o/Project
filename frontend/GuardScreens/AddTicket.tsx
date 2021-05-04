@@ -1,134 +1,168 @@
 import React from "react";
-import { StyleSheet, View,Image,Text ,Dimensions,SafeAreaView,StatusBar,ScrollView, AsyncStorage  } from "react-native";
-import { AntDesign,Feather,MaterialIcons    } from '@expo/vector-icons';
+import { StyleSheet, View, Image, Text, Dimensions, SafeAreaView, StatusBar, ScrollView, AsyncStorage } from "react-native";
+import { AntDesign, Feather, MaterialIcons } from '@expo/vector-icons';
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
 import styles from '../Style/ListTicketStyle';
-import Dropdown from "react-native-modal-dropdown";
 import { Picker } from "native-base";
 import axios from "axios";
 import moment from "moment";
-export default class Map extends React.Component{
+const width = Dimensions.get('window').width; //full width
+const height = Dimensions.get('window').height; //full height
+export default class AddTicket extends React.Component {
     state = {
-        success:false,
-        listTicket:new Array(),
+        success: null,
+        listTicket: new Array(),
         today: moment().format('DD/MM/YYYY'),
-        now:moment().format('hh:mm'),
-        ticket:{
-            price:"",
-            ticketid:"",
+        now: moment().format('hh:mm'),
+        ticket: {
+            price: "",
+            ticketid: "",
         },
-        user:{},
+        user: {},
     }
-    async getUser(){
+
+    async getUser() {
         let value = await AsyncStorage.getItem('user');
-        this.setState({ user : JSON.parse(value)});
-      }
-    async componentDidMount(){
-        const me = this;
-        var response;
-        // alert(1);
-        me.getUser();
-        try{
+        this.setState({ user: JSON.parse(value) });
+        alert(JSON.stringify(this.state.user));
+    }
+    async componentDidMount() {
+        try {
+            const me = this;
+            var response;
+            await me.getUser();
+            alert('1');
             response = await axios
-            .get(`https://project3na.herokuapp.com/api/default-ticket/${this.props.route.params.data.type}`);
-            response = response.data.data;
+                .get(`https://project3na.herokuapp.com/api/default-ticket/${this.props.route.params.data.type}`);
+            if (response.data.data && response.data.data.length)
+                response = response.data.data;
+            else response = new Array();
             me.setState({
-                listTicket : response
+                listTicket: response
             });
-            // alert(JSON.stringify(response));
-        }catch(er){
-            alert(er);
+            if(response&&response.length)
+            me.setState({
+                ticket: response[0]
+            });
+            me.setState({
+                listTicket: response
+            });
+            this.setState({ success: false });
+        } catch (er) {
+            alert(JSON.stringify(er));
         }
     }
-    async createTransaction(){
+    async createTransaction() {
         try {
+            alert(JSON.stringify({
+
+                vehicleid: parseInt(this.props.route.params.data.vehicleid),
+                    parkingid: parseInt(this.state.user.parkingid),
+                    ticketID: parseInt(this.state.ticket.ticketid),
+                    Timein: `${this.state.now} ${this.state.today}`,
+                    Timeout: "",
+                    TotalAmount: 0,
+                    Status: 1,
+                    userid: parseInt(this.props.route.params.data.userid),
+                    typetimeticket: parseInt(this.state.ticket.typetime),
+                    priceticket: parseInt(this.state.ticket.price),
+                    nameticket: this.state.ticket.name,
+            }));
             var reponse = await axios
                 .post('https://project3na.herokuapp.com/api/guard/transaction', {
                     vehicleid: parseInt(this.props.route.params.data.vehicleid),
-                    parkingid:  parseInt(this.state.user.parkingid),
-                    ticketID:  parseInt(this.state.ticket.ticketid),
+                    parkingid: parseInt(this.state.user.parkingid),
+                    ticketID: parseInt(this.state.ticket.ticketid),
                     Timein: `${this.state.now} ${this.state.today}`,
-                    Timeout:"",
-                    TotalAmount:0,
-                    Status :1,
-                     userid:  parseInt(this.props.route.params.data.userid),
-                     typetimeticket: parseInt(this.state.ticket.typetime) ,
-                     priceticket: parseInt(this.state.ticket.price),
-                     nameticket: this.state.ticket.name,
+                    Timeout: "",
+                    TotalAmount: 0,
+                    Status: 1,
+                    userid: parseInt(this.props.route.params.data.userid),
+                    typetimeticket: parseInt(this.state.ticket.typetime),
+                    priceticket: parseInt(this.state.ticket.price),
+                    nameticket: this.state.ticket.name,
                 });
             // alert(reponse.data.msg);
 
-            if(reponse.data.success) {
-                this.setState({success: true});
+            if (reponse.data.success) {
+                this.setState({ success: true });
                 this.state.success = true;
+
             }
         } catch (error) {
             alert(
                 error
             );
+            alert(JSON.stringify({
+
+                vehicleid: parseInt(this.props.route.params.data.vehicleid),
+                    parkingid: parseInt(this.state.user.parkingid),
+                    ticketID: parseInt(this.state.ticket.ticketid),
+                    Timein: `${this.state.now} ${this.state.today}`,
+                    Timeout: "",
+                    TotalAmount: 0,
+                    Status: 1,
+                    userid: parseInt(this.props.route.params.data.userid),
+                    typetimeticket: parseInt(this.state.ticket.typetime),
+                    priceticket: parseInt(this.state.ticket.price),
+                    nameticket: this.state.ticket.name,
+            }));
         }
     }
-    addTicketRender(){
-        const availableHours = ["Vé lượt", "Vé ngày" ];
-        return(
-            <ScrollView style={{height:height*0.5, borderBottomColor:"#CCCCCC"}}>
-                <View style={{flex:7, marginLeft:5, marginTop:-2}}>
-                    <View style={{justifyContent:'center', alignItems:'center'}}>
-                        <Text style={styles.namecar}>Bãi đỗ xe - {user.parkingname}</Text>
+    addTicketRender() {
+        return (
+            <ScrollView style={{ height: height * 0.5, borderBottomColor: "#CCCCCC" }}>
+                <View style={{ flex: 7, marginLeft: 5, marginTop: -2 }}>
+                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={styles.namecar}>Bãi đỗ xe - {this.state.user.parkingname}</Text>
                     </View>
 
-                    <View style={{justifyContent:'center', alignItems:'center'}}>
-                        <View style={{flexDirection:'row', alignItems:'center'}}>
-                            <Feather name="map-pin" size={14} color="gray" style={{ marginLeft:8}}/>
-                            <Text style={styles.textcar}>{user.parkingaddress}</Text>
+                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Feather name="map-pin" size={14} color="gray" style={{ marginLeft: 8 }} />
+                            <Text style={styles.textcar}>{this.state.user.parkingaddress}</Text>
                         </View>
                     </View>
-                    <View style={{marginTop:10, marginLeft:-15,width:width, alignItems:'center'}}>
-                        <Text style={{fontSize:20, fontWeight:'bold'}}>TẠO VÉ</Text>
+                    <View style={{ marginTop: 10, marginLeft: -15, width: width, alignItems: 'center' }}>
+                        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>TẠO VÉ</Text>
                     </View>
-                    <View style={{}}>
-                        <View style={{marginTop:10, flexDirection:'row', alignItems:'center'}}>
+
+                        <View style={{ marginTop: 10, flexDirection: 'row', alignItems: 'center' }}>
                             <Text>Loại vé:  </Text>
                             <Picker
 
                                 style={{ height: 50, width: 150 }}
                                 onValueChange={(itemValue, itemIndex) => {
-                                    this.setState({
-                                        ticket:this.state.listTicket.find(item => item.ticketid == itemValue)
-                                    })
+                                    if (this.state.listTicket && this.state.listTicket.length)
+                                        this.setState({
+                                            ticket: this.state.listTicket.find(item => item.ticketid == itemValue)
+                                        })
                                 }}
                             >
-                                 {this.state.listTicket.map(ticket => (
-                                <Picker.Item label={ticket.name} value={ticket.ticketid} />
+                                {this.state.listTicket.map(ticket => (
+                                    <Picker.Item label={ticket.name} value={ticket.ticketid} />
                                 ))}
                             </Picker>
-                            {/* <Dropdown
-                                defaultIndex={0}
-                                options={availableHours}
-                                style={styles.hoursDropdown}
-                                defaultValue={ "Vé lượt"}
-                                dropdownStyle={styles.hoursDropdownStyle}
 
-                            /> */}
                         </View>
-                        <View style={{marginTop:10}}>
-                            <Text>Giá vé: {this.state.ticket.price} đ </Text>
+                        <View style={{ marginTop: 10 }}>
+                            <Text>Giá vé: {JSON.stringify(this.state.ticket.price)} đ </Text>
                         </View>
-                        <View style={{marginTop:10}}>
-                            <Text>Ngày gửi: {this.state.today} </Text>
+                        <View style={{ marginTop: 10 }}>
+                            <Text>Ngày gửi: {JSON.stringify(this.state.today)} </Text>
                         </View>
-                        <View style={{marginTop:10}}>
-                            <Text>Giờ vào: {this.state.now} </Text>
+                        <View style={{ marginTop: 10 }}>
+                            <Text>Giờ vào: {JSON.stringify(this.state.now)} </Text>
                         </View>
-                    </View>
 
 
 
-                    <View style={{alignItems:'center', justifyContent:'center'}}>
-                        <View style={{height:60, backgroundColor:'white',flexDirection:'row', marginTop:10}}>
+
+                    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                        <View style={{ height: 60, backgroundColor: 'white', flexDirection: 'row', marginTop: 10 }}>
                             <MaterialButtonViolet
                                 onPress={() =>
-                                    this.props.navigation.push("ScanQRCode")
+                                    this.props.navigation.push("ScanQRCodeGuard")
                                 }
                                 style={styles.accept}
                                 title="Từ chối"
@@ -147,36 +181,39 @@ export default class Map extends React.Component{
             </ScrollView>
         );
     }
-    successTicketRender(){
-        const availableHours = ["Vé lượt", "Vé ngày" ];
-        return(
-            <ScrollView style={{flex:1, borderBottomColor:"#CCCCCC"}}>
-                <View style={{flex:7, marginLeft:5, marginTop:-5}}>
-                    <View style={{justifyContent:'center', alignItems:'center'}}>
-                        <Text style={styles.namecar}>Bãi đỗ xe - {user.parkingname}</Text>
+    successTicketRender() {
+        const availableHours = ["Vé lượt", "Vé ngày"];
+        return (
+            <ScrollView style={{ flex: 1, borderBottomColor: "#CCCCCC" }}>
+                <View style={{ flex: 7, marginLeft: 5, marginTop: -5 }}>
+                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={styles.namecar}>Bãi đỗ xe - {this.state.user.parkingname}</Text>
                     </View>
 
-                    <View style={{justifyContent:'center', alignItems:'center'}}>
-                        <View style={{flexDirection:'row', alignItems:'center'}}>
-                            <Feather name="map-pin" size={14} color="gray" style={{ marginLeft:8}}/>
-                            <Text style={styles.textcar}>{user.parkingaddress}</Text>
+                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Feather name="map-pin" size={14} color="gray" style={{ marginLeft: 8 }} />
+                            <Text style={styles.textcar}>{this.state.user.parkingaddress}</Text>
                         </View>
                     </View>
-                    <View style={{marginTop:10, marginLeft:-15,width:width, alignItems:'center'}}>
+                    <View style={{ marginTop: 10, marginLeft: -15, width: width, alignItems: 'center' }}>
                         <Image
                             source={require('../assets/images/su.png')}
                             resizeMode="cover"
-                            style={{height:180, width:180}}
+                            style={{ height: 180, width: 180 }}
                         ></Image>
                     </View>
 
-                    <View style={{alignItems:'center', justifyContent:'center'}}>
-                        <View style={{height:60, backgroundColor:'white',flexDirection:'row', marginTop:10}}>
+                    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                        <View style={{ height: 60, backgroundColor: 'white', flexDirection: 'row', marginTop: 10 }}>
 
                             <MaterialButtonViolet
-                                onPress={() =>
+                                onPress={() => {
+                                    if(this.state.user.role == 2)
                                     this.props.navigation.push("ScanQRCode")
-                                }
+                                    else this.props.navigation.push("ScanQRCodeGuard")
+
+                                }}
                                 style={styles.accept2}
                                 title="Tạo vé mới"
                             ></MaterialButtonViolet>
@@ -187,47 +224,48 @@ export default class Map extends React.Component{
             </ScrollView>
         );
     }
-    render(){
+    render() {
         return (
-            <SafeAreaView  style={styles.container}>
+            <SafeAreaView style={styles.container}>
                 <StatusBar
-                animated={true}
-                hidden={true} />
-                <View style={{flex:9}}>
+                    animated={true}
+                    hidden={true} />
+                <View style={{ flex: 9 }}>
                     <View style={styles.tabback}>
-                        <View style={{flex:1, alignItems:'center'}}>
+                        <View style={{ flex: 1, alignItems: 'center' }}>
                             <AntDesign name="left" size={24} color="gray" />
                         </View>
-                        <View style={{flex:5, alignItems:'center'}}>
-                            <Text style={{fontSize:16, fontWeight:'bold'}}>Tạo vé xe</Text>
+                        <View style={{ flex: 5, alignItems: 'center' }}>
+                            <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Tạo vé xe</Text>
                         </View>
-                        <View style={{flex:1}}>
+                        <View style={{ flex: 1 }}>
                         </View>
                     </View>
-                    <View style={{marginLeft:20, marginTop:15}}>
-                        <View style={{justifyContent:'center', alignItems:'center'}}>
-                            <Text style={{fontSize:16}}>THÔNG TIN XE</Text>
+                    <View style={{ marginLeft: 20, marginTop: 15 }}>
+                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                            <Text style={{ fontSize: 16 }}>THÔNG TIN XE</Text>
                         </View>
-                        <View style={{marginTop:10}}>
+                        <View style={{ marginTop: 10 }}>
                             <Text>Chủ xe: {this.props.route.params.data.username} </Text>
                         </View>
-                        <View style={{marginTop:10}}>
+                        <View style={{ marginTop: 10 }}>
                             <Text>Biển số: {this.props.route.params.data.code} </Text>
                         </View>
-                        <View style={{marginTop:10, flexDirection:'row'}}>
+                        <View style={{ marginTop: 10, flexDirection: 'row' }}>
                             <Text>Hãng: {this.props.route.params.data.brand}</Text>
-                            {this.props.route.params.data.type=='motobike' &&<Text style={{marginLeft:20}}>Loại xe: Xe máy </Text> }
-                            {this.props.route.params.data.type=='car' &&<Text style={{marginLeft:20}}>Loại xe: Ô tô</Text> }
+                            {this.props.route.params.data.type == 'motobike' && <Text style={{ marginLeft: 20 }}>Loại xe: Xe máy </Text>}
+                            {this.props.route.params.data.type == 'car' && <Text style={{ marginLeft: 20 }}>Loại xe: Ô tô</Text>}
                         </View>
-                        <View style={{marginTop:10}}>
+                        <View style={{ marginTop: 10 }}>
                             <Text>Màu xe:  {this.props.route.params.data.color} </Text>
                         </View>
-                        <View style={{marginTop:10}}>
+                        <View style={{ marginTop: 10 }}>
                             <Text>Mô tả:  {this.props.route.params.data.description} </Text>
                         </View>
                     </View>
                 </View>
                 <View style={styles.modeladd}>
+
                     {this.state.success == false && this.addTicketRender()}
                     {this.state.success == true && this.successTicketRender()}
                 </View>
@@ -237,5 +275,3 @@ export default class Map extends React.Component{
         );
     }
 }
-var width = Dimensions.get('window').width; //full width
-var height = Dimensions.get('window').height; //full height

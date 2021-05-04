@@ -3,11 +3,12 @@ const knex = require('../../knex');
 const handleAPIError = require('../../common/handleAPIError');
 const { validateGuardAPI } = require('../../middlewares/validateAPIAuthentication');
 const Enum = require('../../common/Enum');
+var moment = require('moment');
 router.post('/api/guard/transaction', validateGuardAPI, async(req, res) => {
     try {
         let { vehicleid,parkingid,ticketID,Timein,Timeout,TotalAmount,Status, userid,typetimeticket,priceticket,nameticket } = req.body;
         if (!vehicleid || !parkingid || !ticketID) {
-          return res.status(400).json({ success: false, msg: 'Thiếu thông tin bắt buộc', data: req.body });
+          return res.json({ success: false, msg: 'Thiếu thông tin bắt buộc', data: req.body });
         }
         const guarid = req.session.userid;
         const vehicle = await knex('vehicle').first().where({vehicleid});
@@ -156,11 +157,11 @@ router.delete('/api/guard/transaction/:transactionid',validateGuardAPI, async(re
     try {
         const { transactionid } = req.params;
         const guardid = req.session.userid;
-        if (!transactionid || !guardid) return res.status(400).json({ success: false, msg: 'Thông tin bắt buộc bị thiếu' });
+        if (!transactionid || !guardid) return res.json({ success: false, msg: 'Thông tin bắt buộc bị thiếu' });
         const check = await knex('transaction')
             .delete()
             .where({ guardid, transactionid });
-        if (!check) return res.status(400).json({ success: false, msg: 'Xóa vé giao dịch thất bại' });
+        if (!check) return res.json({ success: false, msg: 'Xóa vé giao dịch thất bại' });
         return res.status(200).json({
             success: true,
             msg: `Xóa vé giao dịch thành công`,
@@ -175,7 +176,7 @@ router.put('/api/guard/transaction/:transactionid', validateGuardAPI, async(req,
     const { transactionid }= req.params;
     let { vehicleid,parkingid,ticketID,Timein,Timeout,TotalAmount,Status, userid } = req.body;
     if (!vehicleid || !parkingid || !ticketID || !transactionid) {
-      return res.status(400).json({ success: false, msg: 'Thiếu thông tin bắt buộc' });
+      return res.json({ success: false, msg: 'Thiếu thông tin bắt buộc' });
     }
     const guarid = req.session.userid;
     const vehicle = await knex('vehicle').first().where({vehicleid});
@@ -201,7 +202,7 @@ router.put('/api/guard/transaction/:transactionid', validateGuardAPI, async(req,
       guardname:guard.guardname,
     }).where({transactionid});
 
-    if (!transactionid) return res.status(400).json({ success: true, msg: 'Tạo vé giao dịch thất bại' });
+    if (!transactionid) return res.json({ success: true, msg: 'Tạo vé giao dịch thất bại' });
     return res.status(200).json({ success: true, msg: 'Tạo vé giao dịch thành công' });
 } catch (err) {
     handleAPIError(err, res);
@@ -229,11 +230,11 @@ router.get('/api/guard/transaction/:transactionid',validateGuardAPI, async(req, 
     try {
         const { transactionid } = req.params;
         const guardid = req.session.userid;
-        if (!transactionid) return res.status(400).json({ success: false, msg: 'Thông tin bắt buộc bị thiếu' });
+        if (!transactionid) return res.json({ success: false, msg: 'Thông tin bắt buộc bị thiếu' });
         const transaction = await knex('transaction')
             .first()
             .where({ transactionid, guardid  });
-        if (!transaction) return res.status(400).json({ success: false, msg: 'Lấy thông tin vé giao dịch thất bại' });
+        if (!transaction) return res.json({ success: false, msg: 'Lấy thông tin vé giao dịch thất bại' });
         return res.status(200).json({
             success: true,
             data: transaction,

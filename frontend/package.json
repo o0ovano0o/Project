@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^12.0.0",
-    "@react-native-community/async-storage": "~1.12.0",
     "@react-native-community/checkbox": "^0.5.7",
     "@react-native-community/datetimepicker": "3.2.0",
     "@react-native-community/masked-view": "0.1.10",
@@ -52,16 +51,15 @@
     "react-native-tab-view": "^3.0.1",
     "react-native-vector-icons": "^8.1.0",
     "react-native-web": "~0.13.12",
-    "unimodules-permissions-interface": "~6.1.0",
-    "@react-native-async-storage/async-storage": "^1.13.0"
+    "unimodules-permissions-interface": "~6.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.46",
-    "meteor-node-stubs": "^0.3.2",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
     "faker": "^5.5.3",
     "jest-expo": "^41.0.0",
+    "meteor-node-stubs": "^0.3.2",
     "typescript": "~4.0.0"
   },
   "private": true

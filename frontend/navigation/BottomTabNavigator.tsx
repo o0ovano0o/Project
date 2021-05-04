@@ -17,6 +17,7 @@ import CustomerProfile from '../CustomerScreens/CustomerProfile';
 import GuardProfile from '../GuardScreens/GuardProfile';
 import ListTicket from '../CustomerScreens/ListTicket';
 import MainScreen from '../GuardScreens/MainScreen';
+import ScanQRCodeGuard from '../GuardScreens/ScanQRCodeGuard';
 import ScanQRCode from '../OwnerScreens/ScanQRCode';
 import OwnerProfile from '../OwnerScreens/OwnerProfile';
 
@@ -263,7 +264,7 @@ function TabTwoNavigator() {
       <TabTwoStack.Navigator>
         <TabTwoStack.Screen
           name="TabTwoScreen"
-          component={ScanQRCode}
+          component={ScanQRCodeGuard}
           options={{headerShown: false}}
         />
       </TabTwoStack.Navigator>
