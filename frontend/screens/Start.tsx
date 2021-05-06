@@ -45,11 +45,7 @@ function Untitled({ navigation: { navigate } }) {
             title="Tìm bãi đỗ"
             style={styles.materialButtonViolet1}
             onPress={() =>
-<<<<<<< HEAD
-              navigate('ScanQRCodeGuard')
-=======
-              navigate('FindParking')
->>>>>>> f5377b21a0557e80f33653adca58bebe10ed74da
+              navigate('ListVehicleInOut')
             }
           ></MaterialButtonViolet>
         </View>

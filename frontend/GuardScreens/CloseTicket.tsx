@@ -57,16 +57,16 @@ export default class Map extends React.Component{
     successTicketRender(){
         const availableHours = ["Vé lượt", "Vé ngày" ];
         return(
-            <ScrollView style={{flex:1, borderBottomColor:"#CCCCCC"}}>
+            <ScrollView style={{flex:1, borderBottomColor:"#CCCCCC", position:'absolute',marginTop:(height-90)/3*2}}>
                 <View style={{flex:7, marginLeft:5, marginTop:-5}}>
                     <View style={{justifyContent:'center', alignItems:'center'}}>
-                        <Text style={styles.namecar}>Bãi đỗ xe - {user.parkingname}</Text>
+                        <Text style={styles.namecar}>Bãi đỗ xe - {this.state.user.parkingname}</Text>
                     </View>
 
                     <View style={{justifyContent:'center', alignItems:'center'}}>
                         <View style={{flexDirection:'row', alignItems:'center'}}>
                             <Feather name="map-pin" size={14} color="gray" style={{ marginLeft:8}}/>
-                            <Text style={styles.textcar}>{user.parkingaddress}</Text>
+                            <Text style={styles.textcar}>{this.state.user.parkingaddress}</Text>
                         </View>
                     </View>
                     <View style={{marginTop:10, marginLeft:-15,width:width, alignItems:'center'}}>
@@ -74,12 +74,15 @@ export default class Map extends React.Component{
                     </View>
 
                     <View style={{alignItems:'center', justifyContent:'center'}}>
-                        <View style={{height:60, backgroundColor:'white',flexDirection:'row', marginTop:10}}>
+                        <View style={{height:60, flexDirection:'row', marginTop:10}}>
 
                             <MaterialButtonViolet
-                                onPress={() =>
+                                 onPress={() => {
+                                    if(this.state.user.role == 2)
                                     this.props.navigation.push("ScanQRCode")
-                                }
+                                    else this.props.navigation.push("ScanQRCodeGuard")
+
+                                }}
                                 style={styles.accept2}
                                 title="Tạo vé mới"
                             ></MaterialButtonViolet>
@@ -102,19 +105,23 @@ export default class Map extends React.Component{
                             <AntDesign name="left" size={24} color="black" />
                         </View>
                         <View style={{flex:5, alignItems:'center'}}>
-                            <Text style={{fontSize:16, fontWeight:'bold'}}>Thông tin vé xe</Text>
+                            <Text style={{fontSize:16, fontWeight:'bold'}}>Trả vé xe</Text>
                         </View>
                         <View style={{flex:1}}>
                         </View>
                     </View>
                     <View style={{marginTop:20 }}>
+                            {/* {this.state.success == false && ( */}
                         <View style={ {justifyContent:'center', alignItems:'center'}}>
                             <Image
                                 source={require('../assets/images/ticket.png')}
                                 resizeMode="cover"
                                 style={{height:height-150, width:width-60}}
-                            ></Image>
+                                ></Image>
                         </View>
+
+
+
                         <View style={{position:'absolute'}}>
                             <View style={{marginLeft:60, marginTop:10}}>
                                 <View style={{ flexDirection:'row'}}>
@@ -147,6 +154,10 @@ export default class Map extends React.Component{
                                 </View>
                             </View>
                         </View>
+
+
+                          {
+                              this.state.success == false && (
                         <View style={{position:'absolute',marginTop:(height-150)/3*2-10}}>
                             <View style={{marginLeft:60}}>
                                 <View style={{justifyContent:'center', alignItems:'center'}}>
@@ -165,17 +176,22 @@ export default class Map extends React.Component{
                                 <Text>Tổng tiền: {this.props.route.params.data.Amount} </Text>
                                 </View>
                             </View>
-                        </View>         
+                        </View>
+                         )}
                     </View>
                 </View>
+                {this.state.success == false && (
                 <View style={styles.button}>
-                    {this.state.success == false && (
+
                        <View style={{alignItems:'center', justifyContent:'center'}}>
                        <View style={{height:60, backgroundColor:'white',flexDirection:'row'}}>
                            <MaterialButtonViolet
-                               onPress={() =>
-                                   this.props.navigation.push("ScanQRCode")
-                               }
+                                onPress={() => {
+                                    if(this.state.user.role == 2)
+                                    this.props.navigation.push("ScanQRCode")
+                                    else this.props.navigation.push("ScanQRCodeGuard")
+
+                                }}
                                style={styles.accept}
                                title="Từ chối"
                            ></MaterialButtonViolet>
@@ -188,9 +204,9 @@ export default class Map extends React.Component{
                            ></MaterialButtonViolet>
                        </View>
                    </View>
+                </View>
                     )}
                     {this.state.success == true && this.successTicketRender()}
-                </View>
 
 
             </SafeAreaView>
