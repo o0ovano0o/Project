@@ -92,8 +92,8 @@ function ListParking({ navigation }) {
                 animated={true}
                 hidden={true} />
             <View style={styles.tabback}>
-                <TouchableOpacity onPress={()=> navigation.push("ListParking")} style={{ flex: 1, alignItems: 'center' }}>
-                    <AntDesign name="left" size={24} color="gray" />
+                <TouchableOpacity onPress={()=> navigation.push("ListParking")} style={{ flex: 1, alignItems: 'center', justifyContent:'center' }}>
+                    <AntDesign name="left" size={24} color="black" />
                 </TouchableOpacity>
                 <View style={{ flex: 5, alignItems: 'center' }}>
                     <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Danh sách bãi gửi xe</Text>
