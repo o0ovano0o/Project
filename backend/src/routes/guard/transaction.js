@@ -15,7 +15,7 @@ router.post('/api/guard/transaction', validateGuardAPI, async(req, res) => {
         const parking = await knex('parking').first().where({parkingid});
         const user = await knex('user').first().where({userid});
         const guard = await knex('user').first().where({userid:guarid});
-        const transactionid = await knex('transaction').insert({
+        const [transaction] = await knex('transaction').insert({
           vehicleid,parkingid,ticketID,Timein,Timeout,TotalAmount,Status,guarid, userid,
           color:vehicle.color,
           code:vehicle.code,
@@ -31,29 +31,39 @@ router.post('/api/guard/transaction', validateGuardAPI, async(req, res) => {
 
           guardname:guard.username,
           typetimeticket,priceticket,nameticket
-        }).returning('transactionid');
+        }).returning('*');
+         console.log(transaction);
 
-
-        if (!transactionid) return res.json({ success: false, msg: 'Tạo vé giao dịch thất bại' });
-        const parkinglt = await knex('parking').where({ parkingid });
+        if (!transaction.transactionid) return res.json({ success: false, msg: 'Tạo vé giao dịch thất bại' });
+        const [parkinglt] = await knex('parking').where({ parkingid });
+        if(!parkinglt || !parkinglt.parkingid) return res.status(200).json({ success: true, msg: 'Tạo vé giao dịch thành công' });
         if(transaction.type == 'motobike') {
-            var UsedPackingMotoBike = parseInt(parkinglt.UsedPackingMotoBike) +1 ;
-            if(UsedPackingMotoBike > parseInt(parkinglt.TotalParkingMotoBike)) {
-                return res.json({ success: false, msg: 'Số chỗ dành cho xe máy đã đầy' });
+            if(parkinglt.TotalParkingMotoBike && parseInt(parkinglt.TotalParkingMotoBike)) {
+                var usedmotobike = parseInt(parkinglt.UsedPackingMotoBike) ? parseInt(parkinglt.UsedPackingMotoBike) : 0;
+                var UsedPackingMotoBike = usedmotobike +1 ;
+                if(UsedPackingMotoBike > parseInt(parkinglt.TotalParkingMotoBike)) {
+                    return res.json({ success: false, msg: 'Số chỗ dành cho xe máy đã đầy' });
+                }
+                await knex('parking').update({ UsedPackingMotoBike }).where({parkingid});
             }
-            await knex('parking').update({ UsedPackingMotoBike }).where({parkingid});
         } else if(transaction.type == 'car') {
-            var UsedPackingCar =parseInt(parkinglt.UsedPackingCar) + 1;
-            if(UsedPackingCar > parseInt(parkinglt.TotalParkingCar)) {
-                return res.json({ success: false, msg: 'Số chỗ dành cho ô tô đã đầy' });
+            if(parkinglt.TotalParkingCar && parseInt(parkinglt.TotalParkingCar)) {
+                var usedcar = parseInt(parkinglt.UsedPackingCar) ? parseInt(parkinglt.UsedPackingCar) : 0;
+                var UsedPackingCar = usedcar +1 ;
+                if(UsedPackingCar > parseInt(parkinglt.TotalParkingCar)) {
+                    return res.json({ success: false, msg: 'Số chỗ dành cho xe ô tô đã đầy' });
+                }
+                await knex('parking').update({ UsedPackingCar }).where({parkingid});
             }
-            await knex('parking').update({ UsedPackingCar }).where({parkingid});
         } else if(transaction.type == 'bike') {
-            var UsedPackingBike =parseInt(parkinglt.UsedPackingBike) + 1;
-            if(UsedPackingBike > parseInt(parkinglt.TotalParkingBike)) {
-                return res.json({ success: false, msg: 'Số chỗ dành cho xe đạp đã đầy' });
+            if(parkinglt.TotalParkingBike && parseInt(parkinglt.TotalParkingBike)) {
+                var usedbike = parseInt(parkinglt.UsedPackingBike) ? parseInt(parkinglt.UsedPackingBike) : 0;
+                var UsedPackingBike = usedbike +1 ;
+                if(UsedPackingBike > parseInt(parkinglt.TotalParkingBike)) {
+                    return res.json({ success: false, msg: 'Số chỗ dành cho xe đạp đã đầy' });
+                }
+                await knex('parking').update({ UsedPackingCar }).where({parkingid});
             }
-            await knex('parking').update({ UsedPackingBike }).where({parkingid});
         }
         return res.status(200).json({ success: true, msg: 'Tạo vé giao dịch thành công' });
     } catch (err) {

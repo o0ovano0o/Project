@@ -113,7 +113,7 @@ function InScreen(){
                 })
             }
             <Modal
-                isVisible={visiable===1}
+                isVisible={visiable==1}
                 useNativeDriver
                 style={{margin: 0,
                         justifyContent: 'center', height:200, alignItems:'center'}}
@@ -233,6 +233,11 @@ function OutScreen(){
                                         {/* <Text style={styles.textcar}>Chủ xe: {item.username}</Text> */}
                                     </View>
                                     <View style={{flex:2, justifyContent:'center'}}>
+                                    <Image
+                source={require('../assets/images/paided.png')}
+                resizeMode="cover"
+                style={{height:100, width:200, position:'absolute', right:35, bottom:25}}
+            ></Image>
                                         <Text style={{fontSize:12, marginLeft:10}}>Giá</Text>
                                         <Text style={{color:'#00ff40', fontSize:14, marginLeft:10}}>$20.000</Text>
                                     </View>
@@ -311,15 +316,26 @@ function ModalView({item}) {
                     <Text style={styles.textcar}>Chủ xe: {item.username}</Text>
                 </View>
             </View>
-            <View style={{flex:1, marginLeft:20}}> 
+            <View style={{flex:1, marginLeft:20}}>
                 <Text style={styles.textcar}>Biển số: {item.code}</Text>
                 <Text style={styles.textcar}>Điện thoại: {item.phonenumber}</Text>
-                <Text style={styles.textcar}>Mô tả: {item.description}</Text>  
+                <Text style={styles.textcar}>Mô tả: {item.description}</Text>
+                {item.Status == "2" &&
                 <Image
-                    source={require('../assets/images/paided.png')}
-                    resizeMode="cover"
-                    style={{height:100, width:200, position:'absolute', right:15, bottom:15}}
-                ></Image>  
+                source={require('../assets/images/paided.png')}
+                resizeMode="cover"
+                style={{height:100, width:200, position:'absolute', right:15, bottom:15}}
+            ></Image>
+                }
+                {item.Status == "1" &&
+                <Image
+                source={require('../assets/images/unoaid.png')}
+                resizeMode="cover"
+                style={{height:100, width:200, position:'absolute', right:15, bottom:15}}
+            ></Image>
+                }
+
+
             </View>
         </View>
     );
@@ -354,7 +370,7 @@ function ListVehicleInOut({ navigation }) {
             </View>
       </View>
       <View style={styles.profile}>
-            <TabView 
+            <TabView
                 renderTabBar={props => (
                     <TabBar
                       {...props}
@@ -403,7 +419,7 @@ const styles = StyleSheet.create({
   item:{
     height:100,
     flexDirection:'row',
-    
+
     justifyContent:'center' ,
     marginBottom:10
   },

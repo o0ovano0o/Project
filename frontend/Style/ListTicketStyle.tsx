@@ -69,7 +69,7 @@ var height = Dimensions.get('window').height; //full height
           hoursDropdownStyleScan: {
             marginLeft: -10,
             paddingHorizontal: 10 / 2,
-            marginVertical: -(10 + 1),            
+            marginVertical: -(10 + 1),
             width:300,
             marginTop:10
           },
@@ -98,6 +98,19 @@ var height = Dimensions.get('window').height; //full height
             borderColor: "rgba(35,225,142,1)",
             borderRadius: 6,
             shadowColor: "rgba(0,0,0,1)",
+            shadowOffset: {
+              width: 0,
+              height: 3
+            },
+            margin:10
+          },
+          accept3:{
+            height: 40,
+            width: 300,
+            borderWidth: 1,
+            borderColor: "rgba(35,225,142,1)",
+            borderRadius: 6,
+
             shadowOffset: {
               width: 0,
               height: 3

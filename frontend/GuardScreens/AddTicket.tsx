@@ -146,13 +146,13 @@ export default class AddTicket extends React.Component {
 
                         </View>
                         <View style={{ marginTop: 10 }}>
-                            <Text>Giá vé: {JSON.stringify(this.state.ticket.price)} đ </Text>
+                            <Text>Giá vé: {this.state.ticket.price} đ </Text>
                         </View>
                         <View style={{ marginTop: 10 }}>
-                            <Text>Ngày gửi: {JSON.stringify(this.state.today)} </Text>
+                            <Text>Ngày gửi: {this.state.today.toString()} </Text>
                         </View>
                         <View style={{ marginTop: 10 }}>
-                            <Text>Giờ vào: {JSON.stringify(this.state.now)} </Text>
+                            <Text>Giờ vào: {this.state.now.toString()} </Text>
                         </View>
 
 
@@ -161,9 +161,12 @@ export default class AddTicket extends React.Component {
                     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                         <View style={{ height: 60, backgroundColor: 'white', flexDirection: 'row', marginTop: 10 }}>
                             <MaterialButtonViolet
-                                onPress={() =>
-                                    this.props.navigation.push("ScanQRCodeGuard")
-                                }
+                                onPress={() => {
+                                    if(this.state.user.role == 2)
+                                    this.props.navigation.push("ScanQRCode")
+                                    else this.props.navigation.push("ScanQRCodeGuard")
+
+                                }}
                                 style={styles.accept}
                                 title="Từ chối"
                             ></MaterialButtonViolet>
