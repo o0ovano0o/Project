@@ -1,5 +1,5 @@
 import React, { useState, Component } from "react";
-import { StyleSheet, View, Text, Image, Dimensions, SafeAreaView, StatusBar, ScrollView, TextInput, TouchableHighlight } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Dimensions, SafeAreaView, StatusBar, ScrollView, TextInput, TouchableHighlight } from "react-native";
 import { AntDesign, Feather, Foundation, MaterialIcons, Ionicons, EvilIcons, Fontisto } from '@expo/vector-icons';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from "moment";
@@ -30,7 +30,7 @@ function timeInput() {
     }
 }
 
-function AddParking() {
+function AddParking({ navigation: { navigate } }) {
     const inputOpenTime = timeInput();
     const inputCloseTime = timeInput();
     const [parkingname, setparkingname] = useState('');
@@ -62,14 +62,14 @@ function AddParking() {
                 <ScrollView style={{ height: height - 120, borderBottomColor: "#CCCCCC" }}>
                     <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1, paddingTop: 10, paddingLeft: 20 }}>
                         <Text style={{ marginBottom: 5 }}>Tên bãi gửi xe</Text>
-                        <TextInput placeholder="Nhập tên bãi gửi xe" value="Bãi gửi xe Duy Tân"
+                        <TextInput placeholder="Nhập tên bãi gửi xe" 
                             onChangeText={parkingname => setparkingname(parkingname)}
                             defaultValue={parkingname}
                         ></TextInput>
                     </View>
                     <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1, paddingTop: 10, paddingLeft: 20 }}>
                         <Text style={{ marginBottom: 5 }}>Địa chỉ</Text>
-                        <TextInput placeholder="Nhập địa chỉ" value="" 
+                        <TextInput placeholder="Nhập địa chỉ" 
                             onChangeText={address => setaddress(address)}
                             defaultValue={address}></TextInput>
                     </View>
@@ -78,20 +78,20 @@ function AddParking() {
                         <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 5, flex: 1 }}>
                             <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 5, flex: 1 }}>
                                 <Text>Ô tô: </Text>
-                                <TextInput keyboardType="numeric" value="20"
+                                <TextInput keyboardType="numeric" 
                                         onChangeText={TotalParkingCar => setTotalParkingCar(TotalParkingCar)}
                                         defaultValue={TotalParkingCar}></TextInput>
                             </View>
                             <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 5, flex: 1 }}>
                                 <Text>Xe máy: </Text>
-                                <TextInput keyboardType="numeric" value="10"
+                                <TextInput keyboardType="numeric" 
                                         onChangeText={TotalParkingMotoBike => setTotalParkingMotoBike(TotalParkingMotoBike)}
                                         defaultValue={TotalParkingMotoBike}></TextInput>
                             </View>
                             <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 5, flex: 1 }}>
                                 <Text>Xe đạp: </Text>
-                                <TextInput keyboardType="numeric" value="10"
-                                        onChangeText={TotalParkingBike => setTotalParkingMotoBike(TotalParkingBike)}
+                                <TextInput keyboardType="numeric" 
+                                        onChangeText={TotalParkingBike => setTotalParkingBike(TotalParkingBike)}
                                         defaultValue={TotalParkingBike}></TextInput>
                             </View>
                         </View>
@@ -125,9 +125,30 @@ function AddParking() {
                             />
                         )}
                     </View>
+                    <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1, paddingTop: 10, paddingLeft: 20 }}>
+                        <Text style={{ marginBottom: 5 }}>Mô tả:</Text>
+                        <TextInput placeholder="Nhập mô tả bãi gửi xe" 
+                            onChangeText={description => setdescription(description)}
+                            defaultValue={description}
+                        ></TextInput>
+                    </View>
+                    <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1, paddingTop: 10, paddingLeft: 20 }}>
+                        <TouchableOpacity onPress={() =>
+                                                    navigate('FindAddress')
+                                                    }>
+                            <Text style={{ marginBottom: 5 }}>Giúp địa chỉ được chính xác nhất:</Text>
+                            <View style={{flexDirection:'row'}}>
+                                <Ionicons name="location-sharp" size={20} color="red" />
+                                <TextInput placeholder="Địa chỉ cụ thể" 
+                                    onChangeText={description => setdescription(description)}
+                                    defaultValue={description}
+                                ></TextInput>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                     <View style={{ height: 50, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
                         <MaterialButtonViolet
-                            onPress={() => register( parkingname, TotalParkingCar,TotalParkingBike ,TotalParkingMotoBike ,address)}
+                            onPress={() => register( parkingname, TotalParkingCar,TotalParkingBike ,TotalParkingMotoBike ,address,description)}
                             style={styles.button}
                             title="Thêm bãi gửi xe"
                         ></MaterialButtonViolet>
@@ -204,10 +225,12 @@ const styles = StyleSheet.create({
     }
 
 });
-async function register( parkingname: string, TotalParkingCar: int,TotalParkingBike :int,TotalParkingMotoBike :int,address: string) {
+async function register( parkingname: string, TotalParkingCar: int,TotalParkingBike :int,TotalParkingMotoBike :int,address: string,description: string) {
   var endpoint = '';
-  endpoint = 'http://localhost:3000/api/owner/parking';
-  var latitude,longitude,description;
+  endpoint = 'https://project3na.herokuapp.com/api/owner/parking';
+  var latitude, longitude;
+  latitude="21.054677";
+  longitude="105.786557";
 //   if(password != repassword) {
 //     return alert('Mật khẩu không khớp. Vui lòng nhập lại.');
 //   }
