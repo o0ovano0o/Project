@@ -162,15 +162,15 @@ async function addVehicle(navigation:any, color: string, code: string, type: str
     .then(async function (response) {
       // handle success
       if(response.data.success) {
-        alert(response.data.msg)
+        // alert(response.data.msg)
         navigation.push('ListVehicle');
       } else {
-        alert(response.data.msg);
+        // alert(response.data.msg);
       }
     })
     .catch(function (error) {
       // handle error
-         alert(error);
+        //  alert(error);
     })
     .finally(function () {
     });

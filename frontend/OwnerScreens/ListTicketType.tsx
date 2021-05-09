@@ -33,12 +33,12 @@ function ListTicketType({ navigation }) {
         await axios
             .delete(`https://project3na.herokuapp.com/api/owner/ticket/${id}`)
             .then(async function (response) {
-                alert(response.data.msg);
+                //alert(response.data.msg);
                 setRefreshPage(false);
                 getTicket();
             })
             .catch(function (error) {
-                alert(error);
+                //alert(error);
 
             })
             .finally(function () {
@@ -53,12 +53,12 @@ function ListTicketType({ navigation }) {
                     settickets(response.data.data);
                     settotal(response.data.data.length);
                 }
-                else alert(response.data.msg)
+                //else //alert(response.data.msg)
                 setRefreshPage(false);
 
             })
             .catch(function (error) {
-                alert(error);
+                //alert(error);
                 setRefreshPage(false);
             })
             .finally(function () {
@@ -117,8 +117,8 @@ function ListTicketType({ navigation }) {
                 animated={true}
                 hidden={true} />
             <View style={styles.tabback}>
-            <TouchableOpacity onPress={() => navigation.push('CustomerProfile')}  style={{ flex: 1, alignItems: 'center' }}>
-                    <AntDesign name="left" size={24} color="gray" />
+                <TouchableOpacity onPress={() => navigation.push('CustomerProfile')}  style={{ flex: 1, alignItems: 'center', justifyContent:'center' }}>
+                    <AntDesign name="left" size={24} color="black" />
                 </TouchableOpacity>
                 <View style={{ flex: 5, alignItems: 'center' }}>
                     <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Danh sách loại vé</Text>

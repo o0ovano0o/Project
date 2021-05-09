@@ -132,7 +132,7 @@ export default function AddTicketByHand() {
       if (Platform.OS !== 'web') {
         const { status } = await ImagePicker.requestCameraPermissionsAsync();
         if (status !== 'granted') {
-          alert('Sorry, we need camera roll permissions to make this work!');
+        //   alert('Sorry, we need camera roll permissions to make this work!');
         }
       }
     })();

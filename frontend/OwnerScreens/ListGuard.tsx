@@ -42,12 +42,12 @@ function ListGuard({ navigation }) {
             });
     }
     const deleteGuard = async (userid: any) => {
-        alert('1');
+        //alert('1');
         try {
             await axios
                 .delete(`https://project3na.herokuapp.com/api/owner/guard/${userid}`)
                 .then(async function (response) {
-                    alert(response.data.msg);
+                   // alert(response.data.msg);
                     getGuardList();
                 });
         } catch (error) {

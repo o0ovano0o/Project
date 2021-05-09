@@ -24,12 +24,12 @@ function ListParking({ navigation }) {
         await axios
             .delete(`https://project3na.herokuapp.com/api/owner/parking/${id}`)
             .then(async function (response) {
-                alert(response.data.msg);
+                //alert(response.data.msg);
 
                 getParking();
             })
             .catch(function (error) {
-                alert(error);
+              //  alert(error);
 
             })
             .finally(function () {
@@ -44,12 +44,12 @@ function ListParking({ navigation }) {
                     setParkings(response.data.data);
 
                 }
-                else alert(response.data.msg)
+                //else // alert(response.data.msg)
 
 
             })
             .catch(function (error) {
-                alert(error);
+                //alert(error);
 
             })
             .finally(function () {

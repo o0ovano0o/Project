@@ -48,9 +48,9 @@ export default class Map extends React.Component{
                 this.state.success = true;
             }
         } catch (error) {
-            alert(
-                error
-            );
+            // alert(
+            //     error
+            // );
         }
     }
 

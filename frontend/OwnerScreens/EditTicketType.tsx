@@ -50,30 +50,30 @@ function EditTicketType({navigation,route}) {
                 })
             .then(async function (response) {
               if(response.data.success) {
-                alert(response.data.msg);
+               // alert(response.data.msg);
                 navigation.push('ListTicketType');
               } else {
-                alert(response.data.msg);
+                //alert(response.data.msg);
               }
             })
             .catch(function (error) {
               // handle error
-              alert('error');
-              alert(JSON.stringify({
-                typetime,
-                name,
-                price: parseInt(name),
-                typeverhicle,
-                drescription,
-                isDefault:false,
-                isSystem:0
+            //   alert('error');
+            //   alert(JSON.stringify({
+            //         typetime,
+            //         name,
+            //         price: parseInt(name),
+            //         typeverhicle,
+            //         drescription,
+            //         isDefault:false,
+            //         isSystem:0
 
-            }));
+            //     }));
             })
             .finally(function () {
             });
         }catch(er){
-            alert(er);
+           // alert(er);
         }
     }
     const vehicle = [

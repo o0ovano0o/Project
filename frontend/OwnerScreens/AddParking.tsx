@@ -246,12 +246,12 @@ async function register( parkingname: string, TotalParkingCar: int,TotalParkingB
     if(response.data.success) {
       var data = JSON.stringify(response.data.data);
     } else {
-      alert(response.data.msg);
+    //  alert(response.data.msg);
     }
   })
   .catch(function (error) {
     // handle error
-    alert('error');
+   // alert('error');
   })
   .finally(function () {
   });

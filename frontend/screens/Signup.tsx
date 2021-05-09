@@ -81,7 +81,7 @@ function Signup({ navigation: { navigate } }) {
         <MaterialButtonViolet
         title="Tìm bãi đỗ"
         onPress={() =>
-          navigate('Map')
+          navigate('FindParking')
         }
           style={styles.materialButtonViolet2}
         ></MaterialButtonViolet>
@@ -113,12 +113,12 @@ async function register(navigate:any, username: string, password: string,repassw
       var data = JSON.stringify(response.data.data);
       navigate('Login');
     } else {
-      alert(response.data.msg);
+     // alert(response.data.msg);
     }
   })
   .catch(function (error) {
     // handle error
-    alert('error');
+    //alert('error');
   })
   .finally(function () {
   });

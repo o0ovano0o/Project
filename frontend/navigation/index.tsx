@@ -43,6 +43,7 @@ import EditTicketType from '../OwnerScreens/EditTicketType';
 import FindAddress from '../OwnerScreens/FindAddress';
 import FindParking from '../OwnerScreens/FindParking';
 import MainScreenOwner from '../OwnerScreens/MainScreen';
+import Test from '../OwnerScreens/Test';
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -113,6 +114,7 @@ async function getUser() {
       <Stack.Screen name="ListParking" component={ListParking} />
       <Stack.Screen name="FindParking" component={FindParking} />
       <Stack.Screen name="MainScreenOwner" component={MainScreenOwner} />
+      <Stack.Screen name="Test" component={Test} />
       <Stack.Screen name="Root" component={BottomTabNavigator} />
 
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />

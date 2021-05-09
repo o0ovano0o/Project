@@ -169,12 +169,12 @@ function InScreen() {
                     setsystems(response.data.ticketSystem);
                     settotal(response.data.ticketSystem.length);
                 }
-                else alert(response.data.msg)
+               // else //alert(response.data.msg)
                 setRefreshPage(false);
-                alert(JSON.stringify(response.data));
+                //alert(JSON.stringify(response.data));
             })
             .catch(function (error) {
-                alert(error);
+                //alert(error);
                 setRefreshPage(false);
             })
             .finally(function () {
@@ -281,12 +281,12 @@ function OutScreen() {
                     setnormal(response.data.ticketNormal);
                     settotal(response.data.ticketNormal.length);
                 }
-                else alert(response.data.msg)
+                //else //alert(response.data.msg)
                 setRefreshPage(false);
-                alert(JSON.stringify(response.data));
+                //alert(JSON.stringify(response.data));
             })
             .catch(function (error) {
-                alert(error);
+                //alert(error);
                 setRefreshPage(false);
             })
             .finally(function () {

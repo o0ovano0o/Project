@@ -109,7 +109,7 @@ export default class FindParking extends Component {
           lngcurr: me.state.currentregion.longitude               
       });     
     }, ((error) => {   
-      alert('Lấy vị trí hiện tại thất bại')   
+      //alert('Lấy vị trí hiện tại thất bại')   
     }))
     showLocation({
       latitude: 	lat,
