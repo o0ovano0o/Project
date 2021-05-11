@@ -1,44 +1,92 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {Component, useState} from 'react';
-import { StyleSheet, Text, View,Dimensions, Image,TouchableWithoutFeedback, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View,Dimensions, ScrollView,TouchableWithoutFeedback, TouchableOpacity} from 'react-native';
 import MapView from "react-native-maps";
-import {  Ionicons,AntDesign } from "@expo/vector-icons";
+import {  Ionicons,MaterialIcons } from "@expo/vector-icons";
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
 import { ListItem, SearchBar } from "react-native-elements";
+import axios from "axios";
 const { Marker } = MapView;
+const latitudeDeltaE = 0.0122;
+const longitudeDeltaE = 0.0121;
+// https://maps.vietmap.vn/api/reverse?point.lat=21.054677&point.lon=105.786557&api-version=1.1&apikey=9a9e3d1c0a501c7d4a69c6c5536cd49de806ea33d494114e
 export default class FindAddress extends Component {
     state={
         region: {  
             latitude: 	21.027763,
             longitude:	105.834160,
             latitudeDelta: 0.0122,
-            longitudeDelta: 0.0121,
-            address:''
+            longitudeDelta: 0.0121
+            
           },
-        search: '',
+        search: '', 
+        address:'',
+        text:'',
+        re:[],
+        Id:''     
     }
-    onChangeValue=region =>{
-        alert(JSON.stringify(region))
+    
+    onChangeValue=async(region) =>{
+        var text ='', address=''  
         this.setState({
             region
-        })
+        })        
+        const url = `https://maps.vietmap.vn/api/reverse?point.lat=${region.latitude}&point.lon=${region.longitude}&api-version=1.1&apikey=9a9e3d1c0a501c7d4a69c6c5536cd49de806ea33d494114e`
+        await axios
+          .get(url)
+          .then(async function (response) {
+              text=response.data.data.features[0].properties.name,
+              address=response.data.data.features[0].properties.label
+          })
+          .catch(function (error) {
+                alert("Vị trí chưa được gán định vị");
+          })
+          .finally(function () {
+          });
+        alert(text+'- dia chi: '+ address)
+        
     }
-    updateSearch = search => {
-        this.setState({ search }, () => {
-            if (search.length < 1) {
-                this.setState({
-                    data: []
+    updateSearch = async(search) => {
+        var me=this;
+        this.setState({ search });
+        const url=  `https://maps.vietmap.vn/api/autocomplete?api-version=1.1&apikey=9a9e3d1c0a501c7d4a69c6c5536cd49de806ea33d494114e&text=${search}`
+        await axios
+          .get(url)
+          .then(async function (response) {
+             // alert(response.data.data.features[0].properties.name);
+              me.setState({ 
+                  re:response.data.data.features 
                 });
-                return;
-            }
-
-            
-        });
-    };
+                
+          })
+          .catch(function (error) {
+              //  alert("Vị trí chưa được gán định vị");
+          })
+          .finally(function () {
+          });
+      }
+    ChangeSearchText = async(search, lat, lng,Id)=>{
+        this.setState({ search });
+        this.setState({
+            region: {
+              latitude:lat,
+              longitude: lng ,
+              latitudeDelta: 0.0122,
+              longitudeDelta: 0.0121,   
+            },
+            Id:Id
+          });
+    }
+    onRegionChange(region) {
+        this.setState({ region });
+      }
     render(){
         return (
           <View style={{flex:1}}>
-            <View style={styles.tabback}>
+              <StatusBar
+                animated={true}
+                hidden={true} />
+            <View style={styles.tabback}>  
                 <SearchBar placeholder="Tìm kiếm"
                     lightTheme round editable={true}
                     inputContainerStyle={{height:30, backgroundColor:'white'}}
@@ -46,15 +94,46 @@ export default class FindAddress extends Component {
                     containerStyle={styles.searchstyle} 
                     onChangeText={this.updateSearch} />
             </View>
+            <View style={{ position:'relative',height:142, marginTop:5  }}>
+                <ScrollView>
+                {
+                    this.state.re.map((item)=>{
+                        return (
+                            <View style={{height:30, borderBottomWidth:1, borderBottomColor:'#CCCCCC', marginTop:5}}>
+                                <TouchableOpacity onPress={()=> this.ChangeSearchText(item.properties.name, item.geometry.coordinates[0],item.geometry.coordinates[1],item.Id)} style={{ flex: 1 }}>
+                                    <Text style={{marginLeft:20}}
+                                          key={item.Id}
+                                    >{item.properties.name}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        )
+                    })
+                }
+                </ScrollView>
+            </View>
             <MapView style={{flex:1}}
                     initialRegion={this.state.region}
+                    onRegionChange={this.onRegionChange}
+                    showsUserLocation={true}
+                    followsUserLocation={true}
+                    showsMyLocationButton={true}
                     onRegionChangeComplete={this.onChangeValue}>
-
+                <Marker
+                  coordinate={this.state.region}
+                  title="title"
+                  key={this.state.Id}
+                  description="description"
+                />
             </MapView>
             <View style={{marginTop:DEVICE_HEIGHT/2,marginLeft:DEVICE_WIDTH/2, position:'absolute'}}>
-                <Ionicons name="location-sharp" size={30} color="red" />
+                <Ionicons name="location-sharp" size={30} color="red" />                
             </View>
-            <View style={{ height: 50, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
+            <View style={{marginTop:DEVICE_HEIGHT-90,marginLeft:DEVICE_WIDTH-40, position:'absolute'}}>
+                <TouchableOpacity style={{ flex: 1 }}>
+                    <MaterialIcons name="my-location" size={30} color="#0080ff" />
+                </TouchableOpacity>
+            </View>
+            <View style={{ height: 50, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center' }}>
                 <MaterialButtonViolet
                     // onPress={() => }
                     style={styles.button}
@@ -75,9 +154,18 @@ const styles = StyleSheet.create({
     tabback: {
         height: 50,
         width: DEVICE_WIDTH,
-        justifyContent: 'center',
-        alignItems: 'center',               
+        justifyContent:'center',
+        alignItems:'center'
     },
+    item: {
+        backgroundColor: '#f9c2ff',
+        padding: 20,
+        marginVertical: 8,
+        marginHorizontal: 16,
+      },
+      title: {
+        fontSize: 32,
+      },
     button: {
         height: 40,
         width: 250,
@@ -92,7 +180,6 @@ const styles = StyleSheet.create({
         borderColor:'white', 
         width:DEVICE_WIDTH-20,
         marginTop:25, 
-        marginLeft: 10,
         marginBottom:10
       },
       image:{
