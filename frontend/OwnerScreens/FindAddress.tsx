@@ -26,24 +26,23 @@ export default class FindAddress extends Component {
         Id:''     
     }
     
-    onChangeValue=async(region) =>{
-        var text ='', address=''  
-        this.setState({
-            region
-        })        
+    onChangeValue=async(region) =>{             
+        var me=this      
         const url = `https://maps.vietmap.vn/api/reverse?point.lat=${region.latitude}&point.lon=${region.longitude}&api-version=1.1&apikey=9a9e3d1c0a501c7d4a69c6c5536cd49de806ea33d494114e`
         await axios
           .get(url)
           .then(async function (response) {
-              text=response.data.data.features[0].properties.name,
-              address=response.data.data.features[0].properties.label
+              me.setState({ 
+                  text:response.data.data.features[0].properties.name,
+                  address:response.data.data.features[0].properties.label
+               });
           })
           .catch(function (error) {
                 alert("Vị trí chưa được gán định vị");
           })
           .finally(function () {
           });
-        alert(text+'- dia chi: '+ address)
+        // alert(text+'- dia chi: '+ address)
         
     }
     updateSearch = async(search) => {
@@ -77,9 +76,6 @@ export default class FindAddress extends Component {
             Id:Id
           });
     }
-    onRegionChange(region) {
-        this.setState({ region });
-      }
     render(){
         return (
           <View style={{flex:1}}>
@@ -94,26 +90,8 @@ export default class FindAddress extends Component {
                     containerStyle={styles.searchstyle} 
                     onChangeText={this.updateSearch} />
             </View>
-            <View style={{ position:'relative',height:142, marginTop:5  }}>
-                <ScrollView>
-                {
-                    this.state.re.map((item)=>{
-                        return (
-                            <View style={{height:30, borderBottomWidth:1, borderBottomColor:'#CCCCCC', marginTop:5}}>
-                                <TouchableOpacity onPress={()=> this.ChangeSearchText(item.properties.name, item.geometry.coordinates[0],item.geometry.coordinates[1],item.Id)} style={{ flex: 1 }}>
-                                    <Text style={{marginLeft:20}}
-                                          key={item.Id}
-                                    >{item.properties.name}</Text>
-                                </TouchableOpacity>
-                            </View>
-                        )
-                    })
-                }
-                </ScrollView>
-            </View>
             <MapView style={{flex:1}}
-                    initialRegion={this.state.region}
-                    
+                    initialRegion={this.state.region} 
                     showsUserLocation={true}
                     followsUserLocation={true}
                     showsMyLocationButton={true}
@@ -125,20 +103,44 @@ export default class FindAddress extends Component {
                   description="description"
                 />
             </MapView>
-            <View style={{marginTop:DEVICE_HEIGHT/2,marginLeft:DEVICE_WIDTH/2, position:'absolute'}}>
-                <Ionicons name="location-sharp" size={30} color="red" />                
+            <View style={{ position:'absolute',height:155, marginTop:52 }}>
+                <ScrollView>
+                {
+                    this.state.re.map((item)=>{
+                        return (
+                            <View style={{height:40, borderBottomWidth:1,backgroundColor:'white', borderBottomColor:'#CCCCCC', width:DEVICE_WIDTH, justifyContent:'center'}}>
+                                <TouchableOpacity onPress={()=> this.ChangeSearchText(item.properties.name, item.geometry.coordinates[0],item.geometry.coordinates[1],item.Id)} style={{ flex: 1, justifyContent:'center' }}>
+                                    <Text style={{marginLeft:20}}
+                                          key={item.Id}
+                                    >{item.properties.name}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        )
+                    })
+                }
+                </ScrollView>
             </View>
+            <View style={{marginTop:DEVICE_HEIGHT/2+9,marginLeft:DEVICE_WIDTH/2-15, position:'absolute'}}>
+                <Ionicons name="location-sharp" size={30} color="red" />         
+            </View>
+            
             <View style={{marginTop:DEVICE_HEIGHT-90,marginLeft:DEVICE_WIDTH-40, position:'absolute'}}>
                 <TouchableOpacity style={{ flex: 1 }}>
                     <MaterialIcons name="my-location" size={30} color="#0080ff" />
                 </TouchableOpacity>
             </View>
-            <View style={{ height: 50, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center' }}>
-                <MaterialButtonViolet
-                    // onPress={() => }
-                    style={styles.button}
-                    title="Xác nhận địa chỉ"
-                ></MaterialButtonViolet>
+            <View style={{ height: 120, backgroundColor: 'white', alignItems: 'center', }}>
+                <View style={{height:60,width:DEVICE_WIDTH, alignItems: 'center', justifyContent:'center'}}>    
+                   
+                    <Text style={{margin:10, marginTop:15}}>{this.state.text}{'...'}{this.state.address}</Text>          
+                </View>
+                <View style={{flex:1,alignItems: 'center', justifyContent:'center'}}>    
+                    <MaterialButtonViolet
+                        // onPress={() => }
+                        style={styles.button}
+                        title="Xác nhận địa chỉ"
+                    ></MaterialButtonViolet>        
+                </View>
             </View>
           </View>
         );
@@ -152,7 +154,7 @@ const styles = StyleSheet.create({
         backgroundColor: "white"
     },
     tabback: {
-        height: 50,
+        height: 60,
         width: DEVICE_WIDTH,
         justifyContent:'center',
         alignItems:'center'
@@ -166,6 +168,22 @@ const styles = StyleSheet.create({
       title: {
         fontSize: 32,
       },
+    hoursDropdown: {
+        borderRadius: 15 / 2,
+        borderColor: "gray",
+        borderWidth: 1,
+        padding: 15,
+        marginRight: 16 / 2
+    },
+    hoursDropdownOption: {
+        padding: 5,
+        fontSize: 14 * 0.8
+    },
+    hoursDropdownStyle: {
+        marginLeft: -10,
+        paddingHorizontal: 10 / 2,
+        marginVertical: -(10 + 1)
+    },
     button: {
         height: 40,
         width: 250,
@@ -178,31 +196,12 @@ const styles = StyleSheet.create({
         borderRadius:10,
         backgroundColor:'white', 
         borderColor:'white', 
-        width:DEVICE_WIDTH-20,
-        marginTop:25, 
-        marginBottom:10
+        width:DEVICE_WIDTH-20  
       },
       image:{
         height:100,
         width:100,
         borderRadius:70,
         marginLeft:-10,
-      },
-      hoursDropdown: {
-          borderRadius: 5,
-          borderColor: "#e0e0d1",
-          borderWidth: 1,
-          padding: 5,
-          marginRight: 5,
-          marginLeft:10,
-          marginBottom:10,
-          width:100
-        },
-      hoursDropdownOption: {
-          padding: 5,
-          fontSize: 14 * 0.8
-      },
-      hoursDropdownStyle: {
-          marginVertical: -20
-      },
+      }
 })
