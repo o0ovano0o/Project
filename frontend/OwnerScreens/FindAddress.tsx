@@ -124,7 +124,7 @@ export default class FindAddress extends Component {
                 <Ionicons name="location-sharp" size={30} color="red" />         
             </View>
             
-            <View style={{marginTop:DEVICE_HEIGHT-90,marginLeft:DEVICE_WIDTH-40, position:'absolute'}}>
+            <View style={{marginTop:DEVICE_HEIGHT-160,marginLeft:DEVICE_WIDTH-40, position:'absolute'}}>
                 <TouchableOpacity style={{ flex: 1 }}>
                     <MaterialIcons name="my-location" size={30} color="#0080ff" />
                 </TouchableOpacity>
