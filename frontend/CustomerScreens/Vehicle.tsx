@@ -177,16 +177,16 @@ async function editVehicle(navigation:any,vehicleid:number, color: string, code:
     .then(async function (response) {
       // handle success
       if(response.data.success) {
-        alert(response.data.msg);
+        // alert(response.data.msg);
         navigation.push('ListVehicle');
         // navigate('ListVehicle');
       } else {
-        alert(response.data.msg);
+        // alert(response.data.msg);
       }
     })
     .catch(function (error) {
       // handle error
-         alert(error);
+        //  alert(error);
     })
     .finally(function () {
     });
@@ -198,15 +198,15 @@ const deleteVehicle = async function(navigation:any,vehicleid: number) {
     .then(async function (response) {
 
       if(response.data.success) {
-        alert(response.data.msg);
+        // alert(response.data.msg);
         navigation.push('ListVehicle');
       } else {
-        alert(response.data.msg);
+        // alert(response.data.msg);
       }
     })
     .catch(function (error) {
       // handle error
-         alert(error);
+        //  alert(error);
     })
     .finally(function () {
     });

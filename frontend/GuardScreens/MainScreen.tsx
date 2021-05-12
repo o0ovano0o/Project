@@ -24,12 +24,12 @@ function MainScreen({ navigation}) {
         .then(async function (response) {
             if(response.data.success)
             setParking(response.data.data);
-            else alert(response.data.msg)
+           // else // alert(response.data.msg)
             setRefreshPage(false);
-            alert(JSON.stringify(parking));
+            //alert(JSON.stringify(parking));
         })
         .catch(function (error) {
-                alert(error);
+                //alert(error);
         })
         .finally(function () {
         });

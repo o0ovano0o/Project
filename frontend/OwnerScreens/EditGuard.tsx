@@ -39,13 +39,13 @@ function EditGuard({navigation,route}) {
         try{
             const ownerid = user.userid;
 
-            alert(JSON.stringify({
-              username,
+            // alert(JSON.stringify({
+            //     username,
 
-              phonenumber,address,email,ownerid,parkingid
-            }
+            //     phonenumber,address,email,ownerid,parkingid
+            //     }
 
-            ));
+            // ));
             await axios
             .put(`https://project3na.herokuapp.com/api/owner/guard/${userid}`, {
                   username,
@@ -54,7 +54,7 @@ function EditGuard({navigation,route}) {
                 })
             .then(async function (response) {
 
-                alert(response.data.msg);
+               // alert(response.data.msg);
               if(response.data.success) {
 
                 navigation.push('ListGuard');
@@ -64,12 +64,12 @@ function EditGuard({navigation,route}) {
             })
             .catch(function (error) {
               // handle error
-              alert('error');
+              //alert('error');
             })
             .finally(function () {
             });
         }catch(er){
-            alert(er);
+            //alert(er);
         }
     }
     const getParking = async () => {
@@ -80,7 +80,7 @@ function EditGuard({navigation,route}) {
             setParkings(response.data.data);
             // alert(JSON.stringify(response));
         }catch(er){
-            alert(er);
+           // alert(er);
         }
     }
     const getUser = async () => {

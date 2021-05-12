@@ -168,7 +168,7 @@ function ItemPayScreen() {
             setList(data);
         })
         .catch(function (error) {
-                alert(error);
+                // alert(error);
         })
         .finally(function () {
         });
@@ -274,7 +274,7 @@ function ItemPayScreen() {
             setList(data);
         })
         .catch(function (error) {
-                alert(error);
+                // alert(error);
         })
         .finally(function () {
         });

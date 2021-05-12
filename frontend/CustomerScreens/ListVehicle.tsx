@@ -60,7 +60,7 @@ function ListVehicle({ navigation }) {
         setList(olist);
     })
         .catch(function (error) {
-                alert(error);
+                // alert(error);
         })
         .finally(function () {
         });
@@ -74,9 +74,9 @@ function ListVehicle({ navigation }) {
           setRefreshPage(false);
           getVehicle();
           if(response.data.success) {
-            alert(response.data.msg);
+            // alert(response.data.msg);
           } else {
-            alert(response.data.msg);
+            // alert(response.data.msg);
           }
         })
         .catch(function (error) {

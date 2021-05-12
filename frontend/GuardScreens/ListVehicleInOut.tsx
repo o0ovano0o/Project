@@ -29,12 +29,12 @@ function InScreen(){
                setNotPaidtransactions(response.data.transactionNotPaid);
 
            }
-            else alert(response.data.msg)
+            //else //alert(response.data.msg)
             setRefreshPage(false);
-            alert(JSON.stringify(response.data));
+           // alert(JSON.stringify(response.data));
         })
         .catch(function (error) {
-                alert(error);
+               // alert(error);
         })
         .finally(function () {
         });
@@ -161,12 +161,12 @@ function OutScreen(){
                 setPaidTransaction(response.data.transactionPaid);
 
            }
-            else alert(response.data.msg)
+            //else //alert(response.data.msg)
             setRefreshPage(false);
-            alert(JSON.stringify(response.data));
+            //alert(JSON.stringify(response.data));
         })
         .catch(function (error) {
-                alert(error);
+               // alert(error);
         })
         .finally(function () {
         });
