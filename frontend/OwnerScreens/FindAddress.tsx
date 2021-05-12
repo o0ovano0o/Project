@@ -120,20 +120,24 @@ export default class FindAddress extends Component {
                 }
                 </ScrollView>
             </View>
+            <View style={{  height:50,width:DEVICE_WIDTH-20, 
+                            alignItems: 'center',borderRadius:10,
+                            position:'absolute', 
+                            justifyContent:'center',
+                            backgroundColor:'white',
+                            marginTop:DEVICE_HEIGHT/2-30,marginLeft:10}}>    
+                <Text style={{margin:10, marginTop:15,textAlign: 'center'}}>{this.state.text}</Text>          
+            </View>
             <View style={{marginTop:DEVICE_HEIGHT/2+9,marginLeft:DEVICE_WIDTH/2-15, position:'absolute'}}>
                 <Ionicons name="location-sharp" size={30} color="red" />         
             </View>
             
-            <View style={{marginTop:DEVICE_HEIGHT-160,marginLeft:DEVICE_WIDTH-40, position:'absolute'}}>
+            <View style={{marginTop:DEVICE_HEIGHT-100,marginLeft:DEVICE_WIDTH-40, position:'absolute'}}>
                 <TouchableOpacity style={{ flex: 1 }}>
                     <MaterialIcons name="my-location" size={30} color="#0080ff" />
                 </TouchableOpacity>
             </View>
-            <View style={{ height: 120, backgroundColor: 'white', alignItems: 'center', }}>
-                <View style={{height:60,width:DEVICE_WIDTH, alignItems: 'center', justifyContent:'center'}}>    
-                   
-                    <Text style={{margin:10, marginTop:15}}>{this.state.text}{'...'}{this.state.address}</Text>          
-                </View>
+            <View style={{ height: 60, backgroundColor: 'white', alignItems: 'center', }}>
                 <View style={{flex:1,alignItems: 'center', justifyContent:'center'}}>    
                     <MaterialButtonViolet
                         // onPress={() => }
