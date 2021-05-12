@@ -113,7 +113,7 @@ export default class FindAddress extends Component {
             </View>
             <MapView style={{flex:1}}
                     initialRegion={this.state.region}
-                    onRegionChange={this.onRegionChange}
+                    
                     showsUserLocation={true}
                     followsUserLocation={true}
                     showsMyLocationButton={true}
