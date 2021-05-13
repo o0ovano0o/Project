@@ -56,7 +56,7 @@ async function getUser() {
             </View>
 
 
-            <ScrollView style={{height:height-120, borderBottomColor:"#CCCCCC"}}>
+            <ScrollView style={{height:height-170, borderBottomColor:"#CCCCCC"}}>
                 <View style={{height:70}}>
                     <View style={{flexDirection:'row', paddingTop:10, marginBottom:5}}>
                         <AntDesign  name="enviromento"
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
       flexDirection:'row'
   },
   profile:{
-      height: height-50,
+      height: height-100,
       width: width,
   },
   textstyle2:{

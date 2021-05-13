@@ -1,19 +1,19 @@
-Arguments: 
+Arguments:
   C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js start
 
-PATH: 
+PATH:
   C:\Program Files\AdoptOpenJDK\jdk-11.0.10.9-hotspot\bin;C:\Program Files\AdoptOpenJDK\jdk-8.0.282.8-hotspot\bin;C:\Python27\;C:\Python27\Scripts;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Users\ADMIN\AppData\Local\Microsoft\WindowsApps;C:\Users\ADMIN\AppData\Local\GitHubDesktop\bin;C:\Users\ADMIN\AppData\Local\atom\bin;C:\Users\ADMIN\AppData\Local\Yarn\bin;C:\Users\ADMIN\AppData\Roaming\npm;C:\Users\ADMIN\.dotnet\tools;C:\Users\ADMIN\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\ADMIN\AppData\Local\Microsoft\WindowsApps;
 
-Yarn version: 
+Yarn version:
   1.22.4
 
-Node version: 
+Node version:
   12.16.1
 
-Platform: 
+Platform:
   win32 x64
 
-Trace: 
+Trace:
   SyntaxError: C:\Users\ADMIN\Documents\GitHub\parking\Project\frontend\package.json: Unexpected token < in JSON at position 350
       at JSON.parse (<anonymous>)
       at C:\Program Files (x86)\Yarn\lib\cli.js:1625:59
@@ -21,7 +21,7 @@ Trace:
       at step (C:\Program Files (x86)\Yarn\lib\cli.js:310:30)
       at C:\Program Files (x86)\Yarn\lib\cli.js:321:13
 
-npm manifest: 
+npm manifest:
   {
     "main": "node_modules/expo/AppEntry.js",
     "scripts": {
@@ -37,11 +37,6 @@ npm manifest:
     },
     "dependencies": {
       "@expo/vector-icons": "^12.0.0",
-  <<<<<<< HEAD
-  =======
-      "@react-native-async-storage/async-storage": "^1.13.0",
-      "@react-native-community/async-storage": "~1.12.0",
-  >>>>>>> f5377b21a0557e80f33653adca58bebe10ed74da
       "@react-native-community/checkbox": "^0.5.7",
       "@react-native-community/datetimepicker": "3.2.0",
       "@react-native-community/masked-view": "0.1.10",
@@ -103,8 +98,8 @@ npm manifest:
     "private": true
   }
 
-yarn manifest: 
+yarn manifest:
   No manifest
 
-Lockfile: 
+Lockfile:
   No lockfile

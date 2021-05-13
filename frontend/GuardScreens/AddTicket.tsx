@@ -51,25 +51,25 @@ export default class AddTicket extends React.Component {
             });
             this.setState({ success: false });
         } catch (er) {
-            alert(JSON.stringify(er));
+            // alert(JSON.stringify(er));
         }
     }
     async createTransaction() {
         try {
-            alert(JSON.stringify({
+            // alert(JSON.stringify({
 
-                vehicleid: parseInt(this.props.route.params.data.vehicleid),
-                    parkingid: parseInt(this.state.user.parkingid),
-                    ticketID: parseInt(this.state.ticket.ticketid),
-                    Timein: `${this.state.now} ${this.state.today}`,
-                    Timeout: "",
-                    TotalAmount: 0,
-                    Status: 1,
-                    userid: parseInt(this.props.route.params.data.userid),
-                    typetimeticket: parseInt(this.state.ticket.typetime),
-                    priceticket: parseInt(this.state.ticket.price),
-                    nameticket: this.state.ticket.name,
-            }));
+            //     vehicleid: parseInt(this.props.route.params.data.vehicleid),
+            //         parkingid: parseInt(this.state.user.parkingid),
+            //         ticketID: parseInt(this.state.ticket.ticketid),
+            //         Timein: `${this.state.now} ${this.state.today}`,
+            //         Timeout: "",
+            //         TotalAmount: 0,
+            //         Status: 1,
+            //         userid: parseInt(this.props.route.params.data.userid),
+            //         typetimeticket: parseInt(this.state.ticket.typetime),
+            //         priceticket: parseInt(this.state.ticket.price),
+            //         nameticket: this.state.ticket.name,
+            // }));
             var reponse = await axios
                 .post('https://project3na.herokuapp.com/api/guard/transaction', {
                     vehicleid: parseInt(this.props.route.params.data.vehicleid),
@@ -92,23 +92,23 @@ export default class AddTicket extends React.Component {
 
             }
         } catch (error) {
-            alert(
-                error
-            );
-            alert(JSON.stringify({
+            // alert(
+            //     error
+            // );
+            // alert(JSON.stringify({
 
-                vehicleid: parseInt(this.props.route.params.data.vehicleid),
-                    parkingid: parseInt(this.state.user.parkingid),
-                    ticketID: parseInt(this.state.ticket.ticketid),
-                    Timein: `${this.state.now} ${this.state.today}`,
-                    Timeout: "",
-                    TotalAmount: 0,
-                    Status: 1,
-                    userid: parseInt(this.props.route.params.data.userid),
-                    typetimeticket: parseInt(this.state.ticket.typetime),
-                    priceticket: parseInt(this.state.ticket.price),
-                    nameticket: this.state.ticket.name,
-            }));
+            //     vehicleid: parseInt(this.props.route.params.data.vehicleid),
+            //         parkingid: parseInt(this.state.user.parkingid),
+            //         ticketID: parseInt(this.state.ticket.ticketid),
+            //         Timein: `${this.state.now} ${this.state.today}`,
+            //         Timeout: "",
+            //         TotalAmount: 0,
+            //         Status: 1,
+            //         userid: parseInt(this.props.route.params.data.userid),
+            //         typetimeticket: parseInt(this.state.ticket.typetime),
+            //         priceticket: parseInt(this.state.ticket.price),
+            //         nameticket: this.state.ticket.name,
+            // }));
         }
     }
     addTicketRender() {

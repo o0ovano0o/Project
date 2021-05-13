@@ -122,12 +122,12 @@ async function editPassword(navigation:any,  password: string,repassword :string
           );
         navigation.push('Root', {screen :"profile"})
       } else {
-        alert(response.data.msg);
+       // alert(response.data.msg);
       }
     })
     .catch(function (error) {
       // handle error
-      alert(error);
+     // alert(error);
     })
     .finally(function () {
     });
