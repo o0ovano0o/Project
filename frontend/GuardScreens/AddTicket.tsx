@@ -23,20 +23,22 @@ export default class AddTicket extends React.Component {
 
     async getUser() {
         let value = await AsyncStorage.getItem('user');
-        this.setState({ user: JSON.parse(value) });
-        alert(JSON.stringify(this.state.user));
+        value = JSON.parse(value);
+        if(!value.parkingid) value = Object.assign(value, {...this.props.route.params.data.parking});
+        this.setState({ user:value });
+
     }
     async componentDidMount() {
         try {
             const me = this;
             var response;
             await me.getUser();
-            alert('1');
             response = await axios
                 .get(`https://project3na.herokuapp.com/api/default-ticket/${this.props.route.params.data.type}`);
             if (response.data.data && response.data.data.length)
                 response = response.data.data;
             else response = new Array();
+            alert(JSON.stringify(this.props.route.params.data));
             me.setState({
                 listTicket: response
             });
@@ -140,7 +142,7 @@ export default class AddTicket extends React.Component {
                                 }}
                             >
                                 {this.state.listTicket.map(ticket => (
-                                    <Picker.Item label={ticket.name} value={ticket.ticketid} />
+                                    <Picker.Item key={ticket.ticketid} label={ticket.name} value={ticket.ticketid} />
                                 ))}
                             </Picker>
 

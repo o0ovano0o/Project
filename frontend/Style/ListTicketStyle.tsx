@@ -25,7 +25,10 @@ var height = Dimensions.get('window').height; //full height
             flex:1,
             borderRadius:20,
             backgroundColor: "white",
-            position:'absolute'
+            position:'absolute',
+            // top:70,
+            // alignItems: 'center',
+            // justifyContent:"center"
           },
           find:{
             marginTop:-10,
@@ -55,7 +58,7 @@ var height = Dimensions.get('window').height; //full height
           },
           hoursDropdownScan: {
             borderRadius: 15 / 2,
-            borderColor: "gray",
+            borderColor: "black",
             borderBottomWidth: 1,
             paddingLeft:10,
             paddingTop:10,

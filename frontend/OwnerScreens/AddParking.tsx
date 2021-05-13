@@ -41,7 +41,7 @@ function AddParking() {
     const [latitude, setlatitude] = useState('');
     const [longitude, setlongitude] = useState('');
     const [description, setdescription] = useState('');
-              
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -62,14 +62,14 @@ function AddParking() {
                 <ScrollView style={{ height: height - 120, borderBottomColor: "#CCCCCC" }}>
                     <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1, paddingTop: 10, paddingLeft: 20 }}>
                         <Text style={{ marginBottom: 5 }}>Tên bãi gửi xe</Text>
-                        <TextInput placeholder="Nhập tên bãi gửi xe" value="Bãi gửi xe Duy Tân"
+                        <TextInput placeholder="Nhập tên bãi gửi xe"
                             onChangeText={parkingname => setparkingname(parkingname)}
                             defaultValue={parkingname}
                         ></TextInput>
                     </View>
                     <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1, paddingTop: 10, paddingLeft: 20 }}>
                         <Text style={{ marginBottom: 5 }}>Địa chỉ</Text>
-                        <TextInput placeholder="Nhập địa chỉ" value="" 
+                        <TextInput placeholder="Nhập địa chỉ"
                             onChangeText={address => setaddress(address)}
                             defaultValue={address}></TextInput>
                     </View>
@@ -78,19 +78,19 @@ function AddParking() {
                         <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 5, flex: 1 }}>
                             <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 5, flex: 1 }}>
                                 <Text>Ô tô: </Text>
-                                <TextInput keyboardType="numeric" value="20"
+                                <TextInput keyboardType="numeric"
                                         onChangeText={TotalParkingCar => setTotalParkingCar(TotalParkingCar)}
                                         defaultValue={TotalParkingCar}></TextInput>
                             </View>
                             <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 5, flex: 1 }}>
                                 <Text>Xe máy: </Text>
-                                <TextInput keyboardType="numeric" value="10"
+                                <TextInput keyboardType="numeric"
                                         onChangeText={TotalParkingMotoBike => setTotalParkingMotoBike(TotalParkingMotoBike)}
                                         defaultValue={TotalParkingMotoBike}></TextInput>
                             </View>
                             <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 5, flex: 1 }}>
                                 <Text>Xe đạp: </Text>
-                                <TextInput keyboardType="numeric" value="10"
+                                <TextInput keyboardType="numeric"
                                         onChangeText={TotalParkingBike => setTotalParkingMotoBike(TotalParkingBike)}
                                         defaultValue={TotalParkingBike}></TextInput>
                             </View>
@@ -206,11 +206,14 @@ const styles = StyleSheet.create({
 });
 async function register( parkingname: string, TotalParkingCar: int,TotalParkingBike :int,TotalParkingMotoBike :int,address: string) {
   var endpoint = '';
-  endpoint = 'http://localhost:3000/api/owner/parking';
+  endpoint = 'https://project3na.herokuapp.com/api/owner/parking';
   var latitude,longitude,description;
 //   if(password != repassword) {
 //     return alert('Mật khẩu không khớp. Vui lòng nhập lại.');
 //   }
+longitude="12.1232";
+description="a";
+latitude="10.3123";
   await axios
   .post(endpoint, {
         parkingname,
@@ -234,4 +237,3 @@ async function register( parkingname: string, TotalParkingCar: int,TotalParkingB
   });
 }
 export default AddParking;
-

@@ -39,7 +39,7 @@ export default function BottomTabNavigator() {
       setTab2('Vé xe');
     } else if(data.role == 2){
       setTab1('Bãi đỗ');
-      setTab2('Thiết lập');
+      setTab2('Vé xe');
     } else {
       setTab1('Vé xe');
       setTab2('Bãi đỗ');
@@ -107,11 +107,11 @@ const user = {
 
   if(user.role == 1  || user.role=="1") {
     return (
-     <TabBarIcon name="map" color={color} />);
+     <TabBarIcon name="home" color={color} />);
   }
   else if(user.role == 2  || user.role=="2") {
 
-    return (<TabBarIcon name="ios-code" color={color} />);
+    return (<TabBarIcon name="home" color={color} />);
   }
   else {
 
@@ -134,7 +134,7 @@ const user = {
   }
   else if(user.role == 2  || user.role=="2") {
 
-    return (<TabBarIcon name="ios-code" color={color} />);
+    return (<TabBarIcon name="albums" color={color} />);
   }
   else {
 

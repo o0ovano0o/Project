@@ -1,1 +1,8 @@
-{}
+{
+  "expoServerNgrokUrl": "https://f4-z6f.o0ovano0o.frontend.exp.direct",
+  "packagerNgrokUrl": "https://packager.f4-z6f.o0ovano0o.frontend.exp.direct",
+  "ngrokPid": 6600,
+  "expoServerPort": 19000,
+  "devToolsPort": 19002,
+  "packagerPort": 19000
+}
