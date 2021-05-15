@@ -41,6 +41,9 @@ function MainScreen({ navigation}) {
     const goToList = () => {
         navigation.push("ListVehicleInOut");
     }
+    const goToAddTicketHand = () => {
+        navigation.push("AddTicketByHand");
+    }
   return (
     <SafeAreaView  style={styles.container}>
         <StatusBar
@@ -110,7 +113,7 @@ function MainScreen({ navigation}) {
                         <View style={{  flexDirection:'row',justifyContent:'center', alignItems:'center',
                                         height:40, width:width-60, marginBottom:5,
                                         borderRadius:10, backgroundColor:"#23A67E"}}>
-                            <TouchableOpacity  onPress={() => goToList()} style={{height:40, width:width-60,justifyContent:'center', alignItems:'center',}}>
+                            <TouchableOpacity  onPress={() => goToAddTicketHand()} style={{height:40, width:width-60,justifyContent:'center', alignItems:'center',}}>
                                 <View style ={{flexDirection:'row',justifyContent:'center', alignItems:'center',}}>
                                     <MaterialIcons name="add-a-photo" size={20} color="white" />
                                     <Text style={{color:'white',fontSize:14, marginLeft:30}}>Tạo vé tay</Text>
