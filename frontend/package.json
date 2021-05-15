@@ -71,7 +71,7 @@
     "victory-native": "^35.3.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.6",
+    "@babel/core": "^7.14.2",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
     "faker": "^5.5.3",

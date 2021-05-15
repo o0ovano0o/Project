@@ -1,5 +1,5 @@
-import React, { useState, Component } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Dimensions, SafeAreaView, StatusBar, ScrollView, TextInput, TouchableHighlight } from "react-native";
+import React, { useState, Component, useEffect } from "react";
+import { StyleSheet, View, Text, TouchableOpacity, Dimensions, SafeAreaView, StatusBar, ScrollView, TextInput, TouchableHighlight, Alert } from "react-native";
 import { AntDesign, Feather, Foundation, MaterialIcons, Ionicons, EvilIcons, Fontisto } from '@expo/vector-icons';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from "moment";
@@ -30,7 +30,7 @@ function timeInput() {
     }
 }
 
-function AddParking({ navigation: { navigate } }) {
+function AddParking(props) {
     const inputOpenTime = timeInput();
     const inputCloseTime = timeInput();
     const [parkingname, setparkingname] = useState('');
@@ -41,8 +41,56 @@ function AddParking({ navigation: { navigate } }) {
     const [latitude, setlatitude] = useState('');
     const [longitude, setlongitude] = useState('');
     const [description, setdescription] = useState('');
+    const [region, setRegion] = useState({
+        latitude:0,
+        longitude:0,
+        latitudeDelta: 0.0122,
+                longitudeDelta: 0.0121,
+    });
+    const [getaddress, setgetAddress] = useState('');
+    React.useEffect(() => {
+        alert(JSON.stringify(props?.route?.params))
+        getData();
+        // this.props.route.params.data.username
+      },[]);
 
-
+    const register = async () => {
+        let endpoint = 'https://project3na.herokuapp.com/api/owner/parking';
+          await axios
+          .post(endpoint, {
+                parkingname,
+                TotalParkingCar,TotalParkingBike,TotalParkingMotoBike,
+                address,latitude,longitude,description
+              })
+          .then(async function (response) {
+            // handle success
+            // alert('Tạo bãi đỗ thành công');
+            Alert.alert('Thông báo',response.data.msg)
+            if(response.data.success) {
+              props.navigation.push("ListParking");
+            } else {
+            //  alert(response.data.msg);
+            }
+          })
+          .catch(function (error) {
+            // handle error
+           // alert('error');
+          })
+          .finally(function () {
+          });
+        }
+    const getData = () =>{
+        // alert(JSON.stringify(props));
+        if(!props?.route?.params) return;
+        if(props?.route.params.data?.region) {
+            setlatitude(props.route.params.data.region.latitude);
+            setlongitude(props.route.params.data.region.longitude);
+            setRegion(props.route.params.data.region);
+        }
+        if(props?.route.params.data?.address) {
+            setaddress(props.route.params.data.address);
+        }
+      }
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar
@@ -67,12 +115,12 @@ function AddParking({ navigation: { navigate } }) {
                             defaultValue={parkingname}
                         ></TextInput>
                     </View>
-                    <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1, paddingTop: 10, paddingLeft: 20 }}>
+                    {/* <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1, paddingTop: 10, paddingLeft: 20 }}>
                         <Text style={{ marginBottom: 5 }}>Địa chỉ</Text>
                         <TextInput placeholder="Nhập địa chỉ"
                             onChangeText={address => setaddress(address)}
                             defaultValue={address}></TextInput>
-                    </View>
+                    </View> */}
                     <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1, paddingTop: 10, paddingLeft: 20 }}>
                         <Text style={{ marginBottom: 10 }}>Số ô gửi xe</Text>
                         <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 5, flex: 1 }}>
@@ -133,22 +181,27 @@ function AddParking({ navigation: { navigate } }) {
                         ></TextInput>
                     </View>
                     <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1, paddingTop: 10, paddingLeft: 20 }}>
-                        <TouchableOpacity onPress={() =>
-                                                    navigate('FindAddress')
-                                                    }>
+
                             <Text style={{ marginBottom: 5 }}>Giúp địa chỉ được chính xác nhất:</Text>
                             <View style={{flexDirection:'row'}}>
                                 <Ionicons name="location-sharp" size={20} color="red" />
                                 <TextInput placeholder="Địa chỉ cụ thể"
-                                    onChangeText={description => setdescription(description)}
-                                    defaultValue={description}
+                                    onChangeText={address => setaddress(getaddress)}
+                                    defaultValue={address}
                                 ></TextInput>
                             </View>
-                        </TouchableOpacity>
                     </View>
+                    <View style={{ height: 50, borderBottomColor: "#CCCCCC",backgroundColor:'#CCCCCC', borderBottomWidth: 1, paddingTop: 10, paddingLeft: 20 }}>
+                            <TouchableOpacity style={{flex:1, flexDirection:'row'}} onPress={() =>
+                                                    props.navigation.push('FindAddress')
+                                                    }>
+                                                        <Ionicons name="search" size={30} color="green" />
+                                                        <Text style={{lineHeight:30}}>Tìm địa chỉ trên map</Text>
+                        </TouchableOpacity>
+                        </View>
                     <View style={{ height: 50, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
                         <MaterialButtonViolet
-                            onPress={() => register( parkingname, TotalParkingCar,TotalParkingBike ,TotalParkingMotoBike ,address,description)}
+                            onPress={() => register()}
                             style={styles.button}
                             title="Thêm bãi gửi xe"
                         ></MaterialButtonViolet>
@@ -225,38 +278,29 @@ const styles = StyleSheet.create({
     }
 
 });
-async function register( parkingname: string, TotalParkingCar: int,TotalParkingBike :int,TotalParkingMotoBike :int,address: string,description: string) {
-  var endpoint = '';
-  endpoint = 'https://project3na.herokuapp.com/api/owner/parking';
-  var latitude, longitude;
-  latitude="21.054677";
-  longitude="105.786557";
-//   if(password != repassword) {
-//     return alert('Mật khẩu không khớp. Vui lòng nhập lại.');
-//   }
-longitude="12.1232";
-description="a";
-latitude="10.3123";
-  await axios
-  .post(endpoint, {
-        parkingname,
-        TotalParkingCar,TotalParkingBike,TotalParkingMotoBike,
-        address,latitude,longitude,description
-      })
-  .then(async function (response) {
-    // handle success
-    alert('Tạo bãi đỗ thành công');
-    if(response.data.success) {
-      var data = JSON.stringify(response.data.data);
-    } else {
-    //  alert(response.data.msg);
-    }
-  })
-  .catch(function (error) {
-    // handle error
-   // alert('error');
-  })
-  .finally(function () {
-  });
-}
+// async function register( parkingname: string, TotalParkingCar: int,TotalParkingBike :int,TotalParkingMotoBike :int,address: string,description: string) {
+// async function  register() {
+// let endpoint = 'https://project3na.herokuapp.com/api/owner/parking';
+//   await axios
+//   .post(endpoint, {
+//         parkingname,
+//         TotalParkingCar,TotalParkingBike,TotalParkingMotoBike,
+//         address,latitude,longitude,description
+//       })
+//   .then(async function (response) {
+//     // handle success
+//     alert('Tạo bãi đỗ thành công');
+//     if(response.data.success) {
+//       var data = JSON.stringify(response.data.data);
+//     } else {
+//     //  alert(response.data.msg);
+//     }
+//   })
+//   .catch(function (error) {
+//     // handle error
+//    // alert('error');
+//   })
+//   .finally(function () {
+//   });
+// }
 export default AddParking;
