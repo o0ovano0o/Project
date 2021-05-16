@@ -17,6 +17,7 @@ import CustomerProfile from '../CustomerScreens/CustomerProfile';
 import GuardProfile from '../GuardScreens/GuardProfile';
 import ListTicket from '../CustomerScreens/ListTicket';
 import MainScreen from '../GuardScreens/MainScreen';
+import MainScreenOwner from '../OwnerScreens/MainScreen';
 import ScanQRCodeGuard from '../GuardScreens/ScanQRCodeGuard';
 import ScanQRCode from '../OwnerScreens/ScanQRCode';
 import OwnerProfile from '../OwnerScreens/OwnerProfile';
@@ -179,7 +180,7 @@ function TabOneNavigator() {
       <TabOneStack.Navigator>
         <TabOneStack.Screen
           name="TabOneScreen"
-          component={MainScreen}
+          component={MainScreenOwner}
           options={{headerShown: false}}
         />
       </TabOneStack.Navigator>

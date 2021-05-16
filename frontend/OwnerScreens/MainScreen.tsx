@@ -6,10 +6,47 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import axios from "axios";
 // import {} from "react-native-gesture-handler";
 function MainScreen({ navigation }) {
-    const user = {
-        userid: '1',
-        username: 'Nguyễn Văn A'
+    const [refreshPage, setRefreshPage] = useState(true);
+    const [user, setUser] = React.useState('');
+    const [listParking, setListParking] = useState({});
+    React.useEffect(() => {
+        getListParking();
+        getUser();
+        },[]);
+    const getUser = async () => {
+        let value = await AsyncStorage.getItem('user');
+        setUser(JSON.parse(value));
     }
+    const getListParking = async () => {
+        await axios
+        .get('https://project3na.herokuapp.com/api/owner/parkings')
+        .then(async function (response) {
+            if(response.data.success)
+                setListParking(response.data.data);
+           // else // alert(response.data.msg)
+            setRefreshPage(false);
+            alert(JSON.stringify(response.data.data));
+        })
+        .catch(function (error) {
+                //alert(error);
+        })
+        .finally(function () {
+        });
+    }
+    const refresh = () =>{
+        setRefreshPage(true);
+        getListParking();
+    }
+    const goToList = () => {
+        navigation.push("ListVehicleInOut");
+    }
+    const goToAddParking = () => {
+        navigation.push("AddParking");
+    }
+    const goToStatistic = () => {
+        navigation.push("Statistic");
+    }
+
     const data = [
             {
             parkingid: '1',
@@ -69,7 +106,11 @@ function MainScreen({ navigation }) {
             <StatusBar
                 animated={true}
                 hidden={true} />
-            <ScrollView >
+            <ScrollView  refreshControl={
+                <RefreshControl
+                  refreshing={refreshPage}
+                  onRefresh={()=>refresh()}
+                />}>
                 <View style={styles.backgoundheader}>
                     <Image
                         source={require('../assets/images/parking.jpg')}
@@ -97,13 +138,13 @@ function MainScreen({ navigation }) {
                     <View style={{ alignItems: 'center' }}>
                         <View style={{ padding: 30 }}>
 
-                            {data.length > 0 &&
+                            {listParking.length > 0 &&
                                 <View style={{
                                     flexDirection: 'row', justifyContent: 'center', alignItems: 'center',
                                     height: 40, width: width - 60, marginBottom: 5,
                                     borderRadius: 10, backgroundColor: '#F4D03F'
                                 }}>
-                                    <TouchableOpacity style={{ height: 40, width: width - 60, justifyContent: 'center', alignItems: 'center', }}>
+                                    <TouchableOpacity onPress={() => goToStatistic()} style={{ height: 40, width: width - 60, justifyContent: 'center', alignItems: 'center', }}>
                                         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }}>
                                             <AntDesign name="piechart" size={24} color="white" />
 
@@ -128,28 +169,28 @@ function MainScreen({ navigation }) {
                     </View>
                 </View>
 
-                {data.length > 0 ?
+                {listParking.length > 0 ?
                     <View style={{ padding: 10, backgroundColor: "#F1EFEF" }}>
                         <View style={{ backgroundColor: 'white', height: 50, flexDirection: 'row', padding: 10 }}>
                             <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Danh sách bãi gửi xe</Text>
 
                         </View>
-                        {data.map((item, index) => (
+                        {listParking.map((item, index) => (
                             <View key={item.parkingid} style={{ backgroundColor: 'white', height: 95, flexDirection: 'row', marginTop: 2, alignItems: 'center' }}>
                                 <View style={{ flex: 8, flexDirection: 'row', alignItems: 'center', marginLeft: 10 }}>
                                     <MaterialCommunityIcons name="car-brake-parking" size={36} color="#23A67E" />
                                     <View style={{ paddingLeft: 10, paddingTop: 5, paddingBottom: 5, flex: 1 }}>
                                         <Text style={{ fontWeight: 'bold' }}>Bãi gửi xe: {item.parkingname}</Text>
-                                        <Text style={{ color: 'black' }} >Địa chỉ: {item.address}</Text>
+                                        <Text numberOfLines={1} style={{ color: 'black' }} >Địa chỉ: {item.address}</Text>
                                         <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-                                            <Text style={{ fontSize: 14, opacity: 0.7, color: '#0099cc', marginRight: 20 }}>Xe máy: {item.UsedParkingMotoBike}/{item.TotalParkingMotoBike}</Text>
-                                            <Text style={{ fontSize: 14, opacity: 0.7, color: '#0099cc', marginRight: 20  }}>Xe đạp: {item.UsedParkingBike}/{item.TotalParkingBike}</Text>
-                                            <Text style={{ fontSize: 14, opacity: 0.7, color: '#0099cc', marginRight: 20  }}>Ô tô: {item.UsedParkingCar}/{item.TotalParkingCar}</Text>
+                                            <Text style={{ fontSize: 14, opacity: 0.7, color: '#0099cc', marginRight: 20 }}>Xe máy: {item.UsedPackingMotoBike}/{item.TotalParkingMotoBike}</Text>
+                                            <Text style={{ fontSize: 14, opacity: 0.7, color: '#0099cc', marginRight: 20  }}>Xe đạp: {item.UsedPackingBike}/{item.TotalParkingBike}</Text>
+                                            <Text style={{ fontSize: 14, opacity: 0.7, color: '#0099cc', marginRight: 20  }}>Ô tô: {item.UsedPackingCar}/{item.TotalParkingCar}</Text>
                                        
                                         </View>
                                     </View>
                                 </View>
-                                <TouchableHighlight style={{ flex: 1 }}>
+                                <TouchableHighlight  onPress={() => goToList()} style={{ flex: 1 }}>
                                     <EvilIcons name="chevron-right" size={30} color="gray" />
                                 </TouchableHighlight>
 
@@ -163,7 +204,7 @@ function MainScreen({ navigation }) {
                             height: 40, width: width - 60, marginBottom: 5,
                             borderRadius: 10, backgroundColor: '#F4D03F'
                         }}>
-                            <TouchableOpacity style={{ height: 40, width: width - 60, justifyContent: 'center', alignItems: 'center', }}>
+                            <TouchableOpacity onPress={ () => goToAddParking()} style={{ height: 40, width: width - 60, justifyContent: 'center', alignItems: 'center', }}>
                                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }}>
                                     <MaterialCommunityIcons name="car-brake-parking" size={24} color="white" />
 
