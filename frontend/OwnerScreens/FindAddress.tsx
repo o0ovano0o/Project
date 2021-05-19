@@ -60,6 +60,7 @@ export default class FindAddress extends Component {
 
     }
     async componentDidMount() {
+        alert(JSON.stringify(this.props.route.params));
         await this.getCurrentLocation();
 
     }
@@ -213,7 +214,8 @@ export default class FindAddress extends Component {
                 <View style={{ height: 60, backgroundColor: 'white', alignItems: 'center', }}>
                     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                         <MaterialButtonViolet
-                            onPress={() => this.props.navigation.navigate('AddParking', { data:{
+                            onPress={() => this.props.navigation.push('AddParking', { data:{
+                                obj:this.props.route.params.data,
                                 region: this.state.region,
                                 address: this.state.text
                             }  })}

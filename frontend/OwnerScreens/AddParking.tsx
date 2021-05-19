@@ -49,7 +49,7 @@ function AddParking(props) {
     });
     const [getaddress, setgetAddress] = useState('');
     React.useEffect(() => {
-        alert(JSON.stringify(props?.route?.params))
+        // alert(JSON.stringify(props?.route?.params))
         getData();
         // this.props.route.params.data.username
       },[]);
@@ -59,7 +59,9 @@ function AddParking(props) {
           await axios
           .post(endpoint, {
                 parkingname,
-                TotalParkingCar,TotalParkingBike,TotalParkingMotoBike,
+                TotalParkingCar:parseInt(TotalParkingCar),
+                TotalParkingBike:parseInt(TotalParkingBike),
+                TotalParkingMotoBike: parseInt(TotalParkingMotoBike),
                 address,latitude,longitude,description
               })
           .then(async function (response) {
@@ -81,7 +83,17 @@ function AddParking(props) {
         }
     const getData = () =>{
         // alert(JSON.stringify(props));
+
         if(!props?.route?.params) return;
+        if(props?.route.params.data?.obj) {
+            setparkingname(props?.route.params.data?.obj.parkingname);
+            setTotalParkingCar(props?.route.params.data?.obj.TotalParkingCar);
+            setTotalParkingBike(props?.route.params.data?.obj.TotalParkingBike);
+            setTotalParkingMotoBike(props?.route.params.data?.obj.TotalParkingMotoBike);
+            // setlatitude(props?.route.params.data?.obj.latitude);
+            // setlongitude(props?.route.params.data?.obj.parkingname);
+            setdescription(props?.route.params.data?.obj.description);
+        }
         if(props?.route.params.data?.region) {
             setlatitude(props.route.params.data.region.latitude);
             setlongitude(props.route.params.data.region.longitude);
@@ -97,9 +109,9 @@ function AddParking(props) {
                 animated={true}
                 hidden={true} />
             <View style={styles.tabback}>
-                <View style={{ flex: 1, alignItems: 'center' }}>
+                <TouchableOpacity onPress={()=> props.navigation.push("ListParking")} style={{ flex: 1, alignItems: 'center' }}>
                     <AntDesign name="left" size={24} color="black" />
-                </View>
+                </TouchableOpacity>
                 <View style={{ flex: 5, alignItems: 'center' }}>
                     <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Thêm bãi gửi xe</Text>
                 </View>
@@ -193,7 +205,16 @@ function AddParking(props) {
                     </View>
                     <View style={{ height: 50, borderBottomColor: "#CCCCCC",backgroundColor:'#CCCCCC', borderBottomWidth: 1, paddingTop: 10, paddingLeft: 20 }}>
                             <TouchableOpacity style={{flex:1, flexDirection:'row'}} onPress={() =>
-                                                    props.navigation.push('FindAddress')
+                                                    props.navigation.push('FindAddress',{
+                                                        data: {
+                                                            parkingname,
+                                                            TotalParkingCar,
+                                                            TotalParkingBike,
+                                                            TotalParkingMotoBike,
+
+                                                            description
+                                                        }
+                                                    })
                                                     }>
                                                         <Ionicons name="search" size={30} color="green" />
                                                         <Text style={{lineHeight:30}}>Tìm địa chỉ trên map</Text>
