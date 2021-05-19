@@ -352,7 +352,12 @@ function ListVehicleInOut({ navigation }) {
         second: OutScreen,
       });
       const goToList = () => {
-        navigation.push("MainScreen");
+        if (user.role == 2 || user.role == "2") {
+            navigation.push("MainScreenOwner");
+        }
+        else {
+            navigation.push("MainScreen");
+        }
     }
   return (
     <SafeAreaView  style={styles.container}>

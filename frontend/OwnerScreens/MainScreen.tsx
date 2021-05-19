@@ -23,12 +23,10 @@ function MainScreen({ navigation }) {
         .then(async function (response) {
             if(response.data.success)
                 setListParking(response.data.data);
-           // else // alert(response.data.msg)
+
             setRefreshPage(false);
-            alert(JSON.stringify(response.data.data));
         })
         .catch(function (error) {
-                //alert(error);
         })
         .finally(function () {
         });
@@ -190,9 +188,9 @@ function MainScreen({ navigation }) {
                                         </View>
                                     </View>
                                 </View>
-                                <TouchableHighlight  onPress={() => goToList()} style={{ flex: 1 }}>
+                                <TouchableOpacity  onPress={() => goToList()} style={{ flex: 1 }}>
                                     <EvilIcons name="chevron-right" size={30} color="gray" />
-                                </TouchableHighlight>
+                                </TouchableOpacity>
 
                             </View>
                         ))}
