@@ -92,9 +92,9 @@ function ListParking({ navigation }) {
                 animated={true}
                 hidden={true} />
             <View style={styles.tabback}>
-                <TouchableOpacity onPress={()=> navigation.push("ListParking")} style={{ flex: 1, alignItems: 'center', justifyContent:'center' }}>
+                <TouchableHighlight onPress={()=> navigation.push("CustomerProfile")} style={{ flex: 1, alignItems: 'center', justifyContent:'center' }}>
                     <AntDesign name="left" size={24} color="black" />
-                </TouchableOpacity>
+                </TouchableHighlight>
                 <View style={{ flex: 5, alignItems: 'center' }}>
                     <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Danh sách bãi gửi xe</Text>
                 </View>
@@ -170,12 +170,12 @@ function ListParking({ navigation }) {
                                 <AntDesign name='delete' size={25} style={styles.icondelete} />
                             </View> */}
                              <View style={{ flex: 2, justifyContent: "center", alignContent: "center", flexDirection: 'row' }}>
-                                <Button
+                                {/* <Button
                                     title="Sửa"
 
                                     color='#FFD700'
                                     onPress={() => navigation.push("EditTicketType", { data: item})}
-                                />
+                                /> */}
                                 <View style={{ width: 10 }}></View>
                                 <Button
                                     title="Xóa"
