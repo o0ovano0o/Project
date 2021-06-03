@@ -1,203 +1,80 @@
 import React, { useState } from 'react';
-import { AntDesign, Ionicons, EvilIcons, Feather, MaterialIcons, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
-import { Text, View, StyleSheet, SafeAreaView, Dimensions, ScrollView, StatusBar, useWindowDimensions, FlatList, Image } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+import { Text, View, StyleSheet, SafeAreaView, Dimensions, ScrollView, StatusBar, AsyncStorage, RefreshControl, useWindowDimensions, FlatList } from 'react-native';
 import { Svg } from 'react-native-svg';
 import { Picker } from "native-base";
-import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
-import { VictoryPie } from "victory-native";
-import { color } from 'react-native-elements/dist/helpers';
-import { ForceTouchGestureHandler, TouchableOpacity } from 'react-native-gesture-handler';
-import { Item } from 'native-base';
-import { Rating } from 'react-native-elements';
+import { VictoryPie, VictoryAxis, VictoryLine, VictoryChart, VictoryTheme, VictoryScatter } from "victory-native";
+import axios from "axios";
+import { TouchableOpacity } from 'react-native-gesture-handler';
+//import { Rating } from 'react-native-elements';
 
 const random = (a, b) => Math.floor(Math.random() * b) + a;
 
+function Statistic({ navigation }) {
+    const [time, setTime] = useState("day")
+    const [refreshPage, setRefreshPage] = useState(true);
+    const [selectedParking, setSelectedParking] = React.useState(null)
+    const [dataParking, setDataParking] = useState([]);
+    React.useEffect(() => {
+        setRefreshPage(false);
 
-function RenderRating() {
-    const [parkingPicker, setParkingPicker] = React.useState(null);
+        getDataParking();
+    }, [time]);
+    const getDataParking = async () => {
+        await axios
+            .get(`https://project3na.herokuapp.com/api/owner/analys-amount/${time}`)
+            .then(async function (response) {
+                if (response.data.success) {
+                    setDataParking(response.data.data);
+                }
+                setRefreshPage(false);
 
-    const dataRating = [
-        {
-            parkingid: "1",
-            parkingname: 'Bãi gửi xe Duy Tân1',
-            oneStar: 1,
-            twoStar: 2,
-            threeStar: 4,
-            fourStar: 10,
-            fiveStar: 14,
-            totalStar: 32,
-            average: 4.0
-        },
-        {
-            parkingid: "2",
-            parkingname: 'Bãi gửi xe Duy Tân2',
-            oneStar: 1,
-            twoStar: 1,
-            threeStar: 1,
-            fourStar: 1,
-            fiveStar: 1,
-            totalStar: 5,
-            average: 3,
-        },
-        {
-            parkingid: "3",
-            parkingname: 'Bãi gửi xe Duy Tân3',
-            oneStar: 1,
-            twoStar: 2,
-            threeStar: 4,
-            fourStar: 10,
-            fiveStar: 14,
-            totalStar: 32,
-            average: 4.1
-        },
-    ]
-
-    const dataComment = [
-        {
-            id: "1",
-            username: "Nguyen Van A",
-            comment: "abc",
-            rating: 3,
-            date: "01/01/2021"
-        },
-        {
-            id: "2",
-            username: "Nguyen Van A",
-            comment: "abc",
-            rating: 4,
-            date: "01/01/2021"
-        },
-        {
-            id: "3",
-            username: "Nguyen Van A",
-            comment: "abc",
-            rating: 4,
-            date: "01/01/2021"
-        },
-        {
-            id: "4",
-            username: "Nguyen Van A",
-            comment: "abc",
-            rating: 5,
-            date: "01/01/2021"
-        }
-    ]
-
-    return (
-        <View style={{ flex: 1, backgroundColor: 'white' }}>
-
-            <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
-                <View style={{ margin: 20, alignItems: 'center', marginBottom: 30, borderWidth: 0, borderColor: 'black', overflow: "hidden", height: 55, width: width * 0.8, backgroundColor: "#eee", borderRadius: 8 }}>
-                    <Picker
-                        style={styles.pickerParkingStyle}
-                        onValueChange={(itemValue, itemIndex) => {
-                            let parking = dataRating.filter(item => item.parkingid == itemValue)[0];
-                            setParkingPicker(parking);
-                        }}
-                    >
-                        {dataRating.map(item => (
-                            <Picker.Item label={item.parkingname} value={item.parkingid} />
-                        ))}
-                    </Picker>
-                </View>
-                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
-                    <View style={{ alignItems: 'center' }}>
-                        <Text style={{ color: 'black', fontSize: 60, fontWeight: '600' }}>{parkingPicker ? parkingPicker.average : 0}</Text>
-                        <Rating startingValue={parkingPicker ? parkingPicker.average : 0} readonly={true} imageSize={15} />
-                        <Text style={{ color: 'black', fontSize: 14, fontWeight: '600', marginTop: 5 }}>{parkingPicker ? parkingPicker.totalStar : 0}</Text>
-                    </View>
-                    <View>
-                        <Rating startingValue="5" readonly={true} imageSize={22} />
-                        <Rating startingValue="4" readonly={true} imageSize={22} />
-                        <Rating startingValue="3" readonly={true} imageSize={22} />
-                        <Rating startingValue="2" readonly={true} imageSize={22} />
-                        <Rating startingValue="1" readonly={true} imageSize={22} />
-                    </View>
-                    <View>
-                        <Text style={{ fontSize: 14, lineHeight: 22 }}>{parkingPicker ? parkingPicker.fiveStar : 0}</Text>
-                        <Text style={{ fontSize: 14, lineHeight: 22 }}>{parkingPicker ? parkingPicker.fourStar : 0}</Text>
-                        <Text style={{ fontSize: 14, lineHeight: 22 }}>{parkingPicker ? parkingPicker.threeStar : 0}</Text>
-                        <Text style={{ fontSize: 14, lineHeight: 22 }}>{parkingPicker ? parkingPicker.twoStar : 0}</Text>
-                        <Text style={{ fontSize: 14, lineHeight: 22 }}>{parkingPicker ? parkingPicker.oneStar : 0}</Text>
-                    </View>
-
-                </View>
-                <View style={{ marginTop: 30 }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 18, marginLeft: 20, marginBottom: 10 }}>Bình luận</Text>
-                    <View>
-                        {dataComment.map((item, index) => (
-                            <View key={item.id} style={{ backgroundColor: 'white', marginTop: 2 }}>
-                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                    <View style={styles.avatar}>
-                                        <Image
-                                            source={require('../assets/images/ava.jpg')}
-                                            resizeMode="cover"
-                                            style={styles.image}
-                                        ></Image>
-                                    </View>
-                                    <Text numberOfLines={1} style={{ marginLeft: 20, fontSize: 13, color: 'black', flex: 1, fontWeight: "600" }}>{item.username}</Text>
-                                    <Text style={{ fontSize: 13, marginRight: 20 }}>{item.date}</Text>
-                                </View>
-                                <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingLeft: 20, marginBottom: 30 }}>
-                                    <Text style={{ fontSize: 13, opacity: 0.8, color: 'black', flex: 1 }}>{item.comment}</Text>
-                                </View>
-
-                            </View>
-                        ))}
-                    </View>
-                </View>
-            </ScrollView>
-        </View>
-
-    )
-
-
-}
-
-function RenderChart() {
-    const [time, setTime] = useState(1);
-
+            })
+            .catch(function (error) {
+            })
+            .finally(function () {
+            });
+    }
+    const refresh = () => {
+        setRefreshPage(true);
+        getDataParking();
+    }
     const colorsDefault = [
         "red", "lavender", "#40C4FF", "#FFC440",
         "gold", "blue", "purple", "#F17171", "#BBC940", "magenta",
     ];
-    const [selectedParking, setSelectedParking] = React.useState(null)
 
-    const data = [
-        {
-            id: '1',
-            name: 'Bãi gửi xe Duy Tân1',
-            total: 11500000,
-        },
-        {
-            id: '2',
-            name: 'Bãi gửi xe Duy Tân2',
-            total: 2800000,
-        },
-        {
-            id: '3',
-            name: 'Bãi gửi xe Duy Tân3',
-            total: 8538000,
-        },
-        {
-            id: '4',
-            name: 'Bãi gửi xe Duy Tânaaaaa aaaaaa aaaaaa',
-            total: 21920000,
-        },
-    ]
+    // const dataParking = [
+    //     {
+    //         parkingid: '1',
+    //         parkingname: 'Bãi gửi xe Duy Tân',
+    //         total: 115000,
+    //     },
+    //     {
+    //         parkingid: '2',
+    //         parkingname: 'Bãi gửi xe Hồ Tùng Mậu',
+    //         total: 280000,
+    //     },
+    //     {
+    //         parkingid: '3',
+    //         parkingname: 'Bãi gửi xe Xuân Thủy',
+    //         total: 355000,
+    //     },
+    //     {
+    //         parkingid: '4',
+    //         parkingname: 'Bãi gửi xe Mai Dịch',
+    //         total: 210000,
+    //     },
+    // ]
 
     const timeUnit = [
         {
             name: "Hôm nay",
-            id: 1,
+            id: "day",
         },
         {
             name: "Tháng này",
-            id: 2
-        },
-        {
-            name: "Năm",
-            id: 3
+            id: "month"
         }
     ];
 
@@ -209,12 +86,12 @@ function RenderChart() {
 
     //xử lý số liệu biểu đồ
     function progressData() {
-        let chartData = data.map((item, index) => {
+        let chartData = dataParking.map((item, index) => {
             return {
-                name: item.name,
+                name: item.parkingname,
                 y: item.total,
-                color: getColor(data.length)[index],
-                id: item.id
+                color: getColor(dataParking.length)[index],
+                id: item.parkingid
             }
 
         })
@@ -259,9 +136,9 @@ function RenderChart() {
         return colorRandom;
     }
 
-    
+
     function setSelectedParkingByID(id) {
-        let parking = data.filter(a => a.id == id)
+        let parking = dataParking.filter(a => a.parkingid == id)
         setSelectedParking(parking[0]);
     }
 
@@ -269,49 +146,57 @@ function RenderChart() {
         let dataChart = progressData();
         let colorScales = dataChart.map((item) => item.color)
         let totalAmount = dataChart.reduce((a, b) => a + (b.y || 0), 0);
-
         return (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                <Svg width={width} height={width - 20} style={{ alignItems: 'center', justifyContent: 'center', left: width * 0.1 }}>
-                    <VictoryPie
-                        standalone={false}
-                        data={dataChart}
-                        colorScale={colorScales}
-                        labels={(datum) => `${datum.y}`}
-                        radius={({ datum }) => (selectedParking && selectedParking.name == datum.name) ? width * 0.4 : width * 0.4 - 10}
-                        innerRadius={width * 0.3 - 40}
-                        labelRadius={({ innerRadius }) => (width * 0.4 + innerRadius) / 2.5}
-                        style={{
-                            labels: { fill: 'black' },
-                            parent: {
-                                ...styles.shadow
-                            },
-                        }}
-                        width={width * 0.8}
-                        height={width * 0.8}
-                        events={[{
-                            target: "data",
-                            eventHandlers: {
-                                onPress: () => {
-                                    return [{
-                                        target: "labels",
-                                        mutation: (props) => {
-                                            let parkingid = dataChart[props.index].id
-                                            setSelectedParkingByID(parkingid);
-                                        }
-                                    }]
+                { totalAmount > 0 &&
+                    <Svg width={width} height={width - 20} style={{ alignItems: 'center', justifyContent: 'center', left: width * 0.1 }}>
+                        <VictoryPie
+                            standalone={false}
+                            data={dataChart}
+                            colorScale={colorScales}
+                            labels={(datum) => `${datum.y}`}
+                            radius={({ datum }) => (selectedParking && selectedParking.parkingid == datum.id) ? width * 0.4 : width * 0.4 - 10}
+                            innerRadius={width * 0.3 - 40}
+                            labelRadius={({ innerRadius }) => (width * 0.4 + innerRadius) / 2.5}
+                            style={{
+                                labels: { fill: 'black' },
+                                parent: {
+                                    ...styles.shadow
+                                },
+                            }}
+                            width={width * 0.8}
+                            height={width * 0.8}
+                            events={[{
+                                target: "data",
+                                eventHandlers: {
+                                    onPress: () => {
+                                        return [{
+                                            target: "labels",
+                                            mutation: (props) => {
+                                                let parkingid = dataChart[props.index].id
+                                                setSelectedParkingByID(parkingid);
+                                            }
+                                        }]
+                                    }
                                 }
-                            }
-                        }]}
-                    />
-                </Svg>
-                <View style={{ position: 'absolute', top: '38%', left: '40%' }}>
-                    <Text style={{ textAlign: 'center' }}>Doanh thu</Text>
-                    <Text style={{ textAlign: 'center' }}>
-                        {totalAmount}
-                    </Text>
-                </View>
+                            }]}
+                        />
+                    </Svg>
+                }
+                { totalAmount > 0 ?
+                    <View style={{ position: 'absolute', top: '38%', left: '40%' }}>
+
+                        <Text style={{ textAlign: 'center' }}>Doanh thu</Text>
+                        <Text style={{ textAlign: 'center' }}>
+                            {totalAmount}
+                        </Text>
+
+                    </View>
+                    : <Text style={{ textAlign: 'center', fontSize: 16, padding: 10 }}>Các bãi đỗ xe bạn quản lý chưa phát sinh giao dịch</Text>
+
+                }
             </View>
+
         )
     }
 
@@ -327,7 +212,7 @@ function RenderChart() {
                     paddingHorizontal: 10,
                     borderRadius: 10,
                     marginBottom: 5,
-                    backgroundColor: (selectedParking && selectedParking.name == item.name) ? item.color : 'white'
+                    backgroundColor: (selectedParking && selectedParking.parkingid == item.id) ? item.color : 'white'
                 }}
                 onPress={() => {
                     let parkingid = item.id
@@ -340,16 +225,16 @@ function RenderChart() {
                         style={{
                             width: 20,
                             height: 20,
-                            backgroundColor: (selectedParking && selectedParking.name == item.name) ? 'white' : item.color,
+                            backgroundColor: (selectedParking && selectedParking.parkingid == item.id) ? 'white' : item.color,
                             borderRadius: 5
                         }}
                     />
 
-                    <Text numberOfLines={2} style={{ marginLeft: 10, marginRight: 20, color: (selectedParking && selectedParking.name == item.name) ? 'white' : 'black' }}>{item.name}</Text>
+                    <Text numberOfLines={2} style={{ marginLeft: 10, marginRight: 20, color: (selectedParking && selectedParking.parkingid == item.id) ? 'white' : 'black' }}>{item.name}</Text>
                 </View>
 
                 <View style={{ justifyContent: 'center' }}>
-                    <Text style={{ color: (selectedParking && selectedParking.name == item.name) ? 'white' : 'black' }}>{item.y} USD - {item.label}</Text>
+                    <Text style={{ color: (selectedParking && selectedParking.parkingid == item.id) ? 'white' : 'black' }}>{item.y} Đ - {item.label}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -368,41 +253,6 @@ function RenderChart() {
 
 
     return (
-        <View style={{ flex: 1, backgroundColor: 'white' }}>
-            <ScrollView contentContainerStyle={{ paddingBottom: 50, }}>
-                <View >
-                    <View style={{ paddingLeft: 10, margin: 20, marginBottom: 30, borderWidth: 0, borderColor: 'black', overflow: "hidden", height: 55, width: 200, backgroundColor: "#eee", borderRadius: 8 }}>
-                        <Picker
-                            style={styles.pickerStyle}
-                            onValueChange={(itemValue, itemIndex) => {
-                                setTime(itemValue);
-                            }}
-                        >
-                            {timeUnit.map(item => (
-                                <Picker.Item label={item.name} value={item.id} />
-                            ))}
-                        </Picker>
-                    </View>
-                    {renderChart()}
-                    {renderDataSummary()}
-                </View>
-            </ScrollView>
-        </View>
-    )
-}
-
-function Statistic({ navigation }) {
-    const layout = useWindowDimensions();
-    const [index, setIndex] = React.useState(0);
-    const [routes] = React.useState([
-        { key: 'first', title: 'Doanh thu' },
-        { key: 'second', title: 'Đánh giá' },
-    ]);
-    const renderScene = SceneMap({
-        first: RenderChart,
-        second: RenderRating,
-    });
-    return (
         <SafeAreaView style={styles.container}>
             <StatusBar
                 animated={true}
@@ -417,27 +267,34 @@ function Statistic({ navigation }) {
                 <View style={{ flex: 1 }}>
                 </View>
             </View>
-            <View style={{ height: height - 50, width: width }}>
-                <TabView
-                    renderTabBar={props => (
-                        <TabBar
-                            {...props}
-                            renderLabel={({ route, color }) => (
-                                <Text style={{ color: 'black' }}>
-                                    {route.title}
-                                </Text>
-                            )}
-                            style={{ backgroundColor: "#16f198", height: 40 }}
-                        />
-                    )}
-                    navigationState={{ index, routes }}
-                    renderScene={renderScene}
-                    onIndexChange={setIndex}
-                    initialLayout={{ width: width, height: height - 50 }}
-                />
+            <View style={{ flex: 1, backgroundColor: 'white' }}>
+                <ScrollView refreshControl={
+                    <RefreshControl
+                        refreshing={refreshPage}
+                        onRefresh={() => refresh()}
+                    />}
+                    contentContainerStyle={{ paddingBottom: 50, }}>
+                    <View >
+                        <View style={{ paddingLeft: 10, margin: 20, marginBottom: 30, borderWidth: 0, borderColor: 'black', overflow: "hidden", height: 55, width: 200, backgroundColor: "#eee", borderRadius: 8 }}>
+                            <Picker
+                                style={styles.pickerTimeStyle}
+                                onValueChange={(itemValue, itemIndex) => {
+                                    setTime(itemValue);
+                                }}
+                            >
+                                {timeUnit.map(item => (
+                                    <Picker.Item label={item.name} value={item.id} />
+                                ))}
+                            </Picker>
+                        </View>
+                        {renderChart()}
+                        {renderDataSummary()}
+                    </View>
+                </ScrollView>
             </View>
         </SafeAreaView>
-    );
+
+    )
 }
 
 export default Statistic;
@@ -452,7 +309,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
-        padding: 10,
+        paddingHorizontal: 10,
     },
     header: {
         textAlign: 'center',
