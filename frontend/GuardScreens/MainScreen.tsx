@@ -72,13 +72,12 @@ function MainScreen({ navigation}) {
                         <View style={{flexDirection:'row'}}>
                             <Text style={{ }}>Bảo vệ: {user.username}</Text>
                         </View>
-                        
                     </View>
                 </View>
-                <View style={{bottom:0, position:'absolute', left:20, }}>
+                <View style={{bottom:0, position:'absolute', left:20,right:20 }}>
                     <Text style={{fontSize:14,color: "black"}}>ĐIỂM GỬI XE - {parking.parkingname}</Text>
                     <View style={{flexDirection:'row', alignItems:'center'}}>
-                        <Feather name="map-pin" size={14} color="gray" style={{ }}/>
+                        <Feather name="map-pin" size={14} color="black" style={{ }}/>
                         <Text style={styles.textcar}>{parking.address}</Text>
                     </View>
                 </View>
@@ -86,6 +85,7 @@ function MainScreen({ navigation}) {
             <View style={{flex:5}}>
                 <View style={styles.box}>
                     <View style={styles.boxmain}>
+                        <ScrollView style={{flex:1}}>
                         <View style={{  flexDirection:'row',justifyContent:'center', alignItems:'center',
                                         height:40, width:width-60, marginBottom:5,
                                         borderRadius:10, backgroundColor:'#F1EFEF'}}>
@@ -126,7 +126,7 @@ function MainScreen({ navigation}) {
                                 <View style={{flexDirection:'row'}}>
                                     <View style={{ justifyContent:'center', alignItems:'center'}}>
                                         <View style={{}}>
-                                            <MaterialCommunityIcons name="motorbike" size={20} color="#CCCCCC" />
+                                            <MaterialCommunityIcons name="motorbike" size={20} color="black" />
                                         </View>
                                     </View>
                                     <View style={{marginLeft:10, flexDirection:'row'}}>
@@ -166,6 +166,7 @@ function MainScreen({ navigation}) {
                                 </View>
                           </View>
                         }
+                        </ScrollView>
                     </View>
                 </View>
             </View>
