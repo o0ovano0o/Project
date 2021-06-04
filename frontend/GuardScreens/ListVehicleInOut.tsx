@@ -122,16 +122,32 @@ function InScreen(){
                 onBackdropPress={() => true}
                 onSwipeComplete={() => true}
             >
-                <View style={{height:200, backgroundColor:'white', borderRadius:20}}>
-                    <View style={{alignItems:'flex-end', marginRight:10, marginTop:10}}>
-                        <TouchableOpacity onPress={()=> setCount(0)}>
-                            <View style={{height:20, width:20,  justifyContent:'center', alignItems:'center'}}>
-                                <Ionicons name="close" size={20} color="black" />
-                            </View>
-                        </TouchableOpacity>
+                {
+                    1==1 &&
+                    <View style={{height:400, backgroundColor:'white', borderRadius:20}}>
+                        <View style={{alignItems:'flex-end', marginRight:10, marginTop:10}}>
+                            <TouchableOpacity onPress={()=> setCount(0)}>
+                                <View style={{height:20, width:20,  justifyContent:'center', alignItems:'center'}}>
+                                    <Ionicons name="close" size={20} color="black" />
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                        <ModalViewImage item={transaction}></ModalViewImage>
                     </View>
-                    <ModalView item={transaction}></ModalView>
-                </View>
+                }
+                {
+                    1==2 &&
+                    <View style={{height:200, backgroundColor:'white', borderRadius:20}}>
+                        <View style={{alignItems:'flex-end', marginRight:10, marginTop:10}}>
+                            <TouchableOpacity onPress={()=> setCount(0)}>
+                                <View style={{height:20, width:20,  justifyContent:'center', alignItems:'center'}}>
+                                    <Ionicons name="close" size={20} color="black" />
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                        <ModalView item={transaction}></ModalView>
+                    </View>
+                }
             </Modal>
         </ScrollView>
     );
@@ -257,22 +273,112 @@ function OutScreen(){
                 onBackdropPress={() => true}
                 onSwipeComplete={() => true}
             >
-                <View style={{height:200, backgroundColor:'white', borderRadius:20}}>
-                    <View style={{alignItems:'flex-end', marginRight:10, marginTop:10}}>
-                        <TouchableOpacity onPress={()=> setCount(0)}>
-                            <View style={{height:20, width:20,   justifyContent:'center', alignItems:'center'}}>
-                                <Ionicons name="close" size={20} color="black" />
-                            </View>
-                        </TouchableOpacity>
+                {  1==2 &&
+                    <View style={{height:400, backgroundColor:'white', borderRadius:20}}>
+                        <View style={{alignItems:'flex-end', marginRight:10, marginTop:10}}>
+                            <TouchableOpacity onPress={()=> setCount(0)}>
+                                <View style={{height:20, width:20,   justifyContent:'center', alignItems:'center'}}>
+                                    <Ionicons name="close" size={20} color="black" />
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                        <ModalViewImage  item={transaction}></ModalViewImage>
                     </View>
-                    <ModalView  item={transaction}></ModalView>
-                </View>
+                }
+                {  1==1 &&
+                    <View style={{height:200, backgroundColor:'white', borderRadius:20}}>
+                        <View style={{alignItems:'flex-end', marginRight:10, marginTop:10}}>
+                            <TouchableOpacity onPress={()=> setCount(0)}>
+                                <View style={{height:20, width:20,   justifyContent:'center', alignItems:'center'}}>
+                                    <Ionicons name="close" size={20} color="black" />
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                        <ModalView  item={transaction}></ModalView>
+                    </View>
+                }
             </Modal>
         </ScrollView>
     );
 }
-function ModalView({item}) {
+function ModalViewImage({item}) {
     return(
+        <View style={{height:360, width:width-50, backgroundColor:'white',  borderRadius:20}}>
+            <View style={{height:160, width:width-50, backgroundColor:'white',  borderRadius:20}}>
+                <View style={{flex:1, flexDirection:'row', marginTop:-20}}>
+                    <View style={{  flex:2,
+                                    marginTop:20,
+                                    marginLeft:10,
+                                    alignItems:'center',}}>
+                        <View style={styles.circle}>
+                        {
+                            item.type == 'car' && <Image
+                                                        source={require('../assets/images/car.png')}
+                                                        resizeMode="cover"
+                                                        style={styles.image}
+                                                    ></Image>
+                        }
+                        {
+                            item.type == 'bike' && <Image
+                                                        source={require('../assets/images/bike.jpg')}
+                                                        resizeMode="cover"
+                                                        style={styles.image}
+                                                    ></Image>
+                        }
+                        {
+                            item.type == 'motobike' && <Image
+                                                            source={require('../assets/images/moto.png')}
+                                                            resizeMode="cover"
+                                                            style={styles.image}
+                                                        ></Image>
+                        }
+                        </View>
+                    </View>
+                    <View style={{flex:4, marginRight:15, justifyContent:'center'}}>
+                        {
+                            item.type == 'car' && <Text style={styles.namecar}>Xe ô tô {item.brand} {item.color} </Text>
+                        }
+                        {
+                            item.type == 'bike' && <Text style={styles.namecar}>Xe đạp {item.brand} {item.color} </Text>
+                        }
+                        {
+                            item.type == 'motobike' && <Text style={styles.namecar}>Xe máy {item.brand} {item.color} </Text>
+                        }
+                        <Text style={styles.textcar}>Chủ xe: {item.username}</Text>
+                    </View>
+                </View>
+                <View style={{flex:1, marginLeft:20}}>
+                    <Text style={styles.textcar}>Biển số: {item.code}</Text>
+                    <Text style={styles.textcar}>Điện thoại: {item.phonenumber}</Text>
+                    <Text style={styles.textcar}>Mô tả: {item.description}</Text>
+                    {item.Status == "2" &&
+                    <Image
+                    source={require('../assets/images/paided.png')}
+                    resizeMode="cover"
+                    style={{height:100, width:200, position:'absolute', right:15, bottom:15}}
+                ></Image>
+                    }
+                    {item.Status == "1" &&
+                    <Image
+                    source={require('../assets/images/unoaid.png')}
+                    resizeMode="cover"
+                    style={{height:100, width:200, position:'absolute', right:15, bottom:15}}
+                ></Image>
+                    }
+                </View>               
+            </View>
+            <View style={{height:180, width:width-50, backgroundColor:'white',  borderRadius:20, alignItems:'center', justifyContent:'center'}}>
+                <Image
+                    source={require('../assets/images/moto.png')}
+                    resizeMode="cover"
+                    style={{height:150, width:width-90}}
+                ></Image>
+            </View>
+        </View>       
+    );
+}
+function ModalView({item}) {
+    return(     
         <View style={{height:160, width:width-50, backgroundColor:'white',  borderRadius:20}}>
             <View style={{flex:1, flexDirection:'row', marginTop:-20}}>
                 <View style={{  flex:2,
@@ -334,10 +440,8 @@ function ModalView({item}) {
                 style={{height:100, width:200, position:'absolute', right:15, bottom:15}}
             ></Image>
                 }
-
-
-            </View>
-        </View>
+            </View>               
+        </View>              
     );
 }
 function ListVehicleInOut({ navigation }) {
