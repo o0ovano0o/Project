@@ -40,7 +40,7 @@ var height = Dimensions.get('window').height; //full height
             marginTop:20 
         },
         boxmain:{
-            height:100, 
+            flex:1,
             alignItems:'center',
             marginTop:10
         },
