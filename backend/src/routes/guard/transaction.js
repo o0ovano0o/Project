@@ -246,7 +246,7 @@ router.put('/api/guard/transaction/:transactionid', validateGuardAPI, async(req,
 router.get('/api/guard/transactions',validateGuardAPI, async(req, res) => {
     try {
         const guarid = req.session.userid;
-        const transactions = await knex('transaction').select('transaction.*', 'vehicle.brand').innerJoin('vehicle','transaction.vehicleid','vehicle.vehicleid').where({ guarid }).orderBy('transactionid', "desc");
+        const transactions = await knex('transaction').select('transaction.*', 'vehicle.brand').leftJoin('vehicle','transaction.vehicleid','vehicle.vehicleid').where({ guarid }).orderBy('transactionid', "desc");
         var transactionNotPaid = transactions.filter(item => item.Status == 1 || item.Status == '1');
         var transactionPaid = transactions.filter(item => item.Status == 2 || item.Status == '2');
         return res.status(200).json({
