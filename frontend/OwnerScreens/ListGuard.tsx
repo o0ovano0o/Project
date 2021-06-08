@@ -71,7 +71,7 @@ function ListGuard({ navigation }) {
                 animated={true}
                 hidden={true} />
             <View style={styles.tabback}>
-                <TouchableHighlight onPress={() => navigation.push('CustomerProfile')} style={{ flex: 1, alignItems: 'center' }}>
+                <TouchableHighlight onPress={() => navigation.goBack()} style={{ flex: 1, alignItems: 'center' }}>
                     <AntDesign name="left" size={24} color="gray" />
                 </TouchableHighlight>
                 <View style={{ flex: 5, alignItems: 'center' }}>

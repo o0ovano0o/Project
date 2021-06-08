@@ -46,6 +46,14 @@ var height = Dimensions.get('window').height; //full height
             borderTopLeftRadius: 15,
             borderTopRightRadius: 15
           },
+          modal1:{
+            flexDirection: "column",
+            height:  height,
+            padding: 15 ,
+            backgroundColor: "white",
+            borderTopLeftRadius: 15,
+            borderTopRightRadius: 15
+          },
           hoursDropdown: {
             borderRadius: 15 / 2,
             borderColor: "gray",
@@ -151,11 +159,24 @@ var height = Dimensions.get('window').height; //full height
               width: width,
               marginTop:10
           },
+          profile1:{
+            height: height ,
+            width: width,
+
+        },
           image:{
             height:200,
             width:200,
           },
           item:{
+            height:150,
+            borderColor:"#CCCCCC",
+            borderWidth:1,
+            borderRadius:20,
+            marginHorizontal:20,
+            marginBottom:15
+          },
+          item1:{
             height:150,
             borderColor:"#CCCCCC",
             borderWidth:1,

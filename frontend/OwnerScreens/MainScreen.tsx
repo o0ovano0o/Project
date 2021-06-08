@@ -5,7 +5,7 @@ import MaterialButtonViolet from "../components/MaterialButtonViolet";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import axios from "axios";
 // import {} from "react-native-gesture-handler";
-function MainScreen({ navigation }) {
+function MainScreenOwner({ navigation }) {
     const [refreshPage, setRefreshPage] = useState(true);
     const [user, setUser] = React.useState('');
     const [listParking, setListParking] = useState({});
@@ -35,8 +35,10 @@ function MainScreen({ navigation }) {
         setRefreshPage(true);
         getListParking();
     }
-    const goToList = () => {
-        navigation.push("ListVehicleInOut");
+    const goToList = (pid) => {
+        navigation.push("ListVehicleInOut", { data: {
+            parkingid: pid
+        }});
     }
     const goToAddParking = () => {
         navigation.push("AddParking");
@@ -184,11 +186,11 @@ function MainScreen({ navigation }) {
                                             <Text style={{ fontSize: 14, opacity: 0.7, color: '#0099cc', marginRight: 20 }}>Xe máy: {item.UsedPackingMotoBike}/{item.TotalParkingMotoBike}</Text>
                                             <Text style={{ fontSize: 14, opacity: 0.7, color: '#0099cc', marginRight: 20  }}>Xe đạp: {item.UsedPackingBike}/{item.TotalParkingBike}</Text>
                                             <Text style={{ fontSize: 14, opacity: 0.7, color: '#0099cc', marginRight: 20  }}>Ô tô: {item.UsedPackingCar}/{item.TotalParkingCar}</Text>
-                                       
+
                                         </View>
                                     </View>
                                 </View>
-                                <TouchableOpacity  onPress={() => goToList()} style={{ flex: 1 }}>
+                                <TouchableOpacity  onPress={() => goToList(item.parkingid)} style={{ flex: 1 }}>
                                     <EvilIcons name="chevron-right" size={30} color="gray" />
                                 </TouchableOpacity>
 
@@ -224,7 +226,7 @@ var height = Dimensions.get('window').height; //full height
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "white"   
+        backgroundColor: "white"
     },
     image: {
         height: 50,
@@ -238,13 +240,13 @@ const styles = StyleSheet.create({
         width: width,
     },
     backgoundheader:{
-        height:height/3, 
-        position:'absolute', 
-        backgroundColor:"#16f198", 
+        height:height/3,
+        position:'absolute',
+        backgroundColor:"#16f198",
         width:width,
     }
-      
-      
-    
+
+
+
 });
-export default MainScreen;
+export default MainScreenOwner;

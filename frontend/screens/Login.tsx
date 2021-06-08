@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import { StyleSheet, View,Text ,TextInput } from "react-native";
+import { StyleSheet, View,Text ,TextInput, Alert } from "react-native";
 import { Input } from 'native-base';
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
@@ -82,7 +82,7 @@ async function login(navigate:any, phonenumber: string, password: string) {
       );
       navigate('Root');
     } else {
-      //alert(response.data.msg);
+     Alert.alert("Lỗi",response.data.msg);
     }
   })
   .catch(function (error) {

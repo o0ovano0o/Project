@@ -13,6 +13,7 @@ export type RootStackParamList = {
   ListTicket: undefined;
   Map: undefined;
   ScanQRCode: undefined;
+  ListVehicleInOut:undefined;
 };
 
 export type RootLoginedStackParamList = {
@@ -25,6 +26,7 @@ export type RootLoginedStackParamList = {
   Vehicle: undefined;
   ListVehicle: undefined;
   AddNewVehicle: undefined;
+  ListVehicleInOut:undefined;
   ListTicket: undefined;
   Map: undefined;
   ScanQRCode: undefined;

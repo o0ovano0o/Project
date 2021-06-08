@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, SafeAreaView, Image, StyleSheet, Dimensions, FlatList } from "react-native";
+import { View, SafeAreaView, Image, StyleSheet, Dimensions, FlatList, Alert } from "react-native";
 import { ListItem, SearchBar } from "react-native-elements";
 import {  Button, Container, Header, Icon, Input, Item, Text } from 'native-base';
 import { ScrollView, TextInput, TouchableOpacity } from "react-native-gesture-handler";
@@ -37,7 +37,6 @@ export default class FindParking extends Component {
         long: this.state.lngcurr.toString(),
         locationname: this.state.search,
       };
-      alert(JSON.stringify(params));
       await axios
         .get(`https://project3na.herokuapp.com/api/parkings/nearst`, {params})
         .then(async function (response) {
@@ -47,7 +46,7 @@ export default class FindParking extends Component {
               parkings: response.data.data
             });
           }
-          else alert(response.data.msg)
+          else Alert.alert("Thông báo",response.data.msg)
         })
         .catch(function (error) {
           alert(error);
@@ -82,15 +81,12 @@ export default class FindParking extends Component {
       alert('Permission to access location was denied');
       return;
     }
-
     let location = await Location.getCurrentPositionAsync({});
     me.setState({ currentregion: location.coords });
     me.setState({
       latcurr: me.state.currentregion.latitude,
       lngcurr: me.state.currentregion.longitude
     });
-    alert('location'+JSON.stringify(location));
-
   }
   updateSearch = (search) => {
     this.setState({ search });

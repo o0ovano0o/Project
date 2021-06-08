@@ -92,7 +92,7 @@ function ListParking({ navigation }) {
                 animated={true}
                 hidden={true} />
             <View style={styles.tabback}>
-                <TouchableHighlight onPress={()=> navigation.push("CustomerProfile")} style={{ flex: 1, alignItems: 'center', justifyContent:'center' }}>
+                <TouchableHighlight onPress={()=> navigation.goBack()} style={{ flex: 1, alignItems: 'center', justifyContent:'center' }}>
                     <AntDesign name="left" size={24} color="black" />
                 </TouchableHighlight>
                 <View style={{ flex: 5, alignItems: 'center' }}>

@@ -1,8 +1,8 @@
 import React, { Component,useState  } from "react";
-import { StyleSheet, View,Image,Text ,Dimensions,SafeAreaView,StatusBar,ScrollView,useWindowDimensions, AsyncStorage, RefreshControl   } from "react-native";
+import { StyleSheet, View,Image,Text ,Dimensions,SafeAreaView,StatusBar,ScrollView,useWindowDimensions, AsyncStorage, RefreshControl, TouchableHighlight, TouchableOpacity   } from "react-native";
 import { AntDesign,Feather,MaterialIcons  ,MaterialCommunityIcons,Ionicons,Fontisto    } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { TabView, SceneMap } from 'react-native-tab-view';
+import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import Modal from "react-native-modal";
 import { SearchBar } from 'react-native-elements';
@@ -10,89 +10,7 @@ import { SearchBar } from 'react-native-elements';
 import QRCodeGen from 'react-native-qrcode-svg';
 import styles from '../Style/ListTicketStyle';
 import axios from "axios";
-//giao diện vé đã thanh toán
-function ItemPayScreen() {
-    return (
-        <View style={styles.item}>
-        <View style={styles.itemimage}>
-            <View style={{flex:6, marginTop:2}}>
-                <View style={{ marginLeft:20,borderColor:'#CCCCCC', borderWidth:1, borderRadius:20, height:20, width:160, justifyContent:'center',alignItems:'center'}}>
-                    <Text style={{color:'#33CC66'}}>Đã thanh toán</Text>
-                </View>
-            </View>
-            <View style={{flex:1}}>
-                <Text style={{position:'absolute', right:15, fontSize:20}}>10$</Text>
-            </View>
-        </View>
-        <View style={{flex:7, marginLeft:5, marginTop:-2}}>
-            <View style={{flexDirection:'row', alignItems:'center'}}>
-                <Text style={styles.namecar}>Bãi đỗ xe Duy Tân</Text>
-            </View>
 
-            <View style={{flexDirection:'row', alignItems:'center'}}>
-                <Feather name="map-pin" size={14} color="gray" style={{ marginLeft:8}}/>
-                <Text style={styles.textcar}>Ngõ 12, phố Duy Tân, Cầu Giấy, Hà Nội</Text>
-            </View>
-            <View style={{flexDirection:'row', alignItems:'center', marginTop:10}}>
-                <MaterialIcons name="date-range" size={20} color="gray" style={{ marginLeft:8}}  />
-                <View style={{flex:2}}>
-                    <Text style={{marginLeft:5, fontSize:13}}>30/3/2021</Text>
-                    <Text style={{marginLeft:5, fontSize:13}}>14:30</Text>
-                </View>
-                <View style={{flex:1}}>
-                    <AntDesign name="arrowright" size={24} color="#CCCCCC" />
-                </View>
-                <View style={{flex:2}}>
-                    <Text style={{marginLeft:5, fontSize:13}}>30/3/2021</Text>
-                    <Text style={{marginLeft:5, fontSize:13}}>16:30</Text>
-                </View>
-            </View>
-        </View>
-    </View>
-    );
-  }
-//   giao diện vé chưa thanh toán
-  function ItemNoPayScreen() {
-
-    return (
-        <View style={styles.item}>
-        <View style={styles.itemimage}>
-            <View style={{flex:6, marginTop:2}}>
-                <View style={{ marginLeft:20,borderColor:'#CCCCCC', borderWidth:1, borderRadius:20, height:20, width:160, justifyContent:'center',alignItems:'center'}}>
-                    <Text style={{color:'#FFCC66'}}>Chưa thanh toán</Text>
-                </View>
-            </View>
-            <View style={{flex:1}}>
-                <Text style={{position:'absolute', right:15, fontSize:20}}>$</Text>
-            </View>
-        </View>
-        <View style={{flex:7, marginLeft:5, marginTop:-2}}>
-            <View style={{flexDirection:'row', alignItems:'center'}}>
-                <Text style={styles.namecar}>Bãi đỗ xe Duy Tân 2</Text>
-            </View>
-
-            <View style={{flexDirection:'row', alignItems:'center'}}>
-                <Feather name="map-pin" size={14} color="gray" style={{ marginLeft:8}}/>
-                <Text style={styles.textcar}>Ngõ 12, phố Duy Tân, Cầu Giấy, Hà Nội</Text>
-            </View>
-            <View style={{flexDirection:'row', alignItems:'center', marginTop:10}}>
-                <MaterialIcons name="date-range" size={20} color="gray" style={{ marginLeft:8}}  />
-                <View style={{flex:2}}>
-                    <Text style={{marginLeft:5, fontSize:13}}>30/3/2021</Text>
-                    <Text style={{marginLeft:5, fontSize:13}}>14:30</Text>
-                </View>
-                <View style={{flex:1}}>
-                    <AntDesign name="arrowright" size={24} color="#CCCCCC" />
-                </View>
-                <View style={{flex:2}}>
-                    <Text style={{marginLeft:5, fontSize:13}}>30/3/2021</Text>
-                    <Text style={{marginLeft:5, fontSize:13}}>16:30</Text>
-                </View>
-            </View>
-        </View>
-    </View>
-    );
-  }
 
   function PayScreen() {
     // state = {
@@ -108,11 +26,13 @@ function ItemPayScreen() {
     const [list, setList] = useState(new Array);
     const [refreshPage, setRefreshPage] = useState(true);
     React.useEffect( () => {
-         getTicketPay();
-         getUser();
+
+        getUser();
+        getTicketPay();
     }, []);
     const refresh = () =>{
         setRefreshPage(true);
+
         getTicketPay();
     }
     const getUser = async () => {
@@ -120,70 +40,69 @@ function ItemPayScreen() {
         setUser(JSON.parse(value));
     }
     const getTicketPay = async () => {
-        await axios
-        .get('https://project3na.herokuapp.com/api/customer/transaction/2')
-        .then(async function (response) {
-            var trans = response.data.data;
-            setRefreshPage(false);
-            data = new Array();
+        try {
 
-            trans.forEach((element,index) => {
-                data.push(
-                        <View key={index} style={styles.item}>
-                        <View style={styles.itemimage}>
-                            <View style={{flex:6, marginTop:2}}>
-                                <View style={{ marginLeft:20,borderColor:'#CCCCCC', borderWidth:1, borderRadius:20, height:20, width:160, justifyContent:'center',alignItems:'center'}}>
-                                    <Text style={{color:'#33CC66'}}>Đã thanh toán</Text>
+            await axios
+            .get('https://project3na.herokuapp.com/api/customer/transaction/2')
+            .then(async function (response) {
+                var trans = response.data.data;
+                setRefreshPage(false);
+                data = new Array();
+
+                trans.forEach((element,index) => {
+                    data.push(
+                            <View key={index} style={styles.item1}>
+                            <View style={styles.itemimage}>
+                                <View style={{flex:6, marginTop:2}}>
+                                    <View style={{ marginLeft:20,borderColor:'#CCCCCC', borderWidth:1, borderRadius:20, height:20, width:160, justifyContent:'center',alignItems:'center'}}>
+                                        <Text style={{color:'#33CC66'}}>Đã thanh toán</Text>
+                                    </View>
+                                </View>
+                                <View style={{flex:1}}>
+                                  { element.priceticket!=null && <Text style={{position:'absolute', right:15, fontSize:20}}>{element.priceticket}</Text>}
                                 </View>
                             </View>
-                            <View style={{flex:1}}>
-                              { element.priceticket!=null && <Text style={{position:'absolute', right:15, fontSize:20}}>{element.priceticket}</Text>}
+                            <View style={{flex:7, marginLeft:5, marginTop:-2}}>
+                                <View style={{flexDirection:'row', alignItems:'center'}}>
+                                    <Text style={styles.namecar}>Bãi đỗ xe {element.parkingname}</Text>
+                                </View>
+
+                                <View style={{flexDirection:'row', alignItems:'center'}}>
+                                    <Feather name="map-pin" size={14} color="gray" style={{ marginLeft:8}}/>
+                                    <Text style={styles.textcar}>{element.addressparking}</Text>
+                                </View>
+                                <View style={{flexDirection:'row', alignItems:'center', marginTop:10}}>
+                                    <MaterialIcons name="date-range" size={20} color="gray" style={{ marginLeft:8}}  />
+                                    <View style={{flex:1}}>
+                                        <Text style={{marginLeft:5, fontSize:13}}>{element.Timein}</Text>
+                                    </View>
+                                    <View style={{flex:1}}>
+                                        <AntDesign name="arrowright" size={24} color="#CCCCCC" />
+                                    </View>
+                                    <View style={{flex:1}}>
+                                        <Text style={{marginLeft:5, fontSize:13}}>{element.Timeout}</Text>
+                                    </View>
+                                </View>
                             </View>
                         </View>
-                        <View style={{flex:7, marginLeft:5, marginTop:-2}}>
-                            <View style={{flexDirection:'row', alignItems:'center'}}>
-                                <Text style={styles.namecar}>Bãi đỗ xe {element.parkingname}</Text>
-                            </View>
+                    );
+                });
+                setList(data);
+            })
+            .catch(function (error) {
+                    alert(JSON.stringify(error));
+            })
+        } catch (error) {
+            alert(JSON.stringify(error));
+        }
 
-                            <View style={{flexDirection:'row', alignItems:'center'}}>
-                                <Feather name="map-pin" size={14} color="gray" style={{ marginLeft:8}}/>
-                                <Text style={styles.textcar}>{element.addressparking}</Text>
-                            </View>
-                            <View style={{flexDirection:'row', alignItems:'center', marginTop:10}}>
-                                <MaterialIcons name="date-range" size={20} color="gray" style={{ marginLeft:8}}  />
-                                <View style={{flex:1}}>
-                                    <Text style={{marginLeft:5, fontSize:13}}>{element.Timein}</Text>
-                                </View>
-                                <View style={{flex:1}}>
-                                    <AntDesign name="arrowright" size={24} color="#CCCCCC" />
-                                </View>
-                                <View style={{flex:1}}>
-                                    <Text style={{marginLeft:5, fontSize:13}}>{element.Timeout}</Text>
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                );
-            });
-            setList(data);
-        })
-        .catch(function (error) {
-                // alert(error);
-        })
-        .finally(function () {
-        });
+
     }
     return (
-        <View style={styles.profile}>
-            <View style={styles.find}>
-                <SearchBar
-                    round
-                    placeholder="Tìm kiếm..."
+        <View style={styles.profile1}>
 
-                />
-            </View>
 
-            <ScrollView style={{height:height-150, borderBottomColor:"#CCCCCC"}} refreshControl={
+            <ScrollView style={{height:height,marginBottom:40, borderBottomColor:"#CCCCCC"}} refreshControl={
                 <RefreshControl
                   refreshing={refreshPage}
                   onRefresh={()=>refresh()}
@@ -195,7 +114,7 @@ function ItemPayScreen() {
   }
   //tham khảo thanh tìm kiếm
 //   https://snack.expo.io/embedded/@aboutreact/example-of-search-bar-in-react-native?iframeId=2k48h7eupo&preview=true&platform=ios&theme=dark
-  function NoPayScreen() {
+  function NoPayScreen(props) {
     //   giao diện trang chưa thanh toán
     const [visible, setVisible] = React.useState(false);
     const showModal = (element) => {
@@ -210,8 +129,9 @@ function ItemPayScreen() {
     const [list, setList] = useState(new Array);
     const [refreshPage, setRefreshPage] = useState(true);
     React.useEffect( () => {
-         getTicketPay();
-         getUser();
+        getUser();
+
+        getTicketPay();
     }, []);
     const refresh = () =>{
         setRefreshPage(true);
@@ -222,82 +142,81 @@ function ItemPayScreen() {
         setUser(JSON.parse(value));
     }
     const getTicketPay = async () => {
-        await axios
-        .get('https://project3na.herokuapp.com/api/customer/transaction/1')
-        .then(async function (response) {
-            var trans = response.data.data;
-            setRefreshPage(false);
-            data = new Array();
+        try {
+            await axios
+            .get('https://project3na.herokuapp.com/api/customer/transaction/1')
+            .then(async function (response) {
+                var trans = response.data.data;
+                setRefreshPage(false);
+                data = new Array();
 
-            trans.forEach((element,index) => {
-                data.push(
-                    <TouchableWithoutFeedback
-                    onPress={() =>showModal(element)}
-                >
-                        <View key={index} style={styles.item}>
-                        <View style={styles.itemimage}>
-                            <View style={{flex:6, marginTop:2}}>
-                                <View style={{ marginLeft:20,borderColor:'#CCCCCC', borderWidth:1, borderRadius:20, height:20, width:160, justifyContent:'center',alignItems:'center'}}>
-                                    <Text style={{color:'#33CC66'}}>Chưa thanh toán</Text>
+                trans.forEach((element,index) => {
+                    data.push(
+                        <TouchableWithoutFeedback
+                        onPress={() =>showModal(element)}
+                    >
+                            <View key={index} style={styles.item}>
+                            <View style={styles.itemimage}>
+                                <View style={{flex:6, marginTop:2}}>
+                                    <View style={{ marginLeft:20,borderColor:'#CCCCCC', borderWidth:1, borderRadius:20, height:20, width:160, justifyContent:'center',alignItems:'center'}}>
+                                        <Text style={{color:'#33CC66'}}>Chưa thanh toán</Text>
+                                    </View>
+                                </View>
+                                <View style={{flex:1}}>
+                                  { element.priceticket!=null && <Text style={{position:'absolute', right:15, fontSize:20}}>{element.priceticket}</Text>}
                                 </View>
                             </View>
-                            <View style={{flex:1}}>
-                              { element.priceticket!=null && <Text style={{position:'absolute', right:15, fontSize:20}}>{element.priceticket}</Text>}
+                            <View style={{flex:7, marginLeft:5, marginTop:-2}}>
+                                <View style={{flexDirection:'row', alignItems:'center'}}>
+                                    <Text style={styles.namecar}>Bãi đỗ xe {element.parkingname}</Text>
+                                </View>
+
+                                <View style={{flexDirection:'row', alignItems:'center'}}>
+                                    <Feather name="map-pin" size={14} color="gray" style={{ marginLeft:8}}/>
+                                    <Text style={styles.textcar}>{element.addressparking}</Text>
+                                </View>
+                                <View style={{flexDirection:'row', alignItems:'center', marginTop:10}}>
+                                    <MaterialIcons name="date-range" size={20} color="gray" style={{ marginLeft:8}}  />
+                                    <View style={{flex:1}}>
+                                        <Text style={{marginLeft:5, fontSize:13}}>{element.Timein}</Text>
+                                    </View>
+                                    <View style={{flex:1}}>
+                                        <AntDesign name="arrowright" size={24} color="#CCCCCC" />
+                                    </View>
+                                    <View style={{flex:1}}>
+                                        <Text style={{marginLeft:5, fontSize:13}}>{element.Timeout}</Text>
+                                    </View>
+                                </View>
                             </View>
                         </View>
-                        <View style={{flex:7, marginLeft:5, marginTop:-2}}>
-                            <View style={{flexDirection:'row', alignItems:'center'}}>
-                                <Text style={styles.namecar}>Bãi đỗ xe {element.parkingname}</Text>
-                            </View>
-
-                            <View style={{flexDirection:'row', alignItems:'center'}}>
-                                <Feather name="map-pin" size={14} color="gray" style={{ marginLeft:8}}/>
-                                <Text style={styles.textcar}>{element.addressparking}</Text>
-                            </View>
-                            <View style={{flexDirection:'row', alignItems:'center', marginTop:10}}>
-                                <MaterialIcons name="date-range" size={20} color="gray" style={{ marginLeft:8}}  />
-                                <View style={{flex:1}}>
-                                    <Text style={{marginLeft:5, fontSize:13}}>{element.Timein}</Text>
-                                </View>
-                                <View style={{flex:1}}>
-                                    <AntDesign name="arrowright" size={24} color="#CCCCCC" />
-                                </View>
-                                <View style={{flex:1}}>
-                                    <Text style={{marginLeft:5, fontSize:13}}>{element.Timeout}</Text>
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                </TouchableWithoutFeedback>
-                );
+                    </TouchableWithoutFeedback>
+                    );
+                });
+                setList(data);
+            })
+            .catch(function (error) {
+                    alert(error);
             });
-            setList(data);
-        })
-        .catch(function (error) {
-                // alert(error);
-        })
-        .finally(function () {
-        });
+        } catch (error) {
+            alert(JSON.stringify(error))
+        }
+
     }
     return (
-        <View style={styles.profile}>
-            <View style={styles.find}>
-                <SearchBar
-                    round
-                    placeholder="Tìm kiếm..."
-                />
-            </View>
+        <View style={styles.profile1}>
+
             <Modal
                 isVisible={visible} onDismiss={hideModal}
                 useNativeDriver
+
                 style={styles.modalContainer}
                 backdropColor={"gray"}
                 onBackButtonPress={hideModal}
                 onBackdropPress={hideModal}
                 onSwipeComplete={hideModal}
             >
-                <View style={styles.modal}>
-                    <View style={{margin:10, flexDirection:'row'}}>
+                <View style={styles.modal1}>
+                    <View style={{padding:10, flexDirection:'row'}}>
                         <View style={{ marginLeft:20,borderColor:'#CCCCCC', borderWidth:1, borderRadius:20, height:20, width:160, justifyContent:'center',alignItems:'center'}}>
                             <Text style={{color:'#FFCC66'}}>Chưa thanh toán</Text>
                         </View>
@@ -359,7 +278,7 @@ function ItemPayScreen() {
                     </ScrollView>
                 </View>
             </Modal>
-            <ScrollView style={{height:height-150, borderBottomColor:"#CCCCCC"}} refreshControl={
+            <ScrollView style={{height:height,marginBottom:40, borderBottomColor:"#CCCCCC"}} refreshControl={
                 <RefreshControl
                   refreshing={refreshPage}
                   onRefresh={()=>refresh()}
@@ -372,16 +291,16 @@ function ItemPayScreen() {
 const Tab = createBottomTabNavigator();
 
 
-function ListTicket({ navigation: { navigate } }) {
+function ListTicket({ navigation }) {
     const layout = useWindowDimensions();
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
-        { key: 'first', title: 'Chưa thanh toán' },
-        { key: 'second', title: 'Đã thanh toán' },
+        { key: 'first1', title: 'Chưa thanh toán' },
+        { key: 'second2', title: 'Đã thanh toán' },
     ]);
     const renderScene = SceneMap({
-        first: NoPayScreen,
-        second: PayScreen,
+        first1: () => <NoPayScreen props={navigation}/>,
+        second2: ()=><PayScreen/>,
       });
   return (
     <SafeAreaView  style={styles.container}>
@@ -389,21 +308,34 @@ function ListTicket({ navigation: { navigate } }) {
         animated={true}
         hidden={true} />
 
-      <View style={{height: height-50}}>
-        <TabView
-            navigationState={{ index, routes }}
-            renderScene={renderScene}
-            onIndexChange={setIndex}
-            initialLayout={{ width: width, height:height-50}}
+
+      <View style={styles.profile1}>
+            <TabView
+                renderTabBar={props => (
+                    <TabBar
+                      {...props}
+                      renderLabel={({ route, color }) => (
+                        <Text style={{ color: 'black'}}>
+                          {route.title}
+                        </Text>
+                      )}
+                      style={{backgroundColor: "#16f198", height:50}}
+                    />
+                  )}
+                navigationState={{ index, routes }}
+                renderScene={renderScene}
+                onIndexChange={setIndex}
+                initialLayout={{ width: width, height:height}}
             />
       </View>
+
 
         {/* <View style={{height:50, backgroundColor:"gray"}}></View> */}
     </SafeAreaView>
   );
 }
-var width = Dimensions.get('window').width; //full width
-var height = Dimensions.get('window').height; //full height
+var width = Dimensions.get('screen').width; //full width
+var height = Dimensions.get('screen').height; //full height
 
 
 export default ListTicket;

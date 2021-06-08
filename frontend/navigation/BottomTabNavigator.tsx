@@ -21,6 +21,7 @@ import MainScreenOwner from '../OwnerScreens/MainScreen';
 import ScanQRCodeGuard from '../GuardScreens/ScanQRCodeGuard';
 import ScanQRCode from '../OwnerScreens/ScanQRCode';
 import OwnerProfile from '../OwnerScreens/OwnerProfile';
+import FindParking from '../OwnerScreens/FindParking';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -285,7 +286,7 @@ function TabTwoNavigator() {
     <TabTwoStack.Navigator>
     <TabTwoStack.Screen
       name="TabTwoScreen"
-      component={Map}
+      component={FindParking}
       options={{headerShown: false}}
     />
   </TabTwoStack.Navigator>

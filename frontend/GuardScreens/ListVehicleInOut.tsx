@@ -6,7 +6,7 @@ import Modal from "react-native-modal";
 import axios from "axios";
 import ListVehicle from "../CustomerScreens/ListVehicle";
 
-function InScreen(){
+function InScreen(props){
     const [refreshPage, setRefreshPage] = useState(true);
     const [transaction, setTransaction] = useState({});
     const [NotPaidtransactions, setNotPaidtransactions] = useState([]);
@@ -15,6 +15,7 @@ function InScreen(){
     React.useEffect(() => {
         getTransactions();
         getUser();
+        alert(JSON.stringify(props));
         },[]);
     const getUser = async () => {
         let value = await AsyncStorage.getItem('user');
@@ -22,22 +23,26 @@ function InScreen(){
     }
     const getTransactions = async () => {
         await axios
-        .get('https://project3na.herokuapp.com/api/guard/transactions')
-        .then(async function (response) {
-            if(response.data.success)
-           {
-               setNotPaidtransactions(response.data.transactionNotPaid);
+            .get('https://project3na.herokuapp.com/api/guard/transactions')
+            .then(async function (response) {
+                if(response.data.success)
+               {
+                if(user.role==1 || user.role == '1') {
+                   setNotPaidtransactions(response.data.transactionNotPaid);
+                }
+                else {
+                    setNotPaidtransactions(response.data.transactionNotPaid.filter(item => item.parkingid == props.props.route.params.data.parkingid));
+                }
 
-           }
-            //else //alert(response.data.msg)
-            setRefreshPage(false);
-           // alert(JSON.stringify(response.data));
-        })
-        .catch(function (error) {
-               // alert(error);
-        })
-        .finally(function () {
-        });
+               }
+                //else //alert(response.data.msg)
+                setRefreshPage(false);
+               // alert(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+                   alert(error);
+            });
+
     }
     const refresh = () =>{
         setRefreshPage(true);
@@ -136,7 +141,7 @@ function InScreen(){
         </ScrollView>
     );
 }
-function OutScreen(){
+function OutScreen(props){
     const [refreshPage, setRefreshPage] = useState(true);
     const [transaction, setTransaction] = useState({});
     const [PaidTransaction, setPaidTransaction] = useState([]);
@@ -156,9 +161,17 @@ function OutScreen(){
         .then(async function (response) {
             if(response.data.success)
            {
-            //    var list = new Array();
-            //    list.push(response.data.transactionPaid);
-                setPaidTransaction(response.data.transactionPaid);
+            // if(response.data.success)
+            //    {
+                if(user.role==1 || user.role == '1') {
+                    setPaidTransaction(response.data.transactionNotPaid);
+                }
+                else {
+                    setPaidTransaction(response.data.transactionNotPaid.filter(item => item.parkingid == props.props.route.params.data.parkingid));
+                }
+
+            //    }
+                // setPaidTransaction(response.data.transactionPaid);
 
            }
             //else //alert(response.data.msg)
@@ -166,7 +179,7 @@ function OutScreen(){
             //alert(JSON.stringify(response.data));
         })
         .catch(function (error) {
-               // alert(error);
+               alert(error);
         })
         .finally(function () {
         });
@@ -340,7 +353,7 @@ function ModalView({item}) {
         </View>
     );
 }
-function ListVehicleInOut({ navigation }) {
+function ListVehicleInOut(props) {
     const layout = useWindowDimensions();
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
@@ -348,15 +361,24 @@ function ListVehicleInOut({ navigation }) {
         { key: 'second', title: 'Xe ra' },
     ]);
     const renderScene = SceneMap({
-        first: InScreen,
-        second: OutScreen,
+        first: () => <InScreen props={props} />,
+        second: () => <OutScreen props={props} />,
       });
+    const [user, setUser] = React.useState('');
+    React.useEffect(() => {
+
+        getUser();
+        },[]);
+    const getUser = async () => {
+        let value = await AsyncStorage.getItem('user');
+        setUser(JSON.parse(value));
+    }
       const goToList = () => {
         if (user.role == 2 || user.role == "2") {
-            navigation.push("MainScreenOwner");
+            props.navigation.goBack();
         }
         else {
-            navigation.push("MainScreen");
+            props.navigation.goBack();
         }
     }
   return (
