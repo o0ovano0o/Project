@@ -9,7 +9,6 @@ const { width, height } = Dimensions.get('screen');
 
 const SPACING = 16;
 const AVATAR_SIZE = 70;
-const BG_IMG = 'https://images.pexels.com/photos/5326901/pexels-photo-5326901.jpeg?auto=compress&cs=tinysrgb&h=650&w=940';
 const ITEM_SIZE = AVATAR_SIZE + SPACING * 3;
 
 function ListParking({ navigation }) {
@@ -83,11 +82,6 @@ function ListParking({ navigation }) {
                 backgroundColor: '#fff',
             }}>
 
-            <Image
-                source={{ uri: BG_IMG }}
-                style={StyleSheet.absoluteFillObject}
-                blurRadius={80}
-            />
             <StatusBar
                 animated={true}
                 hidden={true} />
@@ -142,9 +136,10 @@ function ListParking({ navigation }) {
                                 flexDirection: 'row',
                                 padding: SPACING,
                                 marginBottom: SPACING,
-                                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                                backgroundColor: '#f0f0f0',
                                 borderRadius: 20,
-                                shadowColor: "#000",
+                                borderColor: 'rgba(120, 122, 122)',
+                                shadowColor: "#aaa",
                                 shadowOffset: {
                                     width: 0,
                                     height: 10
@@ -157,7 +152,7 @@ function ListParking({ navigation }) {
                                 alignContent: "space-between",
                             }}
                         >
-                            <View style={{ flex: 3 }}>
+                            <View style={{ flex: 5 }}>
                                 <Text numberOfLines={1} style={{ fontSize: 18, fontWeight: '700', flex: 1 }}>{item.parkingname}</Text>
                                 <Text  style={{ fontSize: 15, opacity: 0.7, flex: 1 }}>Địa chỉ: {item.address}</Text>
                                 {/* <View style={{ flexDirection: 'row' }}> */}

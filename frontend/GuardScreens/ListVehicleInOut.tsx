@@ -15,7 +15,7 @@ function InScreen(props){
     React.useEffect(() => {
         getTransactions();
         getUser();
-        alert(JSON.stringify(props));
+        //alert(JSON.stringify(props));
         },[]);
     const getUser = async () => {
         let value = await AsyncStorage.getItem('user');

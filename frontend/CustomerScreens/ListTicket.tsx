@@ -90,10 +90,10 @@ import axios from "axios";
                 setList(data);
             })
             .catch(function (error) {
-                    alert(JSON.stringify(error));
+                    //alert(JSON.stringify(error));
             })
         } catch (error) {
-            alert(JSON.stringify(error));
+            //alert(JSON.stringify(error));
         }
 
 
@@ -195,10 +195,10 @@ import axios from "axios";
                 setList(data);
             })
             .catch(function (error) {
-                    alert(error);
+                //    alert(error);
             });
         } catch (error) {
-            alert(JSON.stringify(error))
+           // alert(JSON.stringify(error))
         }
 
     }

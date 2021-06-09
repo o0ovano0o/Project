@@ -19,7 +19,7 @@ function Statistic({ navigation }) {
         setRefreshPage(false);
 
         getDataParking();
-    }, [time]);
+    }, []);
     const getDataParking = async () => {
         await axios
             .get(`https://project3na.herokuapp.com/api/owner/analys-amount/${time}`)
@@ -258,7 +258,7 @@ function Statistic({ navigation }) {
                 animated={true}
                 hidden={true} />
             <View style={styles.tabback}>
-                <TouchableOpacity style={{ flex: 1, alignItems: 'center', flexDirection: 'row', marginLeft: 20 }}>
+                <TouchableOpacity onPress={()=> navigation.goBack()} style={{ flex: 1, alignItems: 'center', flexDirection: 'row', marginLeft: 20 }}>
                     <AntDesign name="left" size={24} color="black" />
                 </TouchableOpacity>
                 <View style={{ flex: 5, alignItems: 'center' }}>

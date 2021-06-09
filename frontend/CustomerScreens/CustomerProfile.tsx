@@ -57,11 +57,22 @@ function CustomerProfile({ navigation }) {
                 </TouchableHighlight>
                 <View style={styles.avatar}>
                     <View style={{ flex: 2, justifyContent: 'center' }}>
-                        <Image
+                        {
+                            user.role == 2 &&
+                            <Image
+                            source={require('../assets/images/owner.jpg')}
+                            resizeMode="cover"
+                            style={styles.image}
+                        ></Image>
+                        }
+                        {
+                            user.role != 2 &&
+                            <Image
                             source={require('../assets/images/ava.jpg')}
                             resizeMode="cover"
                             style={styles.image}
                         ></Image>
+                        }
                     </View>
                 </View>
                 <View style={{ height: 30, marginTop: -5, alignItems: 'center' }}>
