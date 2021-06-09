@@ -111,7 +111,7 @@ function ListTicketType({ navigation }) {
                 animated={true}
                 hidden={true} />
             <View style={styles.tabback}>
-                <TouchableOpacity onPress={() => navigation.push('CustomerProfile')}  style={{ flex: 1, alignItems: 'center', justifyContent:'center' }}>
+                <TouchableOpacity onPress={() => navigation.push('CustomerProfile')}  style={{ flex: 1, marginLeft: 10, alignItems: 'center', justifyContent:'center' }}>
                     <AntDesign name="left" size={24} color="black" />
                 </TouchableOpacity>
                 <View style={{ flex: 5, alignItems: 'center' }}>

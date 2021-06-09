@@ -49,12 +49,12 @@ export default class FindParking extends Component {
           else Alert.alert("Thông báo",response.data.msg)
         })
         .catch(function (error) {
-          alert(error);
+         // alert(error);
         })
 
 
     } catch (error) {
-      alert(error)
+      //alert(error)
     }
 
   }
@@ -106,8 +106,8 @@ export default class FindParking extends Component {
     showLocation({
       latitude: lat,
       longitude: lng,
-      sourceLatitude: latcurr,  // optionally specify starting location for directions
-      sourceLongitude: lngcurr,  // not optional if sourceLatitude is specified
+      sourceLatitude: me.state.currentregion.latitude,  // optionally specify starting location for directions
+      sourceLongitude:  me.state.currentregion.longitude,  // not optional if sourceLatitude is specified
       title: address,  // optional
       googleForceLatLon: true,  // optionally force GoogleMaps to use the latlon for the query instead of the title
       googlePlaceId: 'ChIJGVtI4by3t4kRr51d_Qm_x58',  // optionally specify the google-place-id

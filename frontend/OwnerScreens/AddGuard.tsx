@@ -59,12 +59,12 @@ function AddGuard({navigation,route}) {
             })
             .catch(function (error) {
               // handle error
-              alert('error');
+             // alert('error');
             })
             .finally(function () {
             });
         }catch(er){
-            alert(er);
+           // alert(er);
         }
     }
     const getParking = async () => {

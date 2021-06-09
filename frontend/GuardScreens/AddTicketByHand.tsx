@@ -99,7 +99,7 @@ export default class AddTicketByHand extends React.Component {
                 })
             }
         } catch (error) {
-            alert(JSON.stringify(error));
+            //alert(JSON.stringify(error));
         }
 
     }
@@ -107,7 +107,7 @@ export default class AddTicketByHand extends React.Component {
         try {
 
             if (!base64) {
-                alert(JSON.stringify(base64))
+                //alert(JSON.stringify(base64))
                 return;
             }
             this.setState({
@@ -122,7 +122,7 @@ export default class AddTicketByHand extends React.Component {
 
 
         } catch (error) {
-            alert(JSON.stringify(error));
+           // alert(JSON.stringify(error));
         }
 
     }
@@ -146,7 +146,7 @@ export default class AddTicketByHand extends React.Component {
             return res;
 
         } catch (error) {
-            alert(JSON.stringify(error));
+            //alert(JSON.stringify(error));
         }
     }
     async getData(itemValue) {
@@ -160,7 +160,7 @@ export default class AddTicketByHand extends React.Component {
                 listTicket: response,
                 ticket: response[0]
             })
-            alert(JSON.stringify(this.state.listTicket));
+            //alert(JSON.stringify(this.state.listTicket));
         }
         else {
             this.setState({
@@ -177,7 +177,7 @@ export default class AddTicketByHand extends React.Component {
 
     }
     async pickdImage() {
-        alert(this.state.code);
+        //alert(this.state.code);
         try {
 
             let result = await ImagePicker.launchCameraAsync({
@@ -187,7 +187,7 @@ export default class AddTicketByHand extends React.Component {
                 mediaTypes: ImagePicker.MediaTypeOptions.All
             });
 
-            alert(JSON.stringify(result));
+            //alert(JSON.stringify(result));
             if (!result.cancelled) {
                 this.setState({
                     image: result.uri,
@@ -198,7 +198,7 @@ export default class AddTicketByHand extends React.Component {
 
 
         } catch (error) {
-            alert(JSON.stringify(error));
+            //alert(JSON.stringify(error));
         }
     }
     AddTicketRender() {
@@ -318,7 +318,7 @@ export default class AddTicketByHand extends React.Component {
                 base64: true,
             });
             console.log(result.uri);
-            alert(JSON.stringify(result));
+            //alert(JSON.stringify(result));
             if (!result.cancelled) {
 
                 this.state.image = result.uri;
@@ -333,7 +333,7 @@ export default class AddTicketByHand extends React.Component {
 
 
         } catch (error) {
-            alert(JSON.stringify(error));
+            //alert(JSON.stringify(error));
         }
 
 
@@ -359,7 +359,7 @@ export default class AddTicketByHand extends React.Component {
                 })
                 .then(async function (response) {
                     if (response.data.success) {
-                        alert(response.data.msg);
+                        //alert(response.data.msg);
                     } else {
                         // alert(response.data.msg);
                         if(pictureUrl)
@@ -374,7 +374,7 @@ export default class AddTicketByHand extends React.Component {
                 .finally(function () {
                 });
         } catch (error) {
-            alert(JSON.stringify(error));
+            //alert(JSON.stringify(error));
         }
     }
     async createTransaction(url) {
@@ -395,7 +395,7 @@ export default class AddTicketByHand extends React.Component {
                     priceticket: parseInt(this.state.ticket.price),
                     nameticket: this.state.ticket.name,
                 });
-            alert(reponse.data.msg);
+            //alert(reponse.data.msg);
 
             if (reponse.data.success) {
                this.setState({

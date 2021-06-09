@@ -19,18 +19,19 @@ function Statistic({ navigation }) {
         setRefreshPage(false);
 
         getDataParking();
-    }, []);
+    }, [time]);
     const getDataParking = async () => {
         await axios
             .get(`https://project3na.herokuapp.com/api/owner/analys-amount/${time}`)
             .then(async function (response) {
                 if (response.data.success) {
                     setDataParking(response.data.data);
+                    //alert(response.data.data[3].total);
                 }
                 setRefreshPage(false);
-
             })
             .catch(function (error) {
+                //alert(error);
             })
             .finally(function () {
             });
