@@ -121,7 +121,7 @@ function MainScreenOwner({ navigation }) {
                 <View style={{ flex: 4 }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
                         <Image
-                            source={require('../assets/images/gu.jpg')}
+                            source={require('../assets/images/owner.jpg')}
                             resizeMode="cover"
                             style={styles.image}
                         ></Image>

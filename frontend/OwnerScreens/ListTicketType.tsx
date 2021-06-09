@@ -107,12 +107,6 @@ function ListTicketType({ navigation }) {
                 flex: 1,
                 backgroundColor: '#fff',
             }}>
-
-            <Image
-                source={{ uri: BG_IMG }}
-                style={StyleSheet.absoluteFillObject}
-                blurRadius={80}
-            />
             <StatusBar
                 animated={true}
                 hidden={true} />
@@ -167,7 +161,7 @@ function ListTicketType({ navigation }) {
                                 flexDirection: 'row',
                                 padding: SPACING,
                                 marginBottom: SPACING,
-                                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                                backgroundColor: '#f0f0f0',
                                 borderRadius: 20,
                                 shadowColor: "#000",
                                 shadowOffset: {

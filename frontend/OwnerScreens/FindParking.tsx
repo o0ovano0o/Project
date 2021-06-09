@@ -41,7 +41,7 @@ export default class FindParking extends Component {
         .get(`https://project3na.herokuapp.com/api/parkings/nearst`, {params})
         .then(async function (response) {
           if (response.data.success) {
-            // alert(JSON.stringify(response.data));
+             alert(JSON.stringify(response.data));
             me.setState({
               parkings: response.data.data
             });
@@ -93,6 +93,7 @@ export default class FindParking extends Component {
   };
   gotoGooogleMap(lat, lng, address) {
     var latcurr, lngcurr;
+    var me = this;
     navigator.geolocation.getCurrentPosition((data) => {
       me.setState({ currentregion: data.coords });
       me.setState({
@@ -213,7 +214,7 @@ export default class FindParking extends Component {
                  <View style={{ flex: 2 }}>
                    <TouchableOpacity onPress={
                      () => {
-                       this.gotoGooogleMap(item.vt.lat, item.vt.lon, item.address)
+                       this.gotoGooogleMap(item.latitude, item.longitude, item.address)
                      }
                    }  >
                      <AntDesign name="enviroment" size={20} color="#4da6ff" />

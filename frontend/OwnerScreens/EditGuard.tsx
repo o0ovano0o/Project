@@ -8,7 +8,7 @@ import Dropdown from "react-native-modal-dropdown";
 import axios from "axios";
 
 faker.seed(10);
-const item_img = `https://randomuser.me/api/portraits/${faker.helpers.randomize(['women', 'men'])}/${faker.random.number(60)}.jpg`;
+const item_img = `https://cdn1.iconfinder.com/data/icons/avatar-3/512/Security-512.png`;
 function EditGuard({navigation,route}) {
     const [user, setUser] = React.useState('');
     const [parkings, setParkings] =  React.useState([]);
