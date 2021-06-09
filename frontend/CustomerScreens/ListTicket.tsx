@@ -208,7 +208,6 @@ import axios from "axios";
             <Modal
                 isVisible={visible} onDismiss={hideModal}
                 useNativeDriver
-
                 style={styles.modalContainer}
                 backdropColor={"gray"}
                 onBackButtonPress={hideModal}

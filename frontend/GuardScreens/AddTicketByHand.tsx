@@ -11,6 +11,7 @@ import * as MediaLibrary from 'expo-media-library';
 import axios from "axios";
 import moment from "moment";
 import { Picker } from "native-base";
+import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
@@ -362,9 +363,8 @@ export default class AddTicketByHand extends React.Component {
                         //alert(response.data.msg);
                     } else {
                         // alert(response.data.msg);
-                        if(pictureUrl)
-                        me.createTransaction(pictureUrl);
 
+                        me.createTransaction(pictureUrl);
                     }
                 })
                 .catch(function (error) {
@@ -395,9 +395,10 @@ export default class AddTicketByHand extends React.Component {
                     priceticket: parseInt(this.state.ticket.price),
                     nameticket: this.state.ticket.name,
                 });
-            //alert(reponse.data.msg);
 
+                //alert(JSON.stringify(reponse.data));
             if (reponse.data.success) {
+
                this.setState({
                    code:2
                })
@@ -432,9 +433,9 @@ export default class AddTicketByHand extends React.Component {
                     hidden={true} />
                 <View style={{ flex: 9 }}>
                     <View style={styles.tabback}>
-                        <View style={{ flex: 1, alignItems: 'center' }}>
+                        <TouchableHighlight onPress={()=> this.props.navigation.goBack()} style={{ flex: 1, alignItems: 'center' }}>
                             <AntDesign name="left" size={24} color="black" />
-                        </View>
+                        </TouchableHighlight>
                         <View style={{ flex: 5, alignItems: 'center' }}>
                             <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Tạo vé xe</Text>
                         </View>

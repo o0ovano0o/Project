@@ -187,6 +187,59 @@ router.post('/api/guard/transaction/close', validateGuardAPI, async(req, res) =>
     }
 });
 
+router.post('/api/guard/transaction/close-trans/:transactionid', validateGuardAPI, async(req, res) => {
+    try {
+        let { Timeout,parkingid } = req.body;
+        let { transactionid } = req.params;
+        const guarid = req.session.userid;
+        const transaction = await knex('transaction').update({
+            Timeout,Status:2
+        }).where({transactionid, guarid}).returning('*');
+        var amount = 0;
+        if(!transaction.typetimeticket) {
+            amount=transaction.priceticket;
+        }
+        else if(transaction.typetimeticket == 1 || transaction.typetimeticket=='1') { // day
+            var dayout = moment(Timeout, "hh:mm DD/MM/YYYY");
+            var dayin = moment(transaction.Timein, "hh:mm DD/MM/YYYY");
+            var duration = dayout.diff(dayin,'days');
+            if(parseInt(duration)>1){
+                amount = transaction.priceticket*parseInt(duration);
+            } else amount =transaction.priceticket;
+        } else if(transaction.typetimeticket == 2  || transaction.typetimeticket=='2') { // hours
+            var dayout = moment(Timeout, "hh:mm DD/MM/YYYY");
+            var dayin = moment(transaction.Timein, "hh:mm DD/MM/YYYY");
+            var duration = dayout.diff(dayin,'hours');
+            if(parseInt(duration)>1){
+                amount = transaction.priceticket*parseInt(duration);
+            } else amount =transaction.priceticket;
+        }
+        if(!amount) amount = 0;
+        const transactions = await knex('transaction').update({
+           TotalAmount:amount
+        }).where({transactionid, guarid}).returning('*');
+
+        if (!transactions) return res.json({ success: false, msg: 'Trả vé giao dịch thất bại' });
+        const parking = await knex('parking').where({ parkingid });
+        if(transaction.type == 'motobike') {
+            var UsedPackingMotoBike =parseInt(parking.UsedPackingMotoBike) - 1 ;
+            UsedPackingMotoBike = UsedPackingMotoBike>=0 ? UsedPackingMotoBike : 0;
+            await knex('parking').update({ UsedPackingMotoBike }).where({parkingid});
+        } else if(transaction.type == 'car') {
+            var UsedPackingCar =parseInt(parking.UsedPackingCar) - 1 ;
+            UsedPackingCar = UsedPackingCar>=0 ? UsedPackingCar : 0;
+            await knex('parking').update({ UsedPackingCar }).where({parkingid});
+        } else if(transaction.type == 'bike') {
+            var UsedPackingBike =parseInt(parking.UsedPackingBike) - 1 ;
+            UsedPackingBike = UsedPackingBike>=0 ? UsedPackingBike : 0;
+            await knex('parking').update({ UsedPackingBike }).where({parkingid});
+        }
+        return res.status(200).json({ success: true, msg: 'Trả vé giao dịch thành công',data:transactionid });
+    } catch (err) {
+        handleAPIError(err, res);
+    }
+});
+
 router.delete('/api/guard/transaction/:transactionid',validateGuardAPI, async(req, res) => {
     try {
         const { transactionid } = req.params;
