@@ -1,10 +1,12 @@
 import React, { Component,useState } from "react";
-import { StyleSheet,Image, View,Text ,TouchableOpacity,Dimensions,SafeAreaView,StatusBar,ScrollView ,useWindowDimensions, AsyncStorage, RefreshControl } from "react-native";
+import { StyleSheet,Image, View,Text ,TouchableOpacity,Dimensions,SafeAreaView,StatusBar,ScrollView ,useWindowDimensions, AsyncStorage, RefreshControl, Alert } from "react-native";
 import { AntDesign,Feather,FontAwesome ,MaterialCommunityIcons,Ionicons,Fontisto    } from '@expo/vector-icons';
 import { TabView, SceneMap,TabBar } from 'react-native-tab-view';
 import Modal from "react-native-modal";
 import axios from "axios";
 import ListVehicle from "../CustomerScreens/ListVehicle";
+import MaterialButtonViolet from "../components/MaterialButtonViolet";
+import moment from "moment";
 
 function InScreen(props){
     const [refreshPage, setRefreshPage] = useState(true);
@@ -13,13 +15,34 @@ function InScreen(props){
     const [visiable, setCount] = useState(0);
     const [user, setUser] = React.useState('');
     React.useEffect(() => {
-        getTransactions();
         getUser();
-        alert(JSON.stringify(props));
+        getTransactions();
+
         },[]);
     const getUser = async () => {
         let value = await AsyncStorage.getItem('user');
         setUser(JSON.parse(value));
+    }
+    const ReturnTicket = async(transactionid: string, parkingid: string) =>{
+        var hour = moment().format('hh:mm');
+        var date = moment().format('DD/MM/YYYY');
+        var data = {
+          parkingid: parseInt(parkingid),
+            Timeout: `${hour.toString()} ${date.toString()}`
+        }
+        await axios
+        .post('https://project3na.herokuapp.com/api/guard/transaction/close-trans/'+transactionid, data)
+        .then(async function (response) {
+        //     if(response.data.success)
+        //    {
+            Alert.alert("Thông báo", response.data.msg);
+        //    }
+            await getTransactions();
+            closeModel();
+        })
+        .catch(function (error) {
+
+        });
     }
     const getTransactions = async () => {
         await axios
@@ -27,11 +50,11 @@ function InScreen(props){
             .then(async function (response) {
                 if(response.data.success)
                {
-                if(user.role==1 || user.role == '1') {
-                   setNotPaidtransactions(response.data.transactionNotPaid);
+                if(props?.props?.route?.params?.data?.parkingid) {
+                    setNotPaidtransactions(response.data.transactionNotPaid.filter(item => item.parkingid == props.props.route.params.data.parkingid));
                 }
                 else {
-                    setNotPaidtransactions(response.data.transactionNotPaid.filter(item => item.parkingid == props.props.route.params.data.parkingid));
+                    setNotPaidtransactions(response.data.transactionNotPaid);
                 }
 
                }
@@ -40,7 +63,7 @@ function InScreen(props){
                // alert(JSON.stringify(response.data));
             })
             .catch(function (error) {
-                   alert(error);
+
             });
 
     }
@@ -51,6 +74,10 @@ function InScreen(props){
     const openModel = (item:any) => {
         setTransaction(item);
         setCount(1);
+    }
+    const closeModel = () => {
+        getTransactions();
+        setCount(0);
     }
     return(
         <ScrollView style={{height:height-120, marginBottom:10, marginTop:10}}
@@ -128,7 +155,7 @@ function InScreen(props){
                 onSwipeComplete={() => true}
             >
                 {
-                    1==1 &&
+                    (transaction.pictureUrl !=null && transaction.pictureUrl !="") &&
                     <View style={{height:400, backgroundColor:'white', borderRadius:20}}>
                         <View style={{alignItems:'flex-end', marginRight:10, marginTop:10}}>
                             <TouchableOpacity onPress={()=> setCount(0)}>
@@ -136,12 +163,30 @@ function InScreen(props){
                                     <Ionicons name="close" size={20} color="black" />
                                 </View>
                             </TouchableOpacity>
-                        </View>
+
+                            </View>
+                            {
+                            transaction.Status == '1' &&
+
+                            <MaterialButtonViolet
+                                onPress={() => {
+                                    ReturnTicket(transaction.transactionid, transaction.parkingid);
+                                }
+
+                                }
+                                style={styles.accept}
+                                title="Trả vé"
+                            ></MaterialButtonViolet>
+
+                        }
+
+
                         <ModalViewImage item={transaction}></ModalViewImage>
+
                     </View>
                 }
                 {
-                    1==2 &&
+                    (transaction.pictureUrl==null || transaction.pictureUrl=="") &&
                     <View style={{height:200, backgroundColor:'white', borderRadius:20}}>
                         <View style={{alignItems:'flex-end', marginRight:10, marginTop:10}}>
                             <TouchableOpacity onPress={()=> setCount(0)}>
@@ -150,7 +195,21 @@ function InScreen(props){
                                 </View>
                             </TouchableOpacity>
                         </View>
+                        {
+                            transaction.Status == '1' &&
+
+                            <MaterialButtonViolet
+                                onPress={() =>{
+                                    ReturnTicket(transaction.transactionid, transaction.parkingid);
+                                }
+                                }
+                                style={styles.accept}
+                                title="Trả vé"
+                            ></MaterialButtonViolet>
+
+                        }
                         <ModalView item={transaction}></ModalView>
+
                     </View>
                 }
             </Modal>
@@ -164,8 +223,8 @@ function OutScreen(props){
     const [visiable, setCount] = useState(0);
     const [user, setUser] = React.useState('');
     React.useEffect(() => {
-        getTransactions();
         getUser();
+        getTransactions();
         },[]);
     const getUser = async () => {
         let value = await AsyncStorage.getItem('user');
@@ -177,25 +236,19 @@ function OutScreen(props){
         .then(async function (response) {
             if(response.data.success)
            {
-            // if(response.data.success)
-            //    {
-                if(user.role==1 || user.role == '1') {
-                    setPaidTransaction(response.data.transactionNotPaid);
-                }
-                else {
-                    setPaidTransaction(response.data.transactionNotPaid.filter(item => item.parkingid == props.props.route.params.data.parkingid));
-                }
+               if(props?.props?.route?.params?.data?.parkingid) {
+                setPaidTransaction(response.data.transactionPaid.filter(item => item.parkingid == props.props.route.params.data.parkingid));
+               }
+               else {
 
-            //    }
-                // setPaidTransaction(response.data.transactionPaid);
+                setPaidTransaction(response.data.transactionPaid);
+               }
 
            }
-            //else //alert(response.data.msg)
             setRefreshPage(false);
-            //alert(JSON.stringify(response.data));
         })
         .catch(function (error) {
-               alert(error);
+
         })
         .finally(function () {
         });
@@ -263,10 +316,10 @@ function OutScreen(props){
                                     </View>
                                     <View style={{flex:2, justifyContent:'center'}}>
                                     <Image
-                source={require('../assets/images/paided.png')}
-                resizeMode="cover"
-                style={{height:100, width:200, position:'absolute', right:35, bottom:25}}
-            ></Image>
+                                        source={require('../assets/images/paided.png')}
+                                        resizeMode="cover"
+                                        style={{height:100, width:200, position:'absolute', right:35, bottom:25}}
+                                    ></Image>
                                         <Text style={{fontSize:12, marginLeft:10}}>Giá</Text>
                                         <Text style={{color:'#00ff40', fontSize:14, marginLeft:10}}>$20.000</Text>
                                     </View>
@@ -286,38 +339,62 @@ function OutScreen(props){
                 onBackdropPress={() => true}
                 onSwipeComplete={() => true}
             >
-                {  1==2 &&
+                {
+                    (transaction.pictureUrl !=null && transaction.pictureUrl !="") &&
                     <View style={{height:400, backgroundColor:'white', borderRadius:20}}>
                         <View style={{alignItems:'flex-end', marginRight:10, marginTop:10}}>
                             <TouchableOpacity onPress={()=> setCount(0)}>
-                                <View style={{height:20, width:20,   justifyContent:'center', alignItems:'center'}}>
+                                <View style={{height:20, width:20,  justifyContent:'center', alignItems:'center'}}>
                                     <Ionicons name="close" size={20} color="black" />
                                 </View>
                             </TouchableOpacity>
+
                         </View>
-                        <ModalViewImage  item={transaction}></ModalViewImage>
+
+                        <ModalViewImage item={transaction}></ModalViewImage>
                     </View>
                 }
-                {  1==1 &&
+                {
+                    (transaction.pictureUrl==null || transaction.pictureUrl=="") &&
                     <View style={{height:200, backgroundColor:'white', borderRadius:20}}>
                         <View style={{alignItems:'flex-end', marginRight:10, marginTop:10}}>
                             <TouchableOpacity onPress={()=> setCount(0)}>
-                                <View style={{height:20, width:20,   justifyContent:'center', alignItems:'center'}}>
+                                <View style={{height:20, width:20,  justifyContent:'center', alignItems:'center'}}>
                                     <Ionicons name="close" size={20} color="black" />
                                 </View>
                             </TouchableOpacity>
                         </View>
-                        <ModalView  item={transaction}></ModalView>
+
+                        <ModalView item={transaction}></ModalView>
                     </View>
                 }
             </Modal>
         </ScrollView>
     );
 }
+async function returnTicket(transactionid: string, parkingid: string) {
+    var hour = moment().format('hh:mm');
+    var date = moment().format('DD/MM/YYYY');
+    var data = {
+      parkingid: parseInt(parkingid),
+        Timeout: `${hour.toString()} ${date.toString()}`
+    }
+    await axios
+    .post('https://project3na.herokuapp.com/api/guard/transaction/close-trans/'+transactionid, data)
+    .then(async function (response) {
+    //     if(response.data.success)
+    //    {
+        Alert.alert("Thông báo", response.data.msg);
+    //    }
+    })
+    .catch(function (error) {
+
+    });
+}
 function ModalViewImage({item}) {
     return(
         <View style={{height:360, width:width-50, backgroundColor:'white',  borderRadius:20}}>
-            <View style={{height:160, width:width-50, backgroundColor:'white',  borderRadius:20}}>
+            <View style={{height:190, width:width-50, backgroundColor:'white',  borderRadius:20}}>
                 <View style={{flex:1, flexDirection:'row', marginTop:-20}}>
                     <View style={{  flex:2,
                                     marginTop:20,
@@ -360,10 +437,13 @@ function ModalViewImage({item}) {
                         <Text style={styles.textcar}>Chủ xe: {item.username}</Text>
                     </View>
                 </View>
+
                 <View style={{flex:1, marginLeft:20}}>
                     <Text style={styles.textcar}>Biển số: {item.code}</Text>
                     <Text style={styles.textcar}>Điện thoại: {item.phonenumber}</Text>
                     <Text style={styles.textcar}>Mô tả: {item.description}</Text>
+
+
                     {item.Status == "2" &&
                     <Image
                     source={require('../assets/images/paided.png')}
@@ -378,20 +458,22 @@ function ModalViewImage({item}) {
                     style={{height:100, width:200, position:'absolute', right:15, bottom:15}}
                 ></Image>
                     }
-                </View>               
+                </View>
             </View>
             <View style={{height:180, width:width-50, backgroundColor:'white',  borderRadius:20, alignItems:'center', justifyContent:'center'}}>
                 <Image
-                    source={require('../assets/images/moto.png')}
+                    source={{uri:item.pictureUrl}}
                     resizeMode="cover"
                     style={{height:150, width:width-90}}
                 ></Image>
             </View>
-        </View>       
+
+
+        </View>
     );
 }
 function ModalView({item}) {
-    return(     
+    return(
         <View style={{height:160, width:width-50, backgroundColor:'white',  borderRadius:20}}>
             <View style={{flex:1, flexDirection:'row', marginTop:-20}}>
                 <View style={{  flex:2,
@@ -453,8 +535,8 @@ function ModalView({item}) {
                 style={{height:100, width:200, position:'absolute', right:15, bottom:15}}
             ></Image>
                 }
-            </View>               
-        </View>              
+            </View>
+        </View>
     );
 }
 function ListVehicleInOut(props) {
@@ -558,6 +640,19 @@ const styles = StyleSheet.create({
     flex:2,
     justifyContent:'center',
     alignItems:'center',
+  },
+  accept:{
+    height: 30,
+    width: 120,
+    borderWidth: 1,
+    borderColor: "rgba(35,225,142,1)",
+    borderRadius: 6,
+    shadowColor: "rgba(0,0,0,1)",
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    margin:10
   },
   namecar:{
     fontWeight:'bold',
