@@ -201,7 +201,8 @@ var height = Dimensions.get('window').height; //full height
             fontSize:12,
             marginTop:5,
             marginLeft:10,
-            color:'gray'
+            color:'gray',
+            marginRight:10
           },
           icondelete:{
             position:'absolute',

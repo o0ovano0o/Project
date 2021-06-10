@@ -107,7 +107,6 @@ export default class Map extends Component {
     me.setState({
       parkings : response
     });
-    // alert(JSON.stringify(me.state.parkings));
     navigator.geolocation.getCurrentPosition((data) => {
       me.setState({currentregion :data.coords});
     }, ((error) => alert('Lấy vị trí hiện tại thất bại')))
@@ -125,9 +124,7 @@ export default class Map extends Component {
           active:true
         }
       });
-      // alert(JSON.stringify(region));
       me.state.ref.animateToRegion(
-        // (new Array()).push(me.state.region),
         me.state.region,
         true, // not animated
       );
@@ -135,9 +132,7 @@ export default class Map extends Component {
     }, ((error) => {
       var me = this;
       var region = me.state.region;
-      // alert(JSON.stringify(me.state));
       region=Object.assign(region,);
-      // alert(JSON.stringify(region));
       me.setState({
         region: {
           latitude: me.state.currentregion.latitude,
@@ -148,18 +143,13 @@ export default class Map extends Component {
         }
       });
       me.state.ref.animateToRegion(
-        // (new Array()).push(me.state.region),
         me.state.region,
         1000, // not animated
       );
-      // alert('Lấy vị trí hiện tại thất bại');
-
     }))
       me.setState({ active: 'current' })
 
   }
-
-
     onRegionChange(region) {
       this.setState({ region });
     }
@@ -172,16 +162,8 @@ export default class Map extends Component {
                       inputContainerStyle={{height:30, backgroundColor:'white'}}
                       placeholder="Tìm kiếm..."
                   ></SearchBar>
-                </View>
-                {/* <View
-                style={{ flex: 1, justifyContent: "center", alignItems: "flex-end" }}
-                >
-                    <TouchableWithoutFeedback>
-                        <Ionicons name="ios-menu" size={30} />
-                    </TouchableWithoutFeedback>
-                </View> */}
+                </View>          
             </View>
-
         );
     }
     renderParking(item){
@@ -192,7 +174,6 @@ export default class Map extends Component {
                         <Text>{item.parkingname}</Text>
                         <Text>x {item.TotalParkingCar}</Text>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
-                            {/* {this.renderHours(item.id)} */}
                             <Text style={{ color: "gray" }}>hrs</Text>
                         </View>
                     </View>
@@ -231,17 +212,14 @@ export default class Map extends Component {
                                 <FontAwesome name="angle-right" size={40} color={'white'}/>
                             </View>
                         </TouchableOpacity>
-
                     </View>
                 </View>
             </TouchableWithoutFeedback>
-
         );
     }
     renderHours(id) {
         const { hours } = this.state;
         const availableHours = [1, 2, 3, 4, 5, 6];
-
         return (
           <Dropdown
             defaultIndex={0}
@@ -255,9 +233,7 @@ export default class Map extends Component {
       }
     renderModal() {
         const { activeModal, hours } = this.state;
-
         if (!activeModal) return null;
-
         return (
           <Modal
             isVisible
@@ -341,8 +317,6 @@ export default class Map extends Component {
                         showsHorizontalScrollIndicator={false}
                         scrollEventThrottle={16}
                         snapToAlignment="center"
-                        // keyExtractor={(item, index) => `${item.id}`}
-                        // renderItem={({ item }) => this.renderParking(item)}
                         style={styles.parkings}>
                 {this.state.parkings.map(parking => this.renderParking(parking))}
             </ScrollView>
@@ -376,25 +350,21 @@ export default class Map extends Component {
                         >
                             <View style={[styles.marker, this.state.active === parking.parkingid ? styles.active : null]}>
                             <Text style={styles.markerPrice}>{parking.parkingname}{" "}</Text>
-                            <Text style={styles.markerStatus}>{" "}({parking.TotalParkingCar+parking.TotalParkingBike}/{parking.UsedPackingCar+parking.UsedPackingBike})</Text>
-                            {/* <Text style={styles.markerStatus}>{"Xe máy/đạp "}({parking.TotalParkingBike}/{parking.UsedPackingBike})</Text> */}
+                            <Text style={styles.markerStatus}>{" "}({parking.TotalParkingCar+parking.TotalParkingBike}/{parking.UsedPackingCar+parking.UsedPackingBike})</Text>                    
                             </View>
                         </TouchableWithoutFeedback>
                     </Marker>
                 ))}
             </MapView>
             <TouchableWithoutFeedback
-
                   style={{elevation: 3,height:40,width:40,backgroundColor:'#d3d7de'}}
                             onPress={() => this.currenlocation()}
                         >
                          <MaterialCommunityIcons name="map-marker-radius" size={38} color="black" style={{position:'absolute', right:30, bottom:140, display:'flex'}} />
                         </TouchableWithoutFeedback >
-
                   {  this.renderParkings()}
             { this.renderModal()}
           </View>
-
         );
     }
 }

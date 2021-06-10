@@ -41,18 +41,14 @@ function ListGuard({ navigation }) {
             });
     }
     const deleteGuard = async (userid: any) => {
-        //alert('1');
         try {
             await axios
                 .delete(`https://project3na.herokuapp.com/api/owner/guard/${userid}`)
                 .then(async function (response) {
-                    // alert(response.data.msg);
                     getGuardList();
                 });
         } catch (error) {
-
         }
-
     }
     return (
         <SafeAreaView
@@ -65,8 +61,8 @@ function ListGuard({ navigation }) {
                 animated={true}
                 hidden={true} />
             <View style={styles.tabback}>
-                <TouchableHighlight onPress={() => navigation.goBack()} style={{ flex: 1, alignItems: 'center' }}>
-                    <AntDesign name="left" size={24} color="gray" />
+                <TouchableHighlight onPress={() => navigation.goBack()} style={{ flex: 1, alignItems: 'center', justifyContent:'center' }}>
+                    <AntDesign name="left" size={24} color="black" />
                 </TouchableHighlight>
                 <View style={{ flex: 5, alignItems: 'center' }}>
                     <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Danh sách bảo vệ</Text>
@@ -74,11 +70,6 @@ function ListGuard({ navigation }) {
                 <View style={{ flex: 1 }}>
                 </View>
             </View>
-            {/* <Image
-                source={{ uri: BG_IMG }}
-                style={StyleSheet.absoluteFillObject}
-                blurRadius={80}
-            /> */}
             <TouchableOpacity onPress={() => navigation.push('AddGuard')} style={{ flexDirection: 'row', justifyContent: "flex-end", marginRight: 10, marginBottom: 10 }}>
                 <Ionicons name="add-circle-outline" size={35} color="black" />
             </TouchableOpacity>

@@ -6,20 +6,11 @@ import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import Modal from "react-native-modal";
 import { SearchBar } from 'react-native-elements';
-
 import QRCodeGen from 'react-native-qrcode-svg';
 import styles from '../Style/ListTicketStyle';
 import axios from "axios";
 
-
   function PayScreen() {
-    // state = {
-    //     search: '',
-    //   };
-
-    //   updateSearch = (search) => {
-    //     this.setState({ search });
-    //   };
     // giao diện trang đã thanh toán
     let data = new Array();
     const [user, setUser] = React.useState('');
@@ -41,14 +32,12 @@ import axios from "axios";
     }
     const getTicketPay = async () => {
         try {
-
             await axios
             .get('https://project3na.herokuapp.com/api/customer/transaction/2')
             .then(async function (response) {
                 var trans = response.data.data;
                 setRefreshPage(false);
                 data = new Array();
-
                 trans.forEach((element,index) => {
                     data.push(
                             <View key={index} style={styles.item1}>
@@ -59,7 +48,7 @@ import axios from "axios";
                                     </View>
                                 </View>
                                 <View style={{flex:1}}>
-                                  { element.priceticket!=null && <Text style={{position:'absolute', right:15, fontSize:20}}>{element.priceticket}</Text>}
+                                  { element.priceticket!=null && <Text style={{position:'absolute', right:15, fontSize:16}}>{element.priceticket}</Text>}
                                 </View>
                             </View>
                             <View style={{flex:7, marginLeft:5, marginTop:-2}}>
@@ -92,15 +81,10 @@ import axios from "axios";
             .catch(function (error) {
             })
         } catch (error) {
-            //alert(JSON.stringify(error));
         }
-
-
     }
     return (
         <View style={styles.profile1}>
-
-
             <ScrollView style={{height:height,marginBottom:40, borderBottomColor:"#CCCCCC"}} refreshControl={
                 <RefreshControl
                   refreshing={refreshPage}
@@ -158,11 +142,11 @@ import axios from "axios";
                             <View style={styles.itemimage}>
                                 <View style={{flex:6, marginTop:2}}>
                                     <View style={{ marginLeft:20,borderColor:'#CCCCCC', borderWidth:1, borderRadius:20, height:20, width:160, justifyContent:'center',alignItems:'center'}}>
-                                        <Text style={{color:'#33CC66'}}>Chưa thanh toán</Text>
+                                        <Text style={{color:'#FFCC66'}}>Chưa thanh toán</Text>
                                     </View>
                                 </View>
                                 <View style={{flex:1}}>
-                                  { element.priceticket!=null && <Text style={{position:'absolute', right:15, fontSize:20}}>{element.priceticket}</Text>}
+                                  { element.priceticket!=null && <Text style={{position:'absolute', right:15, fontSize:16}}>{element.priceticket}</Text>}
                                 </View>
                             </View>
                             <View style={{flex:7, marginLeft:5, marginTop:-2}}>
@@ -170,7 +154,7 @@ import axios from "axios";
                                     <Text style={styles.namecar}>Bãi đỗ xe {element.parkingname}</Text>
                                 </View>
 
-                                <View style={{flexDirection:'row', alignItems:'center'}}>
+                                <View style={{flexDirection:'row', alignItems:'center', }}>
                                     <Feather name="map-pin" size={14} color="gray" style={{ marginLeft:8}}/>
                                     <Text style={styles.textcar}>{element.addressparking}</Text>
                                 </View>
@@ -194,10 +178,8 @@ import axios from "axios";
                 setList(data);
             })
             .catch(function (error) {
-                   // alert(error);
             });
         } catch (error) {
-            //alert(JSON.stringify(error))
         }
 
     }
@@ -217,10 +199,7 @@ import axios from "axios";
                     <View style={{padding:10, flexDirection:'row'}}>
                         <View style={{ marginLeft:20,borderColor:'#CCCCCC', borderWidth:1, borderRadius:20, height:20, width:160, justifyContent:'center',alignItems:'center'}}>
                             <Text style={{color:'#FFCC66'}}>Chưa thanh toán</Text>
-                        </View>
-                        <View style={{position:'absolute', right:10}}>
-                            <Feather name="map-pin" size={20} color="#00CCFF" style={{ marginLeft:8}}/>
-                        </View>
+                        </View>                       
                     </View>
                     <ScrollView style={{height:height*0.5, borderBottomColor:"#CCCCCC"}}>
                         <View style={{flex:7, marginLeft:5, marginTop:-2}}>
@@ -246,20 +225,16 @@ import axios from "axios";
                             <View style={{flexDirection:'row', alignItems:'center', marginTop:10}}>
                                 <MaterialIcons name="date-range" size={20} color="gray" style={{ marginLeft:5}}  />
                                 <View style={{flex:2}}>
-                                    <Text style={{marginLeft:5, fontSize:13}}>Giờ vào</Text>
-                                    {/* <Text style={{marginLeft:5, fontSize:13}}>{ticketcurrent.Timein}</Text> */}
+                                    <Text style={{marginLeft:5, fontSize:13}}>Giờ vào</Text>                             
                                     <Text style={{marginLeft:5, fontSize:13}}>{ticketcurrent.Timein}</Text>
                                 </View>
                                 <View style={{flex:1}}>
                                     <AntDesign name="arrowright" size={24} color="#CCCCCC" />
                                 </View>
-                                {/* {ticketcurrent.Timeout && */}
                                 <View style={{flex:2}}>
                                     <Text style={{marginLeft:5, fontSize:13}}>Giờ ra</Text>
                                     <Text style={{marginLeft:5, fontSize:13}}>{ticketcurrent.Timeout}</Text>
-                                    {/* <Text style={{marginLeft:5, fontSize:13}}>{ticketcurrent.Timeout.split(" ")[0]}</Text> */}
                                 </View>
-
                             </View>
                             <View style={{flexDirection:'row'}}>
                                 <MaterialCommunityIcons name="qrcode-scan" size={20} color="gray" style={{marginRight:10, marginTop:10}} />
@@ -305,8 +280,6 @@ function ListTicket({ navigation }) {
         <StatusBar
         animated={true}
         hidden={true} />
-
-
       <View style={styles.profile1}>
             <TabView
                 renderTabBar={props => (
@@ -326,9 +299,6 @@ function ListTicket({ navigation }) {
                 initialLayout={{ width: width, height:height}}
             />
       </View>
-
-
-        {/* <View style={{height:50, backgroundColor:"gray"}}></View> */}
     </SafeAreaView>
   );
 }
