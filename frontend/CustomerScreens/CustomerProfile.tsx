@@ -68,7 +68,7 @@ function CustomerProfile({ navigation }) {
                         {
                             user.role != 2 &&
                             <Image
-                            source={require('../assets/images/ava.jpg')}
+                            source={require('../assets/images/owner.jpg')}
                             resizeMode="cover"
                             style={styles.image}
                         ></Image>
