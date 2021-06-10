@@ -73,7 +73,7 @@ export default class ScanQRCodeGuard extends React.Component{
               } });
           }
         } catch (error) {
-          alert("Đã có lỗi xảy ra"+ JSON.stringify(error))
+          Alert.alert("Thông báo","Đã có lỗi xảy ra"+ JSON.stringify(error))
         }
     }
     render(){

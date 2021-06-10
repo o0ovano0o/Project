@@ -63,8 +63,6 @@ function AddParking(props) {
                 address,latitude,longitude,description
               })
           .then(async function (response) {
-            // handle success
-            // alert('Tạo bãi đỗ thành công');
             Alert.alert('Thông báo',response.data.msg)
             if(response.data.success) {
               props.navigation.push("ListParking");

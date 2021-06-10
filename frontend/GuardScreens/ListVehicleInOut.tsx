@@ -372,10 +372,7 @@ async function returnTicket(transactionid: string, parkingid: string) {
     await axios
     .post('https://project3na.herokuapp.com/api/guard/transaction/close-trans/'+transactionid, data)
     .then(async function (response) {
-    //     if(response.data.success)
-    //    {
         Alert.alert("Thông báo", response.data.msg);
-    //    }
     })
     .catch(function (error) {
 

@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import { StyleSheet,TouchableOpacity, View, Text, Image, Dimensions, SafeAreaView, StatusBar, ScrollView, TextInput, TouchableHighlight } from "react-native";
+import { StyleSheet,TouchableOpacity, View, Text, Image, Dimensions, SafeAreaView, StatusBar, ScrollView, TextInput, TouchableHighlight, Alert } from "react-native";
 import { AntDesign, Feather, Foundation, MaterialIcons, SimpleLineIcons, EvilIcons, Fontisto } from '@expo/vector-icons';
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
 import { AsyncStorage } from 'react-native';
@@ -53,41 +53,41 @@ function EditProfileOwner({ navigation }) {
                     <ScrollView style={{ height: height - 120 }}>
                         <View style={{ height: 70 }}>
                             <View style={{ flexDirection: 'row', paddingTop: 10, marginBottom: 5 }}>
-                                <AntDesign  name="user" 
-                                            size={20} 
-                                            color="#222222" 
+                                <AntDesign  name="user"
+                                            size={20}
+                                            color="#222222"
                                             style={styles.iconstyle} />
                                 <Text style={styles.textsize}>Tên đăng nhập</Text>
                             </View>
-                            <TextInput  style={styles.btn} 
-                                        placeholder="Nhập tên đăng nhập..."  
+                            <TextInput  style={styles.btn}
+                                        placeholder="Nhập tên đăng nhập..."
                                         onChangeText={username => setusername(username)}
                                         defaultValue={username} />
                         </View>
                         <View style={{ height: 70}}>
                             <View style={{ flexDirection: 'row', paddingTop: 10, marginBottom: 5 }}>
-                                <AntDesign  name="enviromento" 
-                                            size={20} 
-                                            color="#222222" 
+                                <AntDesign  name="enviromento"
+                                            size={20}
+                                            color="#222222"
                                             style={styles.iconstyle} />
                                 <Text style={styles.textsize}>Địa chỉ</Text>
                             </View>
-                            <TextInput  style={styles.btn} 
-                                        placeholder="Nhập địa chỉ..."                 
+                            <TextInput  style={styles.btn}
+                                        placeholder="Nhập địa chỉ..."
                                         onChangeText={address => setaddress(address)}
                                         defaultValue={address} />
                         </View>
 
                         <View style={{ height: 70 }}>
                             <View style={{ flexDirection: 'row', paddingTop: 10, marginBottom: 5 }}>
-                                <SimpleLineIcons name="earphones" 
-                                            size={20} 
-                                            color="#222222" 
+                                <SimpleLineIcons name="earphones"
+                                            size={20}
+                                            color="#222222"
                                             style={styles.iconstyle} />
                                 <Text style={styles.textsize}>Số điện thoại</Text>
                             </View>
-                            <TextInput  style={styles.btn} 
-                                        placeholder="Nhập số điện thoại..."  
+                            <TextInput  style={styles.btn}
+                                        placeholder="Nhập số điện thoại..."
                                         onChangeText={phonenumber => setphonenumber(phonenumber)}
                                         keyboardType = 'numeric'
                                         defaultValue={phonenumber}/>
@@ -97,8 +97,8 @@ function EditProfileOwner({ navigation }) {
                                 <MaterialIcons name="alternate-email" size={20} color="#222222" style={styles.iconstyle} />
                                 <Text style={styles.textsize}>Email</Text>
                             </View>
-                            <TextInput  style={styles.btn} 
-                                        placeholder="Nhập email..." 
+                            <TextInput  style={styles.btn}
+                                        placeholder="Nhập email..."
                                         onChangeText={email => setemail(email)}
                                         defaultValue={email} />
                         </View>
@@ -140,7 +140,7 @@ async function editProfile(navigation:any, username: string,phonenumber :string,
         })
     .then(async function (response) {
       if(response.data.success) {
-        alert('Cập nhật tài khoản thành công');
+        Alert.alert('Cập nhật tài khoản thành công');
         var data = JSON.stringify(response.data.data);
 
         await AsyncStorage.setItem(
@@ -162,7 +162,7 @@ async function editProfile(navigation:any, username: string,phonenumber :string,
         container: {
             flex: 1,
             backgroundColor: "#16f198",
-            
+
         },
         imagebg: {
             flex: 1,
@@ -171,13 +171,13 @@ async function editProfile(navigation:any, username: string,phonenumber :string,
           },
         tabback: {
             height: 50,
-            width: width,            
+            width: width,
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'row'
         },
         iconstyle:{
-            marginRight: 10, 
+            marginRight: 10,
             marginLeft: 40
         },
         textsize:{
@@ -194,7 +194,7 @@ async function editProfile(navigation:any, username: string,phonenumber :string,
             borderRadius: 20,
             marginLeft: 20,
         },
-        avatar: {            
+        avatar: {
             justifyContent: "center",
             height: 200,
             alignItems: 'center'

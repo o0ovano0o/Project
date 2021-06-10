@@ -157,11 +157,7 @@ function ListGuard({ navigation }) {
                                 onPress={() => deleteGuard(item.userid)}
                             />
 
-                            {/* <TouchableHighlight onPress={() =>alert('1')}>
-                                <Animated.View style={{ flex: 1, justifyContent: "center", alignContent: "center" }}>
-                                                                <AntDesign  name='delete' size={25} style={styles.icondelete} />
-                                                                </Animated.View>
-                                </TouchableHighlight> */}
+
 
 
                         </Animated.View>

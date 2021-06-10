@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import FormData from 'form-data';
-import { StyleSheet, View, Image, Button, Platform, Text, Dimensions, SafeAreaView, StatusBar, ScrollView, AsyncStorage, TextInput } from "react-native";
+import { StyleSheet, View, Image, Button, Platform, Text, Dimensions, SafeAreaView, StatusBar, ScrollView, AsyncStorage, TextInput, Alert } from "react-native";
 import { AntDesign, Feather, MaterialIcons } from '@expo/vector-icons';
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
 import styles from '../Style/ListTicketStyle';
@@ -76,7 +76,7 @@ export default class AddTicketByHand extends React.Component {
             if (Platform.OS !== 'web') {
                 const { status } = await ImagePicker.requestCameraPermissionsAsync();
                 if (status !== 'granted') {
-                       alert('Sorry, we need camera roll permissions to make this work!');
+                       Alert.alert("Warning",'Sorry, we need camera roll permissions to make this work!');
                 }
             }
             await me.getUser();
@@ -119,7 +119,7 @@ export default class AddTicketByHand extends React.Component {
         try {
             var data = this.state.result;
             if (!this.state.result) {
-                alert('Đã có lỗi xảy ra. Xin thử lại sau.');
+                Alert.alert("Cảnh báo",'Đã có lỗi xảy ra. Xin thử lại sau.');
                 return;
             }
             data.append('name', this.state.codeVe);
@@ -153,7 +153,7 @@ export default class AddTicketByHand extends React.Component {
     }
     async getUser() {
         let value = await AsyncStorage.getItem('user');
-        value = JSON.parse(value);      
+        value = JSON.parse(value);
         this.setState({ user: value });
     }
     async pickdImage() {
@@ -264,7 +264,7 @@ export default class AddTicketByHand extends React.Component {
         if (Platform.OS !== 'web') {
             const { status } = await ImagePicker.requestCameraPermissionsAsync();
             if (status !== 'granted') {
-                alert('Sorry, we need camera roll permissions to make this work!');
+                Alert.alert("Warning",'Sorry, we need camera roll permissions to make this work!');
             }
         }
     }
@@ -281,14 +281,14 @@ export default class AddTicketByHand extends React.Component {
                 this.state.image = result.uri;
                 this.state.result = result;
             }
-        } 
+        }
         catch (error) {
         }
     };
 
     async register(vehicleid: int, parkingid: int) {
         try {
-            if(!this.state.codeVe) return alert('Thiếu thông tin biển số xe');
+            if(!this.state.codeVe) return Alert.alert("Thông báo",'Thiếu thông tin biển số xe');
             const res = await this.createPicture();
             var pictureUrl = res?.data.data.display_url;
 
@@ -364,7 +364,7 @@ export default class AddTicketByHand extends React.Component {
                             <Text style={{ fontSize: 16 }}>THÔNG TIN XE</Text>
                         </View>
                         <View style={{ height: 150, width: width - 40, marginTop: 10 }}>
-                            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>                          
+                            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                                 <ImagePickerExample
                                     parentReference={this.postPircture.bind(this)}
                                 />
@@ -393,7 +393,7 @@ function ImagePickerExample(props) {
             if (Platform.OS !== 'web') {
                 const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
                 if (status !== 'granted') {
-                    alert('Sorry, we need camera roll permissions to make this work!');
+                    Alert.alert("Warning",'Sorry, we need camera roll permissions to make this work!');
                 }
             }
         })();

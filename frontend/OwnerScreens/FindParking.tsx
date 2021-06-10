@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, SafeAreaView, Image, StyleSheet, Dimensions, FlatList, Alert } from "react-native";
+import { View, SafeAreaView, Image, StyleSheet, Dimensions, FlatList, Alert, Alert } from "react-native";
 import { ListItem, SearchBar } from "react-native-elements";
 import {  Button, Container, Header, Icon, Input, Item, Text } from 'native-base';
 import { ScrollView, TextInput, TouchableOpacity } from "react-native-gesture-handler";
@@ -40,10 +40,10 @@ export default class FindParking extends Component {
       await axios
         .get(`https://project3na.herokuapp.com/api/parkings/nearst`, {params})
         .then(async function (response) {
-          if (response.data.success) {            
+          if (response.data.success) {
             me.setState({
               parkings: response.data.data
-            });          
+            });
           }
           else Alert.alert("Thông báo",response.data.msg)
         })
@@ -93,9 +93,9 @@ export default class FindParking extends Component {
         lngcurr: me.state.currentregion.longitude
       });
     }, ((error) => {
-      alert('Lấy vị trí hiện tại thất bại')
+      Alert.alert('Lấy vị trí hiện tại thất bại')
     }))
-   
+
     showLocation({
       latitude: lat,
       longitude: lng,
@@ -127,7 +127,7 @@ export default class FindParking extends Component {
       });
       me.state.ref.animateToRegion(
         me.state.region,
-        true, 
+        true,
       );
       me.setState({ region });
     }, ((error) => {

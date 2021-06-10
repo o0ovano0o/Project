@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, Image, Dimensions, SafeAreaView, StatusBar, ScrollView, TextInput, AsyncStorage } from "react-native";
+import { StyleSheet, View, Text, Image, Dimensions, SafeAreaView, StatusBar, ScrollView, TextInput, AsyncStorage, Alert } from "react-native";
 import { AntDesign, Feather, Foundation, MaterialIcons, Ionicons, EvilIcons, Fontisto } from '@expo/vector-icons';
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
 import Dropdown from "react-native-modal-dropdown";
@@ -37,6 +37,7 @@ function AddTicketType({ navigation }) {
                 isSystem:0
                 })
             .then(async function (response) {
+            Alert.alert('Thông báo',response.data.msg)
               if(response.data.success) {
                 navigation.push('ListTicketType');
               } else {

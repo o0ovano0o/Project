@@ -6,7 +6,6 @@ import { Picker } from "native-base";
 import { VictoryPie, VictoryAxis, VictoryLine, VictoryChart, VictoryTheme, VictoryScatter } from "victory-native";
 import axios from "axios";
 import { TouchableOpacity } from 'react-native-gesture-handler';
-//import { Rating } from 'react-native-elements';
 
 const random = (a, b) => Math.floor(Math.random() * b) + a;
 
