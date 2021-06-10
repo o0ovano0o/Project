@@ -41,8 +41,8 @@ function Vehicle({ navigation,route }) {
         data.push(user.phonenumber);
         data.push(code);
         data.push(type);
-        setQRCode(data.join('-'));
-        return data.join('-');
+        setQRCode(data.join('*'));
+        return data.join('*');
     }
     return (
         <SafeAreaView style={styles.container}>

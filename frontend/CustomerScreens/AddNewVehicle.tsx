@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import { StyleSheet, View,Text ,Image,Dimensions,SafeAreaView,StatusBar,ScrollView,TextInput, TouchableHighlight  } from "react-native";
+import { StyleSheet, View,Text ,Image,Dimensions,SafeAreaView,StatusBar,ScrollView,TextInput, TouchableHighlight, Alert  } from "react-native";
 import { AntDesign,Feather,FontAwesome ,MaterialCommunityIcons,Ionicons,Fontisto    } from '@expo/vector-icons';
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
 import { Picker } from 'native-base';
@@ -140,6 +140,7 @@ async function addVehicle(navigation:any, color: string, code: string, type: str
       if(response.data.success) {
         navigation.push('ListVehicle');
       } else {
+        Alert.alert(response.data.msg);
       }
     })
     .catch(function (error) {

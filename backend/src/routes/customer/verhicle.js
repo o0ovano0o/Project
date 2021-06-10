@@ -3,7 +3,7 @@ const knex = require('../../knex');
 const Enum = require('../../common/Enum');
 const handleAPIError = require('../../common/handleAPIError');
 const { validateCustomerAPI } = require('../../middlewares/validateAPIAuthentication');
-
+//tạo xe
 router.post('/api/customer/vehicle', validateCustomerAPI, async(req, res) => {
     try {
         let { color, code,brand, type,description,QRCode,isDefault } = req.body;
@@ -24,7 +24,7 @@ router.post('/api/customer/vehicle', validateCustomerAPI, async(req, res) => {
         handleAPIError(err, res);
     }
 });
-
+// chọn xe mặc định
 router.post('/api/customer/vehicle/default/:vehicleid', validateCustomerAPI, async(req, res) => {
     try {
         let { vehicleid } = req.params;
@@ -42,7 +42,7 @@ router.post('/api/customer/vehicle/default/:vehicleid', validateCustomerAPI, asy
         handleAPIError(err, res);
     }
 });
-
+// xóa xe
 router.delete('/api/customer/vehicle/:vehicleid',validateCustomerAPI, async(req, res) => {
     try {
         const { vehicleid } = req.params;
@@ -66,7 +66,7 @@ router.delete('/api/customer/vehicle/:vehicleid',validateCustomerAPI, async(req,
         handleAPIError(err, res);
     }
 });
-
+// sửa thông tin xe
 router.put('/api/customer/vehicle/:vehicleid', validateCustomerAPI, async(req, res) => {
     try {
         let { color, code,brand, type,description,QRCode,isDefault } = req.body;
@@ -88,7 +88,7 @@ router.put('/api/customer/vehicle/:vehicleid', validateCustomerAPI, async(req, r
         handleAPIError(err, res);
     }
 });
-
+// danh sách xe của người dùng
 router.get('/api/customer/vehicles',validateCustomerAPI, async(req, res) => {
     try {
         const userid = req.session.userid;
@@ -101,7 +101,7 @@ router.get('/api/customer/vehicles',validateCustomerAPI, async(req, res) => {
         handleAPIError(err, res);
     }
 });
-
+// lấy chi tiết xe
 router.get('/api/customer/vehicle/:vehicleid',validateCustomerAPI, async(req, res) => {
     try {
         const { vehicleid } = req.params;

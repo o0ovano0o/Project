@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Image, Text, Dimensions, SafeAreaView, StatusBar, ScrollView, AsyncStorage } from "react-native";
+import { StyleSheet, View, Image, Text, Dimensions, SafeAreaView, StatusBar, ScrollView, AsyncStorage, TouchableHighlight } from "react-native";
 import { AntDesign, Feather, MaterialIcons } from '@expo/vector-icons';
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
 import styles from '../Style/ListTicketStyle';
@@ -53,7 +53,7 @@ export default class AddTicket extends React.Component {
         }
     }
     async createTransaction() {
-        try {           
+        try {
             var reponse = await axios
                 .post('https://project3na.herokuapp.com/api/guard/transaction', {
                     vehicleid: parseInt(this.props.route.params.data.vehicleid),
@@ -72,7 +72,7 @@ export default class AddTicket extends React.Component {
                 this.setState({ success: true });
                 this.state.success = true;
             }
-        } catch (error) {     
+        } catch (error) {
         }
     }
     addTicketRender() {
@@ -190,9 +190,9 @@ export default class AddTicket extends React.Component {
                     hidden={true} />
                 <View style={{ flex: 9 }}>
                     <View style={styles.tabback}>
-                        <View style={{ flex: 1, alignItems: 'center' }}>
-                            <AntDesign name="left" size={24} color="gray" />
-                        </View>
+                    <TouchableHighlight onPress={() => this.props.navigation.push('Root', {screen:'Vé xe'})} style={{flex:1, alignItems:'center'}}>
+                            <AntDesign name="left" size={24} color="black" />
+                        </TouchableHighlight>
                         <View style={{ flex: 5, alignItems: 'center' }}>
                             <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Tạo vé xe</Text>
                         </View>

@@ -4,6 +4,7 @@ const handleAPIError = require('../../common/handleAPIError');
 const { validateGuardAPI } = require('../../middlewares/validateAPIAuthentication');
 const Enum = require('../../common/Enum');
 var moment = require('moment');
+// Tạo giao dịch
 router.post('/api/guard/transaction', validateGuardAPI, async(req, res) => {
     try {
         let { vehicleid,parkingid,ticketID,Timein,Timeout,pictureUrl,TotalAmount,Status, userid,typetimeticket,priceticket,nameticket,code,color,type,username,phonenumber } = req.body;
@@ -75,7 +76,7 @@ router.post('/api/guard/transaction', validateGuardAPI, async(req, res) => {
                 if(UsedPackingBike > parseInt(parkinglt.TotalParkingBike)) {
                     return res.json({ success: false, msg: 'Số chỗ dành cho xe đạp đã đầy' });
                 }
-                await knex('parking').update({ UsedPackingCar }).where({parkingid});
+                await knex('parking').update({ UsedPackingBike }).where({parkingid});
             }
         }
         return res.status(200).json({ success: true, msg: 'Tạo vé giao dịch thành công' });
@@ -84,6 +85,7 @@ router.post('/api/guard/transaction', validateGuardAPI, async(req, res) => {
     }
 });
 
+// kiểm tra vé đã có trong bãi hay không nếu có rồi trả về thông tin giao dịch
 router.post('/api/guard/transaction/active', validateGuardAPI, async(req, res) => {
     try {
         let { vehicleid,parkingid,Timeout, code } = req.body;
@@ -113,15 +115,17 @@ router.post('/api/guard/transaction/active', validateGuardAPI, async(req, res) =
             var dayin = moment(transaction.Timein, "hh:mm DD/MM/YYYY");
             var duration = dayout.diff(dayin,'days');
             if(parseInt(duration)>1){
-                amount = transaction.priceticket*parseInt(duration);
+                amount = transaction.priceticket*parseInt(duration+1);
             } else amount =transaction.priceticket;
         } else if(transaction.typetimeticket == 2) { // hours
             var dayout = moment(Timeout, "hh:mm DD/MM/YYYY");
             var dayin = moment(transaction.Timein, "hh:mm DD/MM/YYYY");
             var duration = dayout.diff(dayin,'hours');
             if(parseInt(duration)>1){
-                amount = transaction.priceticket*parseInt(duration);
+                amount = transaction.priceticket*parseInt(duration+1);
             } else amount =transaction.priceticket;
+        }else {
+            amount=transaction.priceticket;
         }
         return res.status(200).json({ success: true, msg: 'Vé đã có trong bãi', data:{
             ...transaction,
@@ -132,6 +136,7 @@ router.post('/api/guard/transaction/active', validateGuardAPI, async(req, res) =
     }
 });
 
+// trả vé bằng QRCode
 router.post('/api/guard/transaction/close', validateGuardAPI, async(req, res) => {
     try {
         let { vehicleid,parkingid,Timeout } = req.body;
@@ -139,10 +144,15 @@ router.post('/api/guard/transaction/close', validateGuardAPI, async(req, res) =>
           return res.json({ success: false, msg: 'Thiếu thông tin bắt buộc', data: req.body });
         }
         const guarid = req.session.userid;
-        const transaction = await knex('transaction').update({
+        console.log(guarid);
+        const [transaction] = await knex('transaction').update({
             Timeout,Status:2
-        }).where({vehicleid, parkingid, guarid}).returning('*');
+        }).where({vehicleid, parkingid, guarid, Status:1}).returning('*');
+        if (!transaction) {
+            return res.json({ success: false, msg: 'Không thấy thông tin vé ', data: req.body });
+        }
         var amount = 0;
+        console.log(transaction.typetimeticket)
         if(!transaction.typetimeticket) {
             amount=transaction.priceticket;
         }
@@ -151,20 +161,23 @@ router.post('/api/guard/transaction/close', validateGuardAPI, async(req, res) =>
             var dayin = moment(transaction.Timein, "hh:mm DD/MM/YYYY");
             var duration = dayout.diff(dayin,'days');
             if(parseInt(duration)>1){
-                amount = transaction.priceticket*parseInt(duration);
+                amount = transaction.priceticket*parseInt(duration+1);
             } else amount =transaction.priceticket;
         } else if(transaction.typetimeticket == 2  || transaction.typetimeticket=='2') { // hours
             var dayout = moment(Timeout, "hh:mm DD/MM/YYYY");
             var dayin = moment(transaction.Timein, "hh:mm DD/MM/YYYY");
             var duration = dayout.diff(dayin,'hours');
             if(parseInt(duration)>1){
-                amount = transaction.priceticket*parseInt(duration);
+                amount = transaction.priceticket*parseInt(duration+1);
             } else amount =transaction.priceticket;
+        }else {
+            amount=transaction.priceticket;
         }
+        console.log(amount)
         if(!amount) amount = 0;
         const transactionid = await knex('transaction').update({
            TotalAmount:amount
-        }).where({vehicleid, parkingid, guarid}).returning('*');
+        }).where({vehicleid, parkingid, guarid,transactionid:transaction.transactionid}).returning('*');
 
         if (!transactionid) return res.json({ success: false, msg: 'Trả vé giao dịch thất bại' });
         const parking = await knex('parking').where({ parkingid });
@@ -187,15 +200,19 @@ router.post('/api/guard/transaction/close', validateGuardAPI, async(req, res) =>
     }
 });
 
+// trả vé tay
 router.post('/api/guard/transaction/close-trans/:transactionid', validateGuardAPI, async(req, res) => {
     try {
         let { Timeout,parkingid } = req.body;
         let { transactionid } = req.params;
         const guarid = req.session.userid;
-        const transaction = await knex('transaction').update({
+        const [transaction] = await knex('transaction').update({
             Timeout,Status:2
-        }).where({transactionid, guarid}).returning('*');
+        }).where({transactionid, guarid,Status:1}).returning('*');
         var amount = 0;
+        if (!transaction) {
+            return res.json({ success: false, msg: 'Không thấy thông tin vé ', data: req.body });
+        }
         if(!transaction.typetimeticket) {
             amount=transaction.priceticket;
         }
@@ -204,14 +221,14 @@ router.post('/api/guard/transaction/close-trans/:transactionid', validateGuardAP
             var dayin = moment(transaction.Timein, "hh:mm DD/MM/YYYY");
             var duration = dayout.diff(dayin,'days');
             if(parseInt(duration)>1){
-                amount = transaction.priceticket*parseInt(duration);
+                amount = transaction.priceticket*parseInt(duration+1);
             } else amount =transaction.priceticket;
         } else if(transaction.typetimeticket == 2  || transaction.typetimeticket=='2') { // hours
             var dayout = moment(Timeout, "hh:mm DD/MM/YYYY");
             var dayin = moment(transaction.Timein, "hh:mm DD/MM/YYYY");
             var duration = dayout.diff(dayin,'hours');
             if(parseInt(duration)>1){
-                amount = transaction.priceticket*parseInt(duration);
+                amount = transaction.priceticket*parseInt(duration+1);
             } else amount =transaction.priceticket;
         }
         if(!amount) amount = 0;
@@ -234,12 +251,12 @@ router.post('/api/guard/transaction/close-trans/:transactionid', validateGuardAP
             UsedPackingBike = UsedPackingBike>=0 ? UsedPackingBike : 0;
             await knex('parking').update({ UsedPackingBike }).where({parkingid});
         }
-        return res.status(200).json({ success: true, msg: 'Trả vé giao dịch thành công',data:transactionid });
+        return res.status(200).json({ success: true, msg: 'Trả vé giao dịch thành công',data:transactions });
     } catch (err) {
         handleAPIError(err, res);
     }
 });
-
+// xóa giao dịch
 router.delete('/api/guard/transaction/:transactionid',validateGuardAPI, async(req, res) => {
     try {
         const { transactionid } = req.params;
@@ -257,7 +274,7 @@ router.delete('/api/guard/transaction/:transactionid',validateGuardAPI, async(re
         handleAPIError(err, res);
     }
 });
-
+// sửa giao dịch
 router.put('/api/guard/transaction/:transactionid', validateGuardAPI, async(req, res) => {
   try {
     const { transactionid }= req.params;
@@ -295,7 +312,7 @@ router.put('/api/guard/transaction/:transactionid', validateGuardAPI, async(req,
     handleAPIError(err, res);
 }
 });
-
+// lấy danh sách giao dịch
 router.get('/api/guard/transactions',validateGuardAPI, async(req, res) => {
     try {
         const guarid = req.session.userid;
@@ -313,6 +330,7 @@ router.get('/api/guard/transactions',validateGuardAPI, async(req, res) => {
     }
 });
 
+// lấy thông tin giao dịch theo id
 router.get('/api/guard/transaction/:transactionid',validateGuardAPI, async(req, res) => {
     try {
         const { transactionid } = req.params;
@@ -331,6 +349,7 @@ router.get('/api/guard/transaction/:transactionid',validateGuardAPI, async(req, 
     }
 });
 
+// lấy các vé mặc định của hệ thống
 router.get('/api/default-ticket/:type',validateGuardAPI, async(req, res) => {
     try {
         const userid = req.session.userid;

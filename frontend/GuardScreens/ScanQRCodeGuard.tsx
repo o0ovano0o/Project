@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View,Text ,Image,Dimensions,SafeAreaView,StatusBar,ScrollView,TextInput, AsyncStorage } from "react-native";
+import { StyleSheet, View,Text ,Image,Dimensions,SafeAreaView,StatusBar,ScrollView,TextInput, AsyncStorage, Alert } from "react-native";
 import {Camera} from 'expo-camera'
 import styles from '../Style/ListTicketStyle';
 import * as Permissions from 'expo-permissions';
@@ -41,7 +41,7 @@ export default class ScanQRCodeGuard extends React.Component{
         });
     }
     async createTicket() {
-        if(!this.state.data?.QRCode) return //alert('Chưa nhận được thông tin');
+        if(!this.state.data?.QRCode) return Alert.alert("Thông báo",'Chưa nhận được thông tin');
         try {
           var reponse = await axios
           .post('https://project3na.herokuapp.com/api/vehicle', {
@@ -65,12 +65,15 @@ export default class ScanQRCodeGuard extends React.Component{
             this.props.navigation.push('AddTicket', { data: reponse.data.data });
           }
           else {
+
+
               this.props.navigation.push('CloseTicket', { data: {
                   ...reponse.data.data,
                   ...check.data.data
               } });
           }
-        } catch (error) {        
+        } catch (error) {
+          Alert.alert("Thông báo","Đã có lỗi xảy ra"+ JSON.stringify(error))
         }
     }
     render(){
@@ -88,7 +91,7 @@ export default class ScanQRCodeGuard extends React.Component{
                             flashMode = {Camera.Constants.FlashMode.auto}
                             whiteBalance = {Camera.Constants.WhiteBalance.auto}
                             zoom = {0}
-                            onBarCodeScanned={({ type, data }) => {                                
+                            onBarCodeScanned={({ type, data }) => {
                                         this.getdataTicket(data);
                                     }}
                             >

@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import { StyleSheet, View, Text, Image, Dimensions, SafeAreaView, StatusBar, ScrollView, TextInput, TouchableHighlight } from "react-native";
+import { StyleSheet, View, Text, Image, Dimensions, SafeAreaView, StatusBar, ScrollView, TextInput, TouchableHighlight, Alert } from "react-native";
 import { AntDesign, Feather, Foundation, MaterialIcons, Ionicons, EvilIcons, Fontisto } from '@expo/vector-icons';
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
 import { AsyncStorage } from 'react-native';
@@ -102,7 +102,7 @@ function ChangePassword({ navigation }) {
 async function editPassword(navigation:any,  password: string,repassword :string) {
     var endpoint = 'https://project3na.herokuapp.com/api/user';
     if(password != repassword) {
-      return alert('Mật khẩu không khớp. Vui lòng nhập lại.');
+      return Alert.alert("Thông báo",'Mật khẩu không khớp. Vui lòng nhập lại.');
     }
     await axios
     .put(endpoint, {
@@ -113,7 +113,7 @@ async function editPassword(navigation:any,  password: string,repassword :string
     .then(async function (response) {
       // handle success
       if(response.data.success) {
-        alert('Cập nhật tài khoản thành công');
+        Alert.alert("Thông báo",'Cập nhật tài khoản thành công');
         var data = JSON.stringify(response.data.data);
 
         await AsyncStorage.setItem(
@@ -137,7 +137,7 @@ async function editPassword(navigation:any,  password: string,repassword :string
             backgroundColor: "#16f198"
         },
         iconstyle:{
-            marginRight: 10, 
+            marginRight: 10,
             marginLeft: 40
         },
         textsize:{

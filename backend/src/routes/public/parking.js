@@ -3,7 +3,7 @@ const knex = require('../../knex');
 const redis = require('redis');
 
 const handleAPIError = require('../../common/handleAPIError');
-
+// danh sách bãi đỗ
 router.get('/api/parkings', async (req, res) => {
     try {
         const parkings = await knex('parking').select();
@@ -15,7 +15,7 @@ router.get('/api/parkings', async (req, res) => {
         handleAPIError(err, res);
     }
 });
-
+// tìm bãi đỗ
 router.get('/api/parkings/nearst', async (req, res) => {
     try {
         const client = await redis.createClient({
@@ -24,17 +24,12 @@ router.get('/api/parkings/nearst', async (req, res) => {
             , password: '8105c5955151f72073472a4a1cfe81a1'
             , retry_strategy: function (options) {
                 if (options.error && options.error.code === 'ECONNREFUSED') {
-                    // End reconnecting on a specific error and flush all commands with
-                    // a individual error
                     return new Error('The server refused the connection');
                 }
                 if (options.total_retry_time > 1000 * 60 * 60) {
-                    // End reconnecting after a specific timeout and flush all commands
-                    // with a individual error
                     return new Error('Retry time exhausted');
                 }
                 if (options.attempt > 10) {
-                    // End reconnecting with built in error
                     return undefined;
                 }
                 // reconnect after

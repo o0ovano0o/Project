@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import { StyleSheet, View, Text, Image, Dimensions, SafeAreaView, StatusBar, ScrollView, TextInput, AsyncStorage, TouchableHighlight } from "react-native";
+import { StyleSheet, View, Text, Image, Dimensions, SafeAreaView, StatusBar, ScrollView, TextInput, AsyncStorage, TouchableHighlight, Alert } from "react-native";
 import { AntDesign, Feather, Foundation, MaterialIcons, Ionicons, EvilIcons, Fontisto } from '@expo/vector-icons';
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
 import faker from 'faker';
@@ -29,7 +29,7 @@ function AddGuard({navigation,route}) {
         try{
             const ownerid = user.userid;
             if(password != repassword) {
-              return alert('Mật khẩu không khớp. Vui lòng nhập lại.');
+              return Alert.alert("Thông báo",'Mật khẩu không khớp. Vui lòng nhập lại.');
             }
             await axios
             .post('https://project3na.herokuapp.com/api/owner/guard', {
@@ -41,6 +41,7 @@ function AddGuard({navigation,route}) {
               if(response.data.success) {
                 navigation.push('ListGuard');
               } else {
+                return Alert.alert("Thông báo",response.data.msg);
               }
             })
             .catch(function (error) {

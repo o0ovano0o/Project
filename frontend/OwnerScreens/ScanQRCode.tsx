@@ -35,7 +35,7 @@ export default class ScanQRCode extends React.Component {
             this.setState({ parkings: response.data.data })
             this.setState({ parking: response.data.data[0] })
         } catch (er) {
-            alert(er);
+
         }
     }
     getdataTicket(data: any) {
@@ -153,7 +153,7 @@ export default class ScanQRCode extends React.Component {
                         flashMode={Camera.Constants.FlashMode.auto}
                         whiteBalance={Camera.Constants.WhiteBalance.auto}
                         zoom={0}
-                        onBarCodeScanned={({ type, data }) => {                    
+                        onBarCodeScanned={({ type, data }) => {
                             this.getdataTicket(data);
                         }}
                     >

@@ -5,7 +5,7 @@ const knex = require('../../knex');
 const handleAPIError = require('../../common/handleAPIError');
 const Enum = require('../../common/Enum');
 const { validateAppAPI,validateOwnerAPI,validateCustomerAPI,validateGuardAPI } = require('../../middlewares/validateAPIAuthentication');
-
+// lấy thông tin người dùng
 router.get('/api/me', validateAppAPI, async(req, res) => {
     try {
         const userid = req.session.userid;
@@ -20,7 +20,7 @@ router.get('/api/me', validateAppAPI, async(req, res) => {
         handleAPIError(err, res);
     }
 });
-
+// chỉnh sửa thông tin người dùng
 router.put('/api/user',validateAppAPI,async (req, res) => {
   try {
     const { username, password, phonenumber,address,email } = req.body;

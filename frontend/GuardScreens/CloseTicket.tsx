@@ -7,6 +7,7 @@ import Dropdown from "react-native-modal-dropdown";
 import { Picker } from "native-base";
 import axios from "axios";
 import moment from "moment";
+import { TouchableHighlight } from "react-native-gesture-handler";
 export default class Map extends React.Component{
     state = {
         success:false,
@@ -90,9 +91,9 @@ export default class Map extends React.Component{
                 hidden={true} />
                 <View style={{flex:16}}>
                     <View style={styles.tabback}>
-                        <View style={{flex:1, alignItems:'center'}}>
+                        <TouchableHighlight onPress={() => this.props.navigation.push('Root', {screen:'Vé xe'})} style={{flex:1, alignItems:'center'}}>
                             <AntDesign name="left" size={24} color="black" />
-                        </View>
+                        </TouchableHighlight>
                         <View style={{flex:5, alignItems:'center'}}>
                             <Text style={{fontSize:16, fontWeight:'bold'}}>Trả vé xe</Text>
                         </View>
