@@ -39,7 +39,6 @@ export default class ScanQRCodeGuard extends React.Component{
                 QRCode: data
             }
         });
-        // alert(JSON.stringify(this.state.data));
     }
     async createTicket() {
         if(!this.state.data?.QRCode) return Alert.alert("Thông báo",'Chưa nhận được thông tin');
@@ -61,7 +60,6 @@ export default class ScanQRCodeGuard extends React.Component{
                 'Content-Type': 'application/json',
             }
         });
-
           if(!check.data.success){
 
             this.props.navigation.push('AddTicket', { data: reponse.data.data });
@@ -77,7 +75,6 @@ export default class ScanQRCodeGuard extends React.Component{
         } catch (error) {
           alert("Đã có lỗi xảy ra"+ JSON.stringify(error))
         }
-
     }
     render(){
         const {hasCameraPermission} = this.state;
@@ -89,14 +86,12 @@ export default class ScanQRCodeGuard extends React.Component{
         } else {
             return(
                 <View style={{flex:1, justifyContent:'center', alignItems:'center', backgroundColor:'#283747'}}>
-
                     <Text style={{marginBottom:20, fontSize:16, color:'white'}}>Quét mã tại đây</Text>
                     <Camera style={{ height:height - 100, width:width-40}} type={this.state.type}
                             flashMode = {Camera.Constants.FlashMode.auto}
                             whiteBalance = {Camera.Constants.WhiteBalance.auto}
                             zoom = {0}
                             onBarCodeScanned={({ type, data }) => {
-                                        // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
                                         this.getdataTicket(data);
                                     }}
                             >
@@ -129,7 +124,6 @@ export default class ScanQRCodeGuard extends React.Component{
                                             <Text style={{}}>Bạn đang muốn xử lý giao dịch cho xe này ?</Text>
                                         </View>
                                     </View>
-
                                     <MaterialButtonViolet
                                         title="Xác nhận"
                                         style={styles.materialButtonViolet1}

@@ -17,7 +17,6 @@ function InScreen(props){
     React.useEffect(() => {
         getUser();
         getTransactions();
-
         },[]);
     const getUser = async () => {
         let value = await AsyncStorage.getItem('user');
@@ -33,10 +32,7 @@ function InScreen(props){
         await axios
         .post('https://project3na.herokuapp.com/api/guard/transaction/close-trans/'+transactionid, data)
         .then(async function (response) {
-        //     if(response.data.success)
-        //    {
             Alert.alert("Thông báo", response.data.msg);
-        //    }
             await getTransactions();
             closeModel();
         })
@@ -58,12 +54,9 @@ function InScreen(props){
                 }
 
                }
-                //else //alert(response.data.msg)
                 setRefreshPage(false);
-               // alert(JSON.stringify(response.data));
             })
             .catch(function (error) {
-
             });
 
     }
@@ -240,15 +233,12 @@ function OutScreen(props){
                 setPaidTransaction(response.data.transactionPaid.filter(item => item.parkingid == props.props.route.params.data.parkingid));
                }
                else {
-
                 setPaidTransaction(response.data.transactionPaid);
                }
-
            }
             setRefreshPage(false);
         })
         .catch(function (error) {
-
         })
         .finally(function () {
         });

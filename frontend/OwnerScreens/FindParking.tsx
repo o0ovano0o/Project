@@ -40,39 +40,32 @@ export default class FindParking extends Component {
       await axios
         .get(`https://project3na.herokuapp.com/api/parkings/nearst`, {params})
         .then(async function (response) {
-          if (response.data.success) {
-             alert(JSON.stringify(response.data));
+          if (response.data.success) {            
             me.setState({
               parkings: response.data.data
-            });
+            });          
           }
           else Alert.alert("Thông báo",response.data.msg)
         })
         .catch(function (error) {
-          alert(error);
         })
-
-
     } catch (error) {
-      alert(error)
     }
 
   }
   renderHeader = () => {
     const availableHours = ["Gần tôi"];
     return( <Container>
-      <Header searchBar rounded>
-          <Item>
-            <Icon name="ios-search" />
-            <Input placeholder="Tìm kiếm" defaultValue={this.state.search} onChangeText={this.updateSearch} />
-
-          </Item>
-          <Button transparent>
-            <Text>Search</Text>
-          </Button>
-        </Header>
-
-        </Container>)
+                <Header searchBar rounded>
+                  <Item>
+                    <Icon name="ios-search" />
+                    <Input placeholder="Tìm kiếm" defaultValue={this.state.search} onChangeText={this.updateSearch} />
+                  </Item>
+                  <Button transparent>
+                    <Text>Search</Text>
+                  </Button>
+                </Header>
+            </Container>)
   };
   async getCurrentLocation() {
     var me = this;
@@ -92,7 +85,6 @@ export default class FindParking extends Component {
     this.setState({ search });
   };
   gotoGooogleMap(lat, lng, address) {
-    var latcurr, lngcurr;
     var me = this;
     navigator.geolocation.getCurrentPosition((data) => {
       me.setState({ currentregion: data.coords });
@@ -103,11 +95,12 @@ export default class FindParking extends Component {
     }, ((error) => {
       alert('Lấy vị trí hiện tại thất bại')
     }))
+   
     showLocation({
       latitude: lat,
       longitude: lng,
-      sourceLatitude: latcurr,  // optionally specify starting location for directions
-      sourceLongitude: lngcurr,  // not optional if sourceLatitude is specified
+      sourceLatitude: me.state.currentregion.latitude,  // optionally specify starting location for directions
+      sourceLongitude:  me.state.currentregion.longitude,  // not optional if sourceLatitude is specified
       title: address,  // optional
       googleForceLatLon: true,  // optionally force GoogleMaps to use the latlon for the query instead of the title
       googlePlaceId: 'ChIJGVtI4by3t4kRr51d_Qm_x58',  // optionally specify the google-place-id
@@ -132,19 +125,15 @@ export default class FindParking extends Component {
           active: true
         }
       });
-      // alert(JSON.stringify(region));
       me.state.ref.animateToRegion(
-        // (new Array()).push(me.state.region),
         me.state.region,
-        true, // not animated
+        true, 
       );
       me.setState({ region });
     }, ((error) => {
       var me = this;
       var region = me.state.region;
-      // alert(JSON.stringify(me.state));
       region = Object.assign(region,);
-      // alert(JSON.stringify(region));
       me.setState({
         region: {
           latitude: me.state.currentregion.latitude,
@@ -155,103 +144,75 @@ export default class FindParking extends Component {
         }
       });
       me.state.ref.animateToRegion(
-        // (new Array()).push(me.state.region),
         me.state.region,
         1000, // not animated
       );
-      // alert('Lấy vị trí hiện tại thất bại');
-
     }))
     me.setState({ active: 'current' })
   }
   render() {
     return (
       <Container>
-      <Header searchBar rounded style={{marginTop:30,
-        flexDirection:'row' }}>
-          <Item>
-            <Icon name="ios-search" />
-            <Input placeholder="Tìm kiếm" blurOnSubmit={true} onSubmitEditing={()=>this.getParking()} defaultValue={this.state.search} onChangeText={this.updateSearch} />
+          <Header searchBar rounded style={{marginTop:30,
+                  flexDirection:'row' }}>
+            <Item>
+              <Icon name="ios-search" />
+              <Input placeholder="Tìm kiếm" blurOnSubmit={true} onSubmitEditing={()=>this.getParking()} defaultValue={this.state.search} onChangeText={this.updateSearch} />
+            </Item>
+          </Header>
+          <ScrollView style={{ flex: 1 }}>
+            {
+            this.state.parkings.length==0 &&
+                (
+                  <View><Text>Không có bãi đỗ nào quanh bạn </Text></View>
+                )
+            }
+            {
+                this.state.parkings.map((item) => (
+                <ListItem
+                  key={item.parkingid}
+                  containerStyle={{ height: 100 }}
+                  bottomDivider
+                  onPress={
+                    () => {
+                      this.setState({ search: item.parkingname })
+                    }
+                  }
+                >
+                  <Image
+                    source={require('../assets/images/p.png')}
+                    resizeMode="cover"
+                    style={styles.image}
+                  ></Image>
+                  <View style={{ flexDirection: 'column' }}>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{item.parkingname}</Text>
+                    <View style={{ width: DEVICE_WIDTH / 2 + 30 }}>
+                      <Text style={{ fontSize: 12, color: 'gray' }}>{item.address}</Text>
+                    </View>
 
-          </Item>
-
-        </Header>
-         <ScrollView style={{ flex: 1 }}>
-        {
-         this.state.parkings.length==0 &&
-         (
-           <View><Text>Không có bãi đỗ nào quanh bạn </Text></View>
-         )
-        }
-      {
-          this.state.parkings.map((item) => (
-           <ListItem
-            key={item.parkingid}
-             containerStyle={{ height: 100 }}
-             bottomDivider
-             onPress={
-               () => {
-                 this.setState({ search: item.parkingname })
-               }
-             }
-           >
-             <Image
-               source={require('../assets/images/p.png')}
-               resizeMode="cover"
-               style={styles.image}
-             ></Image>
-             <View style={{ flexDirection: 'column' }}>
-               <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{item.parkingname}</Text>
-               <View style={{ width: DEVICE_WIDTH / 2 + 30 }}>
-                 <Text style={{ fontSize: 12, color: 'gray' }}>{item.address}</Text>
-               </View>
-
-               <View style={{ flexDirection: 'row' }}>
-                 <View style={{ flex: 7, flexDirection: 'row' }}>
-                   <Entypo name="dot-single" size={20} color="gray" />
-                   <Text style={{ fontSize: 12, color: 'gray' }}>{item.distance} km</Text>
-                 </View>
-                 <View style={{ flex: 2 }}>
-                   <TouchableOpacity onPress={
-                     () => {
-                       this.gotoGooogleMap(item.latitude, item.longitude, item.address)
-                     }
-                   }  >
-                     <AntDesign name="enviroment" size={20} color="#4da6ff" />
-                   </TouchableOpacity>
-                 </View>
-               </View>
-             </View>
-
-           </ListItem>
-          ))
-          }
-
-     </ScrollView>
-
+                    <View style={{ flexDirection: 'row' }}>
+                      <View style={{ flex: 7, flexDirection: 'row' }}>
+                        <Entypo name="dot-single" size={20} color="gray" />
+                        <Text style={{ fontSize: 12, color: 'gray' }}>{item.distance} km</Text>
+                      </View>
+                      <View style={{ flex: 2 }}>
+                        <TouchableOpacity onPress={
+                          () => {
+                            this.gotoGooogleMap(item.latitude, item.longitude, item.address)
+                          }
+                        }  >
+                          <AntDesign name="enviroment" size={20} color="#4da6ff" />
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </View>
+                </ListItem>
+                ))
+            }
+          </ScrollView>
       </Container>
-
     )
   }
-  // render() {
-  //   return (
-  //     <Container>
-  //     <Header searchBar rounded>
-  //     <Item>
-  //       <Icon name="ios-search" />
-  //       <Input placeholder="Search" />
-  //       <Icon name="ios-people" />
-  //     </Item>
-  //     <Button transparent>
-  //       <Text>Search</Text>
-  //     </Button>
-  //     <View>
-
-  //     </View>
-  //   </Header>
-  //   </Container>
-  //   )
-  // }
 }
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;

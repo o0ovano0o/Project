@@ -19,7 +19,7 @@ function Statistic({ navigation }) {
         setRefreshPage(false);
 
         getDataParking();
-    }, []);
+    }, [time]);
     const getDataParking = async () => {
         await axios
             .get(`https://project3na.herokuapp.com/api/owner/analys-amount/${time}`)
@@ -28,7 +28,6 @@ function Statistic({ navigation }) {
                     setDataParking(response.data.data);
                 }
                 setRefreshPage(false);
-
             })
             .catch(function (error) {
             })
@@ -43,30 +42,6 @@ function Statistic({ navigation }) {
         "red", "lavender", "#40C4FF", "#FFC440",
         "gold", "blue", "purple", "#F17171", "#BBC940", "magenta",
     ];
-
-    // const dataParking = [
-    //     {
-    //         parkingid: '1',
-    //         parkingname: 'Bãi gửi xe Duy Tân',
-    //         total: 115000,
-    //     },
-    //     {
-    //         parkingid: '2',
-    //         parkingname: 'Bãi gửi xe Hồ Tùng Mậu',
-    //         total: 280000,
-    //     },
-    //     {
-    //         parkingid: '3',
-    //         parkingname: 'Bãi gửi xe Xuân Thủy',
-    //         total: 355000,
-    //     },
-    //     {
-    //         parkingid: '4',
-    //         parkingname: 'Bãi gửi xe Mai Dịch',
-    //         total: 210000,
-    //     },
-    // ]
-
     const timeUnit = [
         {
             name: "Hôm nay",

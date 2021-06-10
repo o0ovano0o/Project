@@ -4,7 +4,6 @@ import { AntDesign,Feather,FontAwesome ,MaterialCommunityIcons,Ionicons,Fontisto
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
 import { Picker } from 'native-base';
 import QRCodeGen from 'react-native-qrcode-svg';
-
 import CheckBox from "@react-native-community/checkbox";
 import axios from "axios";
 import { AsyncStorage } from 'react-native';
@@ -50,17 +49,7 @@ const genCode = () => {
             </View>
       </View>
       <View style={styles.profile}>
-            {/* <View style={{ height:40}}>
-                <Feather name="edit" size={20} color="gray"  style={{position:'absolute', right:10, top:10}}/>
-            </View> */}
-
             <ScrollView style={{height:height-120, borderBottomColor:"#CCCCCC"}}>
-                {/* <View style={styles.item}>
-                    <View style={{flex:2, justifyContent:'center'}}>
-                        <Text style={styles.text}>Tên xe</Text>
-                    </View>
-                    <TextInput style={styles.btn} placeholder="Nhập tên xe..."  defaultValue={type} onChangeText={(type)=>setType(type)} />
-                </View> */}
                 <View style={styles.item}>
                     <View style={{flex:2, justifyContent:'center'}}>
                         <Text style={styles.text}>Loại xe</Text>
@@ -77,7 +66,6 @@ const genCode = () => {
                         <Picker.Item label="Xe máy" value="motobike" />
                         <Picker.Item label="Xe đạp" value="bike" />
                     </Picker>
-                    {/* <TextInput style={styles.btn} placeholder="Nhập loại xe" defaultValue={type} onChangeText={(type)=>setType(type)} /> */}
                 </View>
                 <View style={styles.item}>
                     <View style={{flex:2, justifyContent:'center'}}>
@@ -115,12 +103,6 @@ const genCode = () => {
                     value={isDefault}
                     onValueChange={setDefault}/>
                 </View>
-                {/* <View style={styles.item}>
-                    <View style={{flex:2, justifyContent:'center'}}>
-                        <Text style={styles.text}>Số điện thoại</Text>
-                    </View>
-                    <TextInput style={styles.btn} placeholder="Nhập số điện thoại..."  defaultValue={type} onChangeText={(type)=>setType(type)} />
-                </View> */}
                 <View style={{ backgroundColor:'white',justifyContent:'center', marginTop:10, borderColor:'#CCCCCC',  borderBottomWidth:1}}>
                     <View style={{flexDirection:'row'}}>
                         <MaterialCommunityIcons name="qrcode-scan" size={20} color="gray" style={{marginHorizontal:20, marginTop:10}} />
@@ -134,9 +116,7 @@ const genCode = () => {
                         logoBackgroundColor='transparent'
                         />
                     </View>
-
                 </View>
-
                 <View style={{height:50, backgroundColor:'white',alignItems:'center',justifyContent:'center', marginTop:10, borderBottomColor:'#CCCCCC', borderBottomWidth:1}}>
                     <MaterialButtonViolet
                         onPress={() => addVehicle(navigation, color, code, type, brand, description, QRCode, isDefault)}

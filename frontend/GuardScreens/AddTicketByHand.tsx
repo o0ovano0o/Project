@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import FormData from 'form-data';
-// import fs from 'react-native-fs';
-// import com.rnfs.RNFSPackage;
 import { StyleSheet, View, Image, Button, Platform, Text, Dimensions, SafeAreaView, StatusBar, ScrollView, AsyncStorage, TextInput } from "react-native";
 import { AntDesign, Feather, MaterialIcons } from '@expo/vector-icons';
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
@@ -78,7 +76,7 @@ export default class AddTicketByHand extends React.Component {
             if (Platform.OS !== 'web') {
                 const { status } = await ImagePicker.requestCameraPermissionsAsync();
                 if (status !== 'granted') {
-                    //   alert('Sorry, we need camera roll permissions to make this work!');
+                       alert('Sorry, we need camera roll permissions to make this work!');
                 }
             }
             await me.getUser();
@@ -92,7 +90,6 @@ export default class AddTicketByHand extends React.Component {
                     listTicket: response,
                     ticket: response[0]
                 })
-
             }
             else {
                 this.setState({
@@ -100,15 +97,11 @@ export default class AddTicketByHand extends React.Component {
                 })
             }
         } catch (error) {
-            alert(JSON.stringify(error));
         }
-
     }
     async postPircture(base64: any) {
         try {
-
             if (!base64) {
-                alert(JSON.stringify(base64))
                 return;
             }
             this.setState({
@@ -119,13 +112,8 @@ export default class AddTicketByHand extends React.Component {
             this.setState({
                 result: data
             })
-
-
-
         } catch (error) {
-            alert(JSON.stringify(error));
         }
-
     }
     async createPicture() {
         try {
@@ -134,20 +122,15 @@ export default class AddTicketByHand extends React.Component {
                 alert('Đã có lỗi xảy ra. Xin thử lại sau.');
                 return;
             }
-            // data.append('image', this.state.result);
             data.append('name', this.state.codeVe);
             data.append('key', '798414800a3b98fd7ff0b562e70781e8');
             const res = await axios.post('https://api.imgbb.com/1/upload', data, {
                 headers: {
-
                     'Content-Type': 'multipart/form-data'
                 },
             });
-
             return res;
-
         } catch (error) {
-            alert(JSON.stringify(error));
         }
     }
     async getData(itemValue) {
@@ -161,7 +144,6 @@ export default class AddTicketByHand extends React.Component {
                 listTicket: response,
                 ticket: response[0]
             })
-            alert(JSON.stringify(this.state.listTicket));
         }
         else {
             this.setState({
@@ -171,35 +153,24 @@ export default class AddTicketByHand extends React.Component {
     }
     async getUser() {
         let value = await AsyncStorage.getItem('user');
-        value = JSON.parse(value);
-        // alert(JSON.stringify(this.props.route.params.data.parking))
-        // if (!value.parkingid) value = Object.assign(value, {  });
+        value = JSON.parse(value);      
         this.setState({ user: value });
-
     }
     async pickdImage() {
-        alert(this.state.code);
         try {
-
             let result = await ImagePicker.launchCameraAsync({
                 quality: 1,
                 base64: true,
                 aspect: [3, 4],
                 mediaTypes: ImagePicker.MediaTypeOptions.All
             });
-
-            alert(JSON.stringify(result));
             if (!result.cancelled) {
                 this.setState({
                     image: result.uri,
                     result: result
                 });
-                //  this.postPircture(result.base64);
             }
-
-
         } catch (error) {
-            alert(JSON.stringify(error));
         }
     }
     AddTicketRender() {
@@ -209,7 +180,6 @@ export default class AddTicketByHand extends React.Component {
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={styles.namecar}>Bãi đỗ xe - {this.state.user.parkingname}</Text>
                     </View>
-
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Feather name="map-pin" size={14} color="gray" style={{ marginLeft: 8 }} />
@@ -227,7 +197,6 @@ export default class AddTicketByHand extends React.Component {
                             onChangeText={(codeVe:any) => this.setState({codeVe})}
                             defaultValue={this.state.codeVe}
                         ></TextInput>
-
                         </View>
                         <View style={{ marginTop: 10, flexDirection: 'row', alignItems: 'center' }}>
                             <Text>Loại vé:  </Text>
@@ -268,22 +237,14 @@ export default class AddTicketByHand extends React.Component {
                                 <Text>Giá vé: {this.state.ticket.price} đ </Text>
                             </View>
                         </View>
-                        {/* <View style={{ marginTop: 10 }}>
-                            <Text>Giá vé: 20.000 đ </Text>
-                        </View> */}
                         <View style={{ marginTop: 10, flexDirection: 'row' }}>
                             <Text>Ngày gửi: {moment().format('DD/MM/YYYY')} </Text>
                             <Text style={{ marginLeft: 20 }}>Giờ vào: {moment().format('hh:mm')} </Text>
                         </View>
-
-
                     </View>
                     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                         <View style={{ height: 60, backgroundColor: 'white', flexDirection: 'row', marginTop: 10 }}>
                             <MaterialButtonViolet
-                                // onPress={() =>
-
-                                // }
                                 style={styles.accept}
                                 title="Từ chối"
                             ></MaterialButtonViolet>
@@ -300,18 +261,15 @@ export default class AddTicketByHand extends React.Component {
         );
     }
     async getAcess() {
-
         if (Platform.OS !== 'web') {
             const { status } = await ImagePicker.requestCameraPermissionsAsync();
             if (status !== 'granted') {
-                //   alert('Sorry, we need camera roll permissions to make this work!');
+                alert('Sorry, we need camera roll permissions to make this work!');
             }
         }
-
     }
     async pickImage() {
         try {
-
             let result = await ImagePicker.launchCameraAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.All,
                 aspect: [4, 3],
@@ -319,26 +277,13 @@ export default class AddTicketByHand extends React.Component {
                 base64: true,
             });
             console.log(result.uri);
-            alert(JSON.stringify(result));
             if (!result.cancelled) {
-
                 this.state.image = result.uri;
                 this.state.result = result;
-                // result.base64({
-                //     image: result.base64,
-                //     result:result
-                // });
-                //  this.postPircture(result.base64);
             }
-
-
-
-        } catch (error) {
-            alert(JSON.stringify(error));
+        } 
+        catch (error) {
         }
-
-
-
     };
 
     async register(vehicleid: int, parkingid: int) {
@@ -360,22 +305,15 @@ export default class AddTicketByHand extends React.Component {
                 })
                 .then(async function (response) {
                     if (response.data.success) {
-                        alert(response.data.msg);
-
                     } else {
-                        // alert(response.data.msg);
-
                         me.createTransaction(pictureUrl);
                     }
                 })
                 .catch(function (error) {
-                    // handle error
-                    // alert('Tạo vé thất bại');
                 })
                 .finally(function () {
                 });
         } catch (error) {
-            alert(JSON.stringify(error));
         }
     }
     async createTransaction(url) {
@@ -396,38 +334,16 @@ export default class AddTicketByHand extends React.Component {
                     priceticket: parseInt(this.state.ticket.price),
                     nameticket: this.state.ticket.name,
                 });
-
-                alert(JSON.stringify(reponse.data));
             if (reponse.data.success) {
-
                this.setState({
                    code:2
                })
             }
         } catch (error) {
-
-            alert(JSON.stringify({
-                error,
-                code: this.state.codeVe,
-                parkingid: parseInt('1'),
-                ticketID: parseInt(this.state.ticket.ticketid),
-                Timein: `${moment().format('hh:mm')} ${moment().format('DD/MM/YYYY')}`,
-                Timeout: "",
-                pictureUrl:url,
-                type:this.state.type,
-                TotalAmount: 0,
-                Status: 1,
-                typetimeticket: parseInt(this.state.ticket.typetime),
-                priceticket: parseInt(this.state.ticket.price),
-                nameticket: this.state.ticket.name,
-            }));
         }
     }
     render() {
-
-
         return (
-
             <SafeAreaView style={styles.container}>
                 <StatusBar
                     animated={true}
@@ -448,20 +364,15 @@ export default class AddTicketByHand extends React.Component {
                             <Text style={{ fontSize: 16 }}>THÔNG TIN XE</Text>
                         </View>
                         <View style={{ height: 150, width: width - 40, marginTop: 10 }}>
-                            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                                {/* <Button title="Pick an image from camer" onPress={() =>this.pickImage()}  />
-                               <Image source={{ uri:this.state.image }} style={{ width: 200, height: 200 }} /> */}
+                            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>                          
                                 <ImagePickerExample
-
                                     parentReference={this.postPircture.bind(this)}
-
                                 />
                             </View>
                         </View>
                     </View>
                 </View>
                 <View style={styles.modeladd}>
-                    {/* {this.addTicketRender()} */}
                     {
                         this.state.code == 1 &&
                         this.AddTicketRender()
@@ -470,16 +381,13 @@ export default class AddTicketByHand extends React.Component {
                         this.state.code == 2 &&
                         this.SuccessTicketRender()
                     }
-                    {/* <SuccessTicketRender></SuccessTicketRender> */}
                 </View>
             </SafeAreaView>
         );
     }
-
 }
 function ImagePickerExample(props) {
     const [image, setImage] = useState(null);
-
     useEffect(() => {
         (async () => {
             if (Platform.OS !== 'web') {
@@ -490,7 +398,6 @@ function ImagePickerExample(props) {
             }
         })();
     }, []);
-
     const pickImage = async () => {
         let result = await ImagePicker.launchCameraAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -498,13 +405,11 @@ function ImagePickerExample(props) {
             aspect: [4, 3],
             quality: 1,
         })
-
         if (!result.cancelled) {
             setImage(result.uri);
             props.parentReference(result.base64);
         }
     };
-
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <Button title="Pick an image from camera roll" onPress={pickImage} />

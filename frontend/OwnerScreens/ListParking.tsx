@@ -23,13 +23,9 @@ function ListParking({ navigation }) {
         await axios
             .delete(`https://project3na.herokuapp.com/api/owner/parking/${id}`)
             .then(async function (response) {
-                //alert(response.data.msg);
-
                 getParking();
             })
             .catch(function (error) {
-              //  alert(error);
-
             })
             .finally(function () {
             });
@@ -39,17 +35,10 @@ function ListParking({ navigation }) {
             .get('https://project3na.herokuapp.com/api/owner/parkings')
             .then(async function (response) {
                 if (response.data.success) {
-                    // alert(JSON.stringify(response.data));
                     setParkings(response.data.data);
-
                 }
-                //else // alert(response.data.msg)
-
-
             })
             .catch(function (error) {
-                //alert(error);
-
             })
             .finally(function () {
             });
@@ -73,15 +62,12 @@ function ListParking({ navigation }) {
         TotalParkingBike: 100,
     }
     ];
-
-
     return (
         <SafeAreaView
             style={{
                 flex: 1,
                 backgroundColor: '#fff',
             }}>
-
             <StatusBar
                 animated={true}
                 hidden={true} />
@@ -154,23 +140,12 @@ function ListParking({ navigation }) {
                         >
                             <View style={{ flex: 5 }}>
                                 <Text numberOfLines={1} style={{ fontSize: 18, fontWeight: '700', flex: 1 }}>{item.parkingname}</Text>
-                                <Text  style={{ fontSize: 15, opacity: 0.7, flex: 1 }}>Địa chỉ: {item.address}</Text>
-                                {/* <View style={{ flexDirection: 'row' }}> */}
-                                    <Text style={{ fontSize: 14, opacity: 0.7, flex: 1, color: '#0099cc' }}>Xe máy: {item.TotalParkingMotoBike ? item.TotalParkingMotoBike : 0} ô</Text>
-                                    <Text style={{ fontSize: 14, opacity: 0.7, flex: 1 , color: '#0099cc'}}>Ô tô: {item.TotalParkingCar ? item.TotalParkingCar : 0 } ô</Text>
-                                    <Text  style={{ fontSize: 14, opacity: 0.7, flex: 1 , color: '#0099cc'}}>Xe đạp: {item.TotalParkingBike ? item.TotalParkingBike : 0 } ô</Text>
-                                {/* </View> */}
-                            </View>
-                            {/* <View style={{ flex: 1, justifyContent: "center", alignContent: "center" }}>
-                                <AntDesign name='delete' size={25} style={styles.icondelete} />
-                            </View> */}
-                             <View style={{ flex: 2, justifyContent: "center", alignContent: "center", flexDirection: 'row' }}>
-                                {/* <Button
-                                    title="Sửa"
-
-                                    color='#FFD700'
-                                    onPress={() => navigation.push("EditTicketType", { data: item})}
-                                /> */}
+                                <Text  style={{ fontSize: 15, opacity: 0.7, flex: 1 }}>Địa chỉ: {item.address}</Text>                  
+                                <Text style={{ fontSize: 14, opacity: 0.7, flex: 1, color: '#0099cc' }}>Xe máy: {item.TotalParkingMotoBike ? item.TotalParkingMotoBike : 0} ô</Text>
+                                <Text style={{ fontSize: 14, opacity: 0.7, flex: 1 , color: '#0099cc'}}>Ô tô: {item.TotalParkingCar ? item.TotalParkingCar : 0 } ô</Text>
+                                <Text  style={{ fontSize: 14, opacity: 0.7, flex: 1 , color: '#0099cc'}}>Xe đạp: {item.TotalParkingBike ? item.TotalParkingBike : 0 } ô</Text>
+                            </View>                           
+                             <View style={{ flex: 2, justifyContent: "center", alignContent: "center", flexDirection: 'row' }}>                               
                                 <View style={{ width: 10 }}></View>
                                 <Button
                                     title="Xóa"
@@ -178,13 +153,10 @@ function ListParking({ navigation }) {
                                     onPress={() => deleteParking(item.parkingid)}
                                 />
                             </View>
-
                         </Animated.View>
                     )
                 }}
             />
-
-
         </SafeAreaView>
     );
 }

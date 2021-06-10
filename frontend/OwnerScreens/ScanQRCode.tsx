@@ -34,7 +34,6 @@ export default class ScanQRCode extends React.Component {
                 .get(`https://project3na.herokuapp.com/api/owner/parkings`);
             this.setState({ parkings: response.data.data })
             this.setState({ parking: response.data.data[0] })
-            // alert(JSON.stringify(response));
         } catch (er) {
             alert(er);
         }
@@ -54,7 +53,6 @@ export default class ScanQRCode extends React.Component {
                 QRCode: data
             }
         });
-        // alert(JSON.stringify(this.state.data));
     }
     async createTicket() {
         if (!this.state.data?.QRCode) return alert('Chưa nhận được thông tin');
@@ -74,14 +72,12 @@ export default class ScanQRCode extends React.Component {
                 Timeout: `${hour} ${date}`
 
             });
-        alert(JSON.stringify(check));
         if (!check.data.success)
             this.props.navigation.push('AddTicket', { data:{
                 ...reponse.data.data,
                 parking:this.state.parking
             }  });
         else {
-            alert(JSON.stringify(check));
             this.props.navigation.push('CloseTicket', {
                 data: {
                     ...reponse.data.data,
@@ -116,9 +112,6 @@ export default class ScanQRCode extends React.Component {
                     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                         <View style={{ height: 60, backgroundColor: 'white', flexDirection: 'row', marginTop: 10 }}>
                             <MaterialButtonViolet
-                                // onPress={() =>
-
-                                // }
                                 style={styles.accept2}
                                 title="Tạo vé mới"
                             ></MaterialButtonViolet>
@@ -154,22 +147,13 @@ export default class ScanQRCode extends React.Component {
                             ))}
                         </Picker>
                     </View>
-                    {/* <Dropdown
-                        defaultIndex={0}
-                        textstyle={{color:"white"}}
-                        style={styles.hoursDropdownScan}
-                        defaultValue={ 'Bãi xe Duy Tân'}
-                        dropdownStyle={styles.hoursDropdownStyleScan}
-                        options={['Bãi xe Duy Tân','Bãi xe Mỹ Đình']}
-                    /> */}
                     <View>
                     <Text style={{ marginBottom: 20,alignItems:'center',justifyContent:"center",display:'flex', fontSize: 16, color: 'white' }}>Quét mã tại đây</Text>
                     <Camera style={{ height: 400, width: width - 40 }} type={this.state.type}
                         flashMode={Camera.Constants.FlashMode.auto}
                         whiteBalance={Camera.Constants.WhiteBalance.auto}
                         zoom={0}
-                        onBarCodeScanned={({ type, data }) => {
-                            // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+                        onBarCodeScanned={({ type, data }) => {                    
                             this.getdataTicket(data);
                         }}
                     >

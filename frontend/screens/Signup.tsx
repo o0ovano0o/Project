@@ -107,18 +107,14 @@ async function register(navigate:any, username: string, password: string,repassw
         phonenumber,address,email
       })
   .then(async function (response) {
-    // handle success
     alert('Tạo tài khoản thành công');
     if(response.data.success) {
       var data = JSON.stringify(response.data.data);
       navigate('Login');
     } else {
-     // alert(response.data.msg);
     }
   })
   .catch(function (error) {
-    // handle error
-    //alert('error');
   })
   .finally(function () {
   });

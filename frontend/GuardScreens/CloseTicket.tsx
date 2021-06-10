@@ -27,7 +27,6 @@ export default class Map extends React.Component{
     async componentDidMount(){
         const me = this;
         var response;
-        // alert(1);
         me.getUser();
     }
     async closeTransaction(){
@@ -38,20 +37,13 @@ export default class Map extends React.Component{
                 .post('https://project3na.herokuapp.com/api/guard/transaction/close', {
                     vehicleid: parseInt(this.props.route.params.data.vehicleid),
                     parkingid:  parseInt(this.state.user.parkingid),
-
-
                     Timeout:`${now} ${today}`,
                 });
-            // alert(reponse.data.msg);
-
             if(reponse.data.success) {
                 this.setState({success: true});
                 this.state.success = true;
             }
         } catch (error) {
-            // alert(
-            //     error
-            // );
         }
     }
 
@@ -76,20 +68,17 @@ export default class Map extends React.Component{
 
                     <View style={{alignItems:'center', justifyContent:'center'}}>
                         <View style={{height:60, flexDirection:'row', marginTop:10}}>
-
                             <MaterialButtonViolet
                                  onPress={() => {
                                     if(this.state.user.role == 2)
                                     this.props.navigation.push("ScanQRCode")
                                     else this.props.navigation.push("ScanQRCodeGuard")
-
                                 }}
                                 style={styles.accept2}
                                 title="Tạo vé mới"
                             ></MaterialButtonViolet>
                         </View>
                     </View>
-
                 </View>
             </ScrollView>
         );
@@ -112,7 +101,6 @@ export default class Map extends React.Component{
                         </View>
                     </View>
                     <View style={{marginTop:20 }}>
-                            {/* {this.state.success == false && ( */}
                         <View style={ {justifyContent:'center', alignItems:'center'}}>
                             <Image
                                 source={require('../assets/images/ticket.png')}
@@ -120,9 +108,6 @@ export default class Map extends React.Component{
                                 style={{height:height-150, width:width-60}}
                                 ></Image>
                         </View>
-
-
-
                         <View style={{position:'absolute'}}>
                             <View style={{marginLeft:60, marginTop:10}}>
                                 <View style={{ flexDirection:'row'}}>
@@ -155,8 +140,6 @@ export default class Map extends React.Component{
                                 </View>
                             </View>
                         </View>
-
-
                           {
                               this.state.success == false && (
                         <View style={{position:'absolute',marginTop:(height-150)/3*2-10}}>
@@ -183,7 +166,6 @@ export default class Map extends React.Component{
                 </View>
                 {this.state.success == false && (
                 <View style={styles.button}>
-
                        <View style={{alignItems:'center', justifyContent:'center'}}>
                        <View style={{height:60, backgroundColor:'white',flexDirection:'row'}}>
                            <MaterialButtonViolet
@@ -191,7 +173,6 @@ export default class Map extends React.Component{
                                     if(this.state.user.role == 2)
                                     this.props.navigation.push("ScanQRCode")
                                     else this.props.navigation.push("ScanQRCodeGuard")
-
                                 }}
                                style={styles.accept}
                                title="Từ chối"
@@ -208,8 +189,6 @@ export default class Map extends React.Component{
                 </View>
                     )}
                     {this.state.success == true && this.successTicketRender()}
-
-
             </SafeAreaView>
         );
     }

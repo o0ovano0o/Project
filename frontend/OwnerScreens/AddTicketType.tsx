@@ -26,18 +26,6 @@ function AddTicketType({ navigation }) {
     const addTicket = async () => {
         try{
             const ownerid = user.userid;
-            // alert(JSON.stringify({
-            //     typetime,
-            //     name,
-            //     price: parseInt(name),
-            //     typeverhicle,
-            //     drescription,
-            //     isDefault:false,
-            //     isSystem:0
-
-            // }
-
-            // ));
             await axios
             .post('https://project3na.herokuapp.com/api/owner/ticket', {
                 typetime,
@@ -50,30 +38,15 @@ function AddTicketType({ navigation }) {
                 })
             .then(async function (response) {
               if(response.data.success) {
-               // alert(response.data.msg);
                 navigation.push('ListTicketType');
               } else {
-                //alert(response.data.msg);
               }
             })
             .catch(function (error) {
-              // handle error
-             // alert('error');
-            //   alert(JSON.stringify({
-            //     typetime,
-            //     name,
-            //     price: parseInt(name),
-            //     typeverhicle,
-            //     drescription,
-            //     isDefault:false,
-            //     isSystem:0
-
-            //     }));
             })
             .finally(function () {
             });
         }catch(er){
-            //alert(er);
         }
     }
     const vehicle = [
@@ -124,26 +97,13 @@ function AddTicketType({ navigation }) {
                         <TextInput placeholder="Nhập tên loại vé" onChangeText={name => setName(name)}
                    defaultValue={name} />
                     </View>
-
-                    {/* <View style={{ height: 90, borderBottomColor: "#CCCCCC", borderBottomWidth: 1, paddingLeft: 20 }}>
-                        <Text style={{ marginRight: 10, marginBottom: 10, marginTop: 10 }}>Bãi gửi xe:  </Text>
-                        <Dropdown
-                            defaultIndex={0}
-                            style={styles.dropdownParkingName}
-                            options={parkingName}
-                            defaultValue={"Bãi gửi xe Duy Tân"}
-                            dropdownStyle={styles.dropdownStyle}
-
-                        />
-                    </View> */}
-
                     <View style={{ height: 90, borderBottomColor: "#CCCCCC", borderBottomWidth: 1, paddingTop: 10, paddingLeft: 20, paddingRight: 20 }}>
                         <Text>Giá vé: </Text>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
                             <TextInput style={{ fontSize: 18,width:130 }} keyboardType="numeric" onChangeText={price => setPrice(price)}
                    defaultValue={price} />
                             <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ fontSize: 25 }}>/ </Text>
+                                <Text style={{ fontSize: 25, marginTop: 5 }}>/ </Text>
 
                                 <Picker
 
@@ -178,7 +138,6 @@ function AddTicketType({ navigation }) {
                         <TextInput placeholder="Nhập mô tả..."  onChangeText={drescription => setdrescription(drescription)}
                    defaultValue={drescription} />
                     </View>
-
 
                     <View style={{ height: 50, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
                         <MaterialButtonViolet

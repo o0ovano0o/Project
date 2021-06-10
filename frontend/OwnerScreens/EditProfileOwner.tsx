@@ -32,7 +32,6 @@ function EditProfileOwner({ navigation }) {
                 <StatusBar
                     animated={true}
                     hidden={true} />
-                {/* <ImageBackground source={image} style={styles.imagebg}> */}
                 <View style={styles.tabback}>
                     <TouchableHighlight  onPress={() => navigation.push('Root', {screen :"profile"})}   style={{ flex: 1, alignItems: 'center' }}>
                         <AntDesign name="left" size={24} color="black" />
@@ -123,16 +122,10 @@ function EditProfileOwner({ navigation }) {
                             <TouchableOpacity onPress={() => navigation.push('ChangePassword')} >
                                 <Text style={{color:"#0066FF",textDecorationLine: 'underline',fontStyle: 'italic'}}>Đổi mật khẩu</Text>
                             </TouchableOpacity>
-                            {/* <MaterialButtonViolet
-                                onPress={() => navigation.push('ChangePassword')}
-                                    style={styles.change}
-                                    title="Đổi mật khẩu"
-                                ></MaterialButtonViolet> */}
                         </View>
                     </ScrollView>
                     {/* Khoảng cho menubar */}
                 </View>
-                {/* </ImageBackground> */}
             </SafeAreaView>
         );
     }
@@ -146,7 +139,6 @@ async function editProfile(navigation:any, username: string,phonenumber :string,
           phonenumber,address,email
         })
     .then(async function (response) {
-      // handle success
       if(response.data.success) {
         alert('Cập nhật tài khoản thành công');
         var data = JSON.stringify(response.data.data);
@@ -157,12 +149,9 @@ async function editProfile(navigation:any, username: string,phonenumber :string,
           );
         navigation.push('Root', {screen :"profile"})
       } else {
-        //alert(response.data.msg);
       }
     })
     .catch(function (error) {
-      // handle error
-      //alert(error);
     })
     .finally(function () {
     });

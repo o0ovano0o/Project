@@ -21,7 +21,6 @@ function Vehicle({ navigation,route }) {
     const [user, setUser] = React.useState('');
     React.useEffect(() => {
         var data = route.params.vehicle;
-        // alert(data);
         getUser();
         setColor(data.color);
         setCode(data.code);
@@ -61,17 +60,7 @@ function Vehicle({ navigation,route }) {
                 </View>
             </View>
             <View style={styles.profile}>
-                {/* <View style={{ height:40}}>
-        <Feather name="edit" size={20} color="gray"  style={{position:'absolute', right:10, top:10}}/>
-    </View> */}
-
                 <ScrollView style={{ height: height - 120, borderBottomColor: "#CCCCCC" }}>
-                    {/* <View style={styles.item}>
-            <View style={{flex:2, justifyContent:'center'}}>
-                <Text style={styles.text}>Tên xe</Text>
-            </View>
-            <TextInput style={styles.btn} placeholder="Nhập tên xe..."  defaultValue={type} onChangeText={(type)=>setType(type)} />
-        </View> */}
                     <View style={styles.item}>
                         <View style={{ flex: 2, justifyContent: 'center' }}>
                             <Text style={styles.text}>Loại xe</Text>
@@ -88,7 +77,6 @@ function Vehicle({ navigation,route }) {
                             <Picker.Item label="Xe máy" value="motobike" />
                             <Picker.Item label="Xe đạp" value="bike" />
                         </Picker>
-                        {/* <TextInput style={styles.btn} placeholder="Nhập loại xe" defaultValue={type} onChangeText={(type)=>setType(type)} /> */}
                     </View>
                     <View style={styles.item}>
                         <View style={{ flex: 2, justifyContent: 'center' }}>
@@ -126,12 +114,6 @@ function Vehicle({ navigation,route }) {
                             value={isDefault}
                             onValueChange={setDefault} />
                     </View>
-                    {/* <View style={styles.item}>
-            <View style={{flex:2, justifyContent:'center'}}>
-                <Text style={styles.text}>Số điện thoại</Text>
-            </View>
-            <TextInput style={styles.btn} placeholder="Nhập số điện thoại..."  defaultValue={type} onChangeText={(type)=>setType(type)} />
-        </View> */}
                     <View style={{ backgroundColor: 'white', justifyContent: 'center', marginTop: 10, borderColor: '#CCCCCC', borderBottomWidth: 1 }}>
                         <View style={{ flexDirection: 'row' }}>
                             <MaterialCommunityIcons name="qrcode-scan" size={20} color="gray" style={{ marginHorizontal: 20, marginTop: 10 }} />
@@ -156,15 +138,8 @@ function Vehicle({ navigation,route }) {
                             style={styles.accept}
                             title="Sửa thông tin"
                         ></MaterialButtonViolet>
-
-
                     </View>
                 </ScrollView>
-
-                {/* Khoảng cho menubar */}
-
-
-
             </View>
         </SafeAreaView>
     );
@@ -175,18 +150,12 @@ async function editVehicle(navigation:any,vehicleid:number, color: string, code:
         color, code, type, brand, description, QRCode, isDefault
         })
     .then(async function (response) {
-      // handle success
       if(response.data.success) {
-        // alert(response.data.msg);
         navigation.push('ListVehicle');
-        // navigate('ListVehicle');
       } else {
-        // alert(response.data.msg);
       }
     })
     .catch(function (error) {
-      // handle error
-        //  alert(error);
     })
     .finally(function () {
     });
@@ -196,17 +165,12 @@ const deleteVehicle = async function(navigation:any,vehicleid: number) {
     await axios
     .delete(`https://project3na.herokuapp.com/api/customer/vehicle/${vehicleid}`)
     .then(async function (response) {
-
       if(response.data.success) {
-        // alert(response.data.msg);
         navigation.push('ListVehicle');
       } else {
-        // alert(response.data.msg);
       }
     })
     .catch(function (error) {
-      // handle error
-        //  alert(error);
     })
     .finally(function () {
     });

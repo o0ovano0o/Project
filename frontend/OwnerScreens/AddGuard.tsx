@@ -31,16 +31,6 @@ function AddGuard({navigation,route}) {
             if(password != repassword) {
               return alert('Mật khẩu không khớp. Vui lòng nhập lại.');
             }
-            alert(JSON.stringify({
-                username,
-                password,
-                phonenumber,
-                address,
-                email,
-                ownerid,parkingid
-            }
-
-            ));
             await axios
             .post('https://project3na.herokuapp.com/api/owner/guard', {
                   username,
@@ -48,34 +38,24 @@ function AddGuard({navigation,route}) {
                   phonenumber,address,email,ownerid,parkingid
                 })
             .then(async function (response) {
-
-                // alert(response.data.msg);
               if(response.data.success) {
-
                 navigation.push('ListGuard');
               } else {
-
               }
             })
             .catch(function (error) {
-              // handle error
-              alert('error');
             })
             .finally(function () {
             });
         }catch(er){
-            alert(er);
         }
     }
     const getParking = async () => {
         try{
             var response = await axios
             .get(`https://project3na.herokuapp.com/api/owner/parkings`);
-
             setParkings(response.data.data);
-            // alert(JSON.stringify(response));
         }catch(er){
-            alert(er);
         }
     }
     const getUser = async () => {
@@ -212,8 +192,6 @@ function AddGuard({navigation,route}) {
                         ></MaterialButtonViolet>
                     </View>
                 </ScrollView>
-                {/* Khoảng cho menubar */}
-
             </View>
         </SafeAreaView>
     );

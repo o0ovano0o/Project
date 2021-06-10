@@ -12,8 +12,8 @@ function AddGuard() {
                 animated={true}
                 hidden={true} />
             <View style={styles.tabback}>
-                <View style={{ flex: 1, alignItems: 'center' }}>
-                    <AntDesign name="left" size={24} color="gray" />
+                <View style={{ flex: 1, alignItems: 'center', justifyContent:'center' }}>
+                    <AntDesign name="left" size={24} color="black" />
                 </View>
                 <View style={{ flex: 5, alignItems: 'center' }}>
                     <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Cập nhật thông tin</Text>
