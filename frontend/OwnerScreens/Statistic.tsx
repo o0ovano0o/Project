@@ -17,7 +17,6 @@ function Statistic({ navigation }) {
     const [dataParking, setDataParking] = useState([]);
     React.useEffect(() => {
         setRefreshPage(false);
-
         getDataParking();
     }, [time]);
     const getDataParking = async () => {
@@ -73,12 +72,13 @@ function Statistic({ navigation }) {
 
         //lấy doanh thu > 0
         let filterData = chartData.filter(a => a.y > 0);
-
-        let totalAmount = filterData.reduce((a, b) => a + (b.y || 0), 0);
-
+        let totalAmount = 0;
+        for(let i = 0 ; i < filterData.length; i++){
+            if(parseInt(filterData[i].y) >0)
+            totalAmount += parseInt(filterData[i].y);
+        }
         let dataResult = filterData.map((item) => {
             let ratio = (item.y / totalAmount * 100).toFixed(1);
-
             return {
                 label: `${ratio}%`,
                 y: Number(item.y),
