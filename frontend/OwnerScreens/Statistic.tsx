@@ -26,12 +26,10 @@ function Statistic({ navigation }) {
             .then(async function (response) {
                 if (response.data.success) {
                     setDataParking(response.data.data);
-                    //alert(response.data.data[3].total);
                 }
                 setRefreshPage(false);
             })
             .catch(function (error) {
-                //alert(error);
             })
             .finally(function () {
             });
@@ -44,30 +42,6 @@ function Statistic({ navigation }) {
         "red", "lavender", "#40C4FF", "#FFC440",
         "gold", "blue", "purple", "#F17171", "#BBC940", "magenta",
     ];
-
-    // const dataParking = [
-    //     {
-    //         parkingid: '1',
-    //         parkingname: 'Bãi gửi xe Duy Tân',
-    //         total: 115000,
-    //     },
-    //     {
-    //         parkingid: '2',
-    //         parkingname: 'Bãi gửi xe Hồ Tùng Mậu',
-    //         total: 280000,
-    //     },
-    //     {
-    //         parkingid: '3',
-    //         parkingname: 'Bãi gửi xe Xuân Thủy',
-    //         total: 355000,
-    //     },
-    //     {
-    //         parkingid: '4',
-    //         parkingname: 'Bãi gửi xe Mai Dịch',
-    //         total: 210000,
-    //     },
-    // ]
-
     const timeUnit = [
         {
             name: "Hôm nay",

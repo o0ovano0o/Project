@@ -39,7 +39,6 @@ export default class ScanQRCodeGuard extends React.Component{
                 QRCode: data
             }
         });
-        // alert(JSON.stringify(this.state.data));
     }
     async createTicket() {
         if(!this.state.data?.QRCode) return //alert('Chưa nhận được thông tin');
@@ -55,30 +54,24 @@ export default class ScanQRCodeGuard extends React.Component{
               parkingid: parseInt(this.state.user.parkingid),
               Timeout: `${hour.toString()} ${date.toString()}`
           }
-          //alert(JSON.stringify(data));
           var check = await axios
           .post('https://project3na.herokuapp.com/api/guard/transaction/active', data,{
             headers: {
                 'Content-Type': 'application/json',
             }
         });
-          //alert(JSON.stringify(check));
           if(!check.data.success){
 
             this.props.navigation.push('AddTicket', { data: reponse.data.data });
           }
           else {
-              //alert(JSON.stringify(check));
-
               this.props.navigation.push('CloseTicket', { data: {
                   ...reponse.data.data,
                   ...check.data.data
               } });
           }
-        } catch (error) {
-          //alert("Đã có lỗi xảy ra"+ JSON.stringify(error))
+        } catch (error) {        
         }
-
     }
     render(){
         const {hasCameraPermission} = this.state;
@@ -90,14 +83,12 @@ export default class ScanQRCodeGuard extends React.Component{
         } else {
             return(
                 <View style={{flex:1, justifyContent:'center', alignItems:'center', backgroundColor:'#283747'}}>
-
                     <Text style={{marginBottom:20, fontSize:16, color:'white'}}>Quét mã tại đây</Text>
                     <Camera style={{ height:height - 100, width:width-40}} type={this.state.type}
                             flashMode = {Camera.Constants.FlashMode.auto}
                             whiteBalance = {Camera.Constants.WhiteBalance.auto}
                             zoom = {0}
-                            onBarCodeScanned={({ type, data }) => {
-                                        // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+                            onBarCodeScanned={({ type, data }) => {                                
                                         this.getdataTicket(data);
                                     }}
                             >
@@ -130,7 +121,6 @@ export default class ScanQRCodeGuard extends React.Component{
                                             <Text style={{}}>Bạn đang muốn xử lý giao dịch cho xe này ?</Text>
                                         </View>
                                     </View>
-
                                     <MaterialButtonViolet
                                         title="Xác nhận"
                                         style={styles.materialButtonViolet1}

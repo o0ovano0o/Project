@@ -24,12 +24,9 @@ function MainScreen({ navigation}) {
         .then(async function (response) {
             if(response.data.success)
             setParking(response.data.data);
-           // else // alert(response.data.msg)
             setRefreshPage(false);
-            //alert(JSON.stringify(parking));
         })
         .catch(function (error) {
-                //alert(error);
         })
         .finally(function () {
         });
@@ -170,10 +167,7 @@ function MainScreen({ navigation}) {
                     </View>
                 </View>
             </View>
-
         </ScrollView>
-
-
     </SafeAreaView>
   );
 }

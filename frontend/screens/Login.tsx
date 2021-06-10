@@ -73,7 +73,6 @@ async function login(navigate:any, phonenumber: string, password: string) {
         password
       })
   .then(async function (response) {
-    // handle success
     if(response.data.success) {
       var data = JSON.stringify(response.data.data);
       await AsyncStorage.setItem(
@@ -86,8 +85,6 @@ async function login(navigate:any, phonenumber: string, password: string) {
     }
   })
   .catch(function (error) {
-    // handle error
-   // alert(error);
    Alert.alert("Lỗi",JSON.stringify(error));
   })
   .finally(function () {

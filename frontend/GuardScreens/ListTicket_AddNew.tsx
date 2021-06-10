@@ -169,12 +169,9 @@ function InScreen() {
                     setsystems(response.data.ticketSystem);
                     settotal(response.data.ticketSystem.length);
                 }
-               // else //alert(response.data.msg)
                 setRefreshPage(false);
-                //alert(JSON.stringify(response.data));
             })
             .catch(function (error) {
-                //alert(error);
                 setRefreshPage(false);
             })
             .finally(function () {
@@ -192,27 +189,17 @@ function InScreen() {
         <View style={{}}>
             <View style={{ height: 40, justifyContent: 'center' }}>
                 <Text style={{ marginLeft: 10 }}>Tổng: {total} vé</Text>
-                {/* <Ionicons name="md-add-sharp" size={30} color="gray" style={{ position: 'absolute', right: 5 }} /> */}
-            </View>
-            {/* <View style={{ height: 40, alignItems: 'center', marginBottom: 10 }}>
-                <SearchBar lightTheme={true}
-                    containerStyle={styles.searchstyle}
-                    inputContainerStyle={{ height: 30 }}
-                    placeholder="Tìm kiếm..."
-                ></SearchBar>
-            </View> */}
+            </View>           
             <ScrollView style={{ height: height - 250, borderBottomColor: "#CCCCCC", marginBottom: 10, marginTop: 10 }}
                 refreshControl={
                     <RefreshControl
                         refreshing={refreshPage}
                         onRefresh={() => refresh()}
-                    />}>
-                {/* <View style={{flex:1,flexWrap:'wrap', flexDirection:"row" }}> */}
+                    />}>              
                 {
                     systems.map((item, index) => {
                         return (
-                            <View key={index} style={{ flexBasis: '50%', flex: 1, flexWrap: 'wrap', flexDirection: "row" }}>
-                                {/* <TouchableOpacity onPress={() => setCount(1)}> */}
+                            <View key={index} style={{ flexBasis: '50%', flex: 1, flexWrap: 'wrap', flexDirection: "row" }}>                          
                                 <View style={styles.item}>
                                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                         <Text style={styles.namecar}>{item.name}</Text>
@@ -243,14 +230,10 @@ function InScreen() {
                                                 <Text style={styles.textcar}>Vé theo: giờ</Text>
                                             }
 
-                                            <Text style={styles.textcar}>Mô tả: {item.drescription}</Text>
-                                            {/* {item.isDefault && <Text style={styles.textcar}>Vé mặc định </Text>} */}
-
-
+                                            <Text style={styles.textcar}>Mô tả: {item.drescription}</Text>                                       
                                         </View>
                                     </View>
                                 </View>
-                                {/* </TouchableOpacity> */}
                             </View>
                         );
                     })
@@ -281,12 +264,9 @@ function OutScreen() {
                     setnormal(response.data.ticketNormal);
                     settotal(response.data.ticketNormal.length);
                 }
-                //else //alert(response.data.msg)
                 setRefreshPage(false);
-                //alert(JSON.stringify(response.data));
             })
             .catch(function (error) {
-                //alert(error);
                 setRefreshPage(false);
             })
             .finally(function () {
@@ -325,8 +305,7 @@ function OutScreen() {
                {
                     normal.map((item, index) => {
                         return (
-                            <View key={index} style={{ flexBasis: '50%', flex: 1, flexWrap: 'wrap', flexDirection: "row" }}>
-                                {/* <TouchableOpacity onPress={() => setCount(1)}> */}
+                            <View key={index} style={{ flexBasis: '50%', flex: 1, flexWrap: 'wrap', flexDirection: "row" }}>                            
                                 <View style={styles.item}>
                                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                         <Text style={styles.namecar}>{item.name}</Text>
@@ -357,14 +336,10 @@ function OutScreen() {
                                                 <Text style={styles.textcar}>Vé theo: giờ</Text>
                                             }
 
-                                            <Text style={styles.textcar}>Mô tả: {item.drescription}</Text>
-                                            {/* {item.isDefault && <Text style={styles.textcar}>Vé mặc định </Text>} */}
-
-
+                                            <Text style={styles.textcar}>Mô tả: {item.drescription}</Text>                                      
                                         </View>
                                     </View>
                                 </View>
-                                {/* </TouchableOpacity> */}
                             </View>
                         );
                     })
@@ -443,9 +418,6 @@ function ListTicket_AddNew(props) {
                     onIndexChange={setIndex}
                     initialLayout={{ width: width, height: height - 50 }}
                 />
-
-
-
             </View>
         </SafeAreaView>
     );

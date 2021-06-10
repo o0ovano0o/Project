@@ -35,7 +35,6 @@ export default class FindAddress extends Component {
     }
 
     onChangeValue = async (region) => {
-
         this.setState({
             region: region
         })
@@ -51,18 +50,14 @@ export default class FindAddress extends Component {
                         address: response.data.data.features[0].properties.label
                     });
                 }).catch(function (error) {
-
                     Alert.alert("Cảnh báo","Vị trí chưa được gán định vị");
                 })
         } catch (error) {
 
         }
-
     }
     async componentDidMount() {
-       // alert(JSON.stringify(this.props.route.params));
         await this.getCurrentLocation();
-
     }
     updateSearch = async (search) => {
         var me = this;
@@ -108,12 +103,9 @@ export default class FindAddress extends Component {
         });
         this.setState({ region: this.state.currentregion })
         this.state.ref.animateToRegion(
-            // (new Array()).push(me.state.region),
             me.state.region,
             true, // not animated
         );
-
-
     }
     ChangeSearchText = async (search, region, Id) => {
         this.setState({ search });
@@ -126,15 +118,8 @@ export default class FindAddress extends Component {
             },
             Id: Id,
             re: new Array()
-        });
-        // alert(JSON.stringify({
-        //     latitude: parseFloat(region.coordinates[1].toFixed(5)),
-        //     longitude: parseFloat(region.coordinates[0].toFixed(5)),
-        //     latitudeDelta: 0.0122,
-        //     longitudeDelta: 0.0121,
-        // }));
+        });     
         this.state.ref.animateToRegion(
-            // (new Array()).push(me.state.region),
             {
                 latitude: parseFloat(region.coordinates[1]),
                 longitude:  parseFloat(region.coordinates[0]),
@@ -143,8 +128,6 @@ export default class FindAddress extends Component {
             },
             true, // not animated
         );
-
-
     }
     render() {
         return (

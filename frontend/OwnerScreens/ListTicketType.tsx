@@ -33,13 +33,10 @@ function ListTicketType({ navigation }) {
         await axios
             .delete(`https://project3na.herokuapp.com/api/owner/ticket/${id}`)
             .then(async function (response) {
-                //alert(response.data.msg);
                 setRefreshPage(false);
                 getTicket();
             })
             .catch(function (error) {
-                //alert(error);
-
             })
             .finally(function () {
             });
@@ -49,16 +46,13 @@ function ListTicketType({ navigation }) {
             .get('https://project3na.herokuapp.com/api/owner/tickets')
             .then(async function (response) {
                 if (response.data.success) {
-                    // alert(JSON.stringify(response.data));
                     settickets(response.data.data);
                     settotal(response.data.data.length);
                 }
-                //else //alert(response.data.msg)
                 setRefreshPage(false);
 
             })
             .catch(function (error) {
-                //alert(error);
                 setRefreshPage(false);
             })
             .finally(function () {
@@ -69,7 +63,6 @@ function ListTicketType({ navigation }) {
         getTicket();
     }
     const openModel = (item: any) => {
-
         setCount(1);
     }
     const DATA = [{

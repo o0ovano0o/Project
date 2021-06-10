@@ -49,9 +49,7 @@ function AddParking(props) {
     });
     const [getaddress, setgetAddress] = useState('');
     React.useEffect(() => {
-        // alert(JSON.stringify(props?.route?.params))
         getData();
-        // this.props.route.params.data.username
       },[]);
 
     const register = async () => {
@@ -71,27 +69,20 @@ function AddParking(props) {
             if(response.data.success) {
               props.navigation.push("ListParking");
             } else {
-            //  alert(response.data.msg);
             }
           })
           .catch(function (error) {
-            // handle error
-           // alert('error');
           })
           .finally(function () {
           });
         }
     const getData = () =>{
-        // alert(JSON.stringify(props));
-
         if(!props?.route?.params) return;
         if(props?.route.params.data?.obj) {
             setparkingname(props?.route.params.data?.obj.parkingname);
             setTotalParkingCar(props?.route.params.data?.obj.TotalParkingCar);
             setTotalParkingBike(props?.route.params.data?.obj.TotalParkingBike);
             setTotalParkingMotoBike(props?.route.params.data?.obj.TotalParkingMotoBike);
-            // setlatitude(props?.route.params.data?.obj.latitude);
-            // setlongitude(props?.route.params.data?.obj.parkingname);
             setdescription(props?.route.params.data?.obj.description);
         }
         if(props?.route.params.data?.region) {
@@ -127,12 +118,6 @@ function AddParking(props) {
                             defaultValue={parkingname}
                         ></TextInput>
                     </View>
-                    {/* <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1, paddingTop: 10, paddingLeft: 20 }}>
-                        <Text style={{ marginBottom: 5 }}>Địa chỉ</Text>
-                        <TextInput placeholder="Nhập địa chỉ"
-                            onChangeText={address => setaddress(address)}
-                            defaultValue={address}></TextInput>
-                    </View> */}
                     <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1, paddingTop: 10, paddingLeft: 20 }}>
                         <Text style={{ marginBottom: 10 }}>Số ô gửi xe</Text>
                         <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 5, flex: 1 }}>
@@ -299,29 +284,5 @@ const styles = StyleSheet.create({
     }
 
 });
-// async function register( parkingname: string, TotalParkingCar: int,TotalParkingBike :int,TotalParkingMotoBike :int,address: string,description: string) {
-// async function  register() {
-// let endpoint = 'https://project3na.herokuapp.com/api/owner/parking';
-//   await axios
-//   .post(endpoint, {
-//         parkingname,
-//         TotalParkingCar,TotalParkingBike,TotalParkingMotoBike,
-//         address,latitude,longitude,description
-//       })
-//   .then(async function (response) {
-//     // handle success
-//     alert('Tạo bãi đỗ thành công');
-//     if(response.data.success) {
-//       var data = JSON.stringify(response.data.data);
-//     } else {
-//     //  alert(response.data.msg);
-//     }
-//   })
-//   .catch(function (error) {
-//     // handle error
-//    // alert('error');
-//   })
-//   .finally(function () {
-//   });
-// }
+
 export default AddParking;

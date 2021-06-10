@@ -38,7 +38,6 @@ export default class AddTicket extends React.Component {
             if (response.data.data && response.data.data.length)
                 response = response.data.data;
             else response = new Array();
-            //alert(JSON.stringify(this.props.route.params.data));
             me.setState({
                 listTicket: response
             });
@@ -51,25 +50,10 @@ export default class AddTicket extends React.Component {
             });
             this.setState({ success: false });
         } catch (er) {
-            // alert(JSON.stringify(er));
         }
     }
     async createTransaction() {
-        try {
-            // alert(JSON.stringify({
-
-            //     vehicleid: parseInt(this.props.route.params.data.vehicleid),
-            //         parkingid: parseInt(this.state.user.parkingid),
-            //         ticketID: parseInt(this.state.ticket.ticketid),
-            //         Timein: `${this.state.now} ${this.state.today}`,
-            //         Timeout: "",
-            //         TotalAmount: 0,
-            //         Status: 1,
-            //         userid: parseInt(this.props.route.params.data.userid),
-            //         typetimeticket: parseInt(this.state.ticket.typetime),
-            //         priceticket: parseInt(this.state.ticket.price),
-            //         nameticket: this.state.ticket.name,
-            // }));
+        try {           
             var reponse = await axios
                 .post('https://project3na.herokuapp.com/api/guard/transaction', {
                     vehicleid: parseInt(this.props.route.params.data.vehicleid),
@@ -84,31 +68,11 @@ export default class AddTicket extends React.Component {
                     priceticket: parseInt(this.state.ticket.price),
                     nameticket: this.state.ticket.name,
                 });
-            // alert(reponse.data.msg);
-
             if (reponse.data.success) {
                 this.setState({ success: true });
                 this.state.success = true;
-
             }
-        } catch (error) {
-            // alert(
-            //     error
-            // );
-            // alert(JSON.stringify({
-
-            //     vehicleid: parseInt(this.props.route.params.data.vehicleid),
-            //         parkingid: parseInt(this.state.user.parkingid),
-            //         ticketID: parseInt(this.state.ticket.ticketid),
-            //         Timein: `${this.state.now} ${this.state.today}`,
-            //         Timeout: "",
-            //         TotalAmount: 0,
-            //         Status: 1,
-            //         userid: parseInt(this.props.route.params.data.userid),
-            //         typetimeticket: parseInt(this.state.ticket.typetime),
-            //         priceticket: parseInt(this.state.ticket.price),
-            //         nameticket: this.state.ticket.name,
-            // }));
+        } catch (error) {     
         }
     }
     addTicketRender() {
@@ -132,7 +96,6 @@ export default class AddTicket extends React.Component {
                         <View style={{ marginTop: 10, flexDirection: 'row', alignItems: 'center' }}>
                             <Text>Loại vé:  </Text>
                             <Picker
-
                                 style={{ height: 50, width: 150 }}
                                 onValueChange={(itemValue, itemIndex) => {
                                     if (this.state.listTicket && this.state.listTicket.length)
@@ -156,10 +119,6 @@ export default class AddTicket extends React.Component {
                         <View style={{ marginTop: 10 }}>
                             <Text>Giờ vào: {this.state.now.toString()} </Text>
                         </View>
-
-
-
-
                     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                         <View style={{ height: 60, backgroundColor: 'white', flexDirection: 'row', marginTop: 10 }}>
                             <MaterialButtonViolet
@@ -167,7 +126,6 @@ export default class AddTicket extends React.Component {
                                     if(this.state.user.role == 2)
                                     this.props.navigation.push("ScanQRCode")
                                     else this.props.navigation.push("ScanQRCodeGuard")
-
                                 }}
                                 style={styles.accept}
                                 title="Từ chối"
@@ -181,7 +139,6 @@ export default class AddTicket extends React.Component {
                             ></MaterialButtonViolet>
                         </View>
                     </View>
-
                 </View>
             </ScrollView>
         );
@@ -194,7 +151,6 @@ export default class AddTicket extends React.Component {
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={styles.namecar}>Bãi đỗ xe - {this.state.user.parkingname}</Text>
                     </View>
-
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Feather name="map-pin" size={14} color="gray" style={{ marginLeft: 8 }} />
@@ -208,10 +164,8 @@ export default class AddTicket extends React.Component {
                             style={{ height: 180, width: 180 }}
                         ></Image>
                     </View>
-
                     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                         <View style={{ height: 60, backgroundColor: 'white', flexDirection: 'row', marginTop: 10 }}>
-
                             <MaterialButtonViolet
                                 onPress={() => {
                                     if(this.state.user.role == 2)
@@ -224,7 +178,6 @@ export default class AddTicket extends React.Component {
                             ></MaterialButtonViolet>
                         </View>
                     </View>
-
                 </View>
             </ScrollView>
         );
@@ -270,12 +223,9 @@ export default class AddTicket extends React.Component {
                     </View>
                 </View>
                 <View style={styles.modeladd}>
-
                     {this.state.success == false && this.addTicketRender()}
                     {this.state.success == true && this.successTicketRender()}
                 </View>
-
-
             </SafeAreaView>
         );
     }

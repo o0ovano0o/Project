@@ -10,7 +10,6 @@ import axios from "axios";
 
 function EditTicketType({navigation,route}) {
     const [name, setName ] = useState('');
-
     const [price, setPrice ] = useState('');
     const [typetime, setTypetime ] = useState(1);
     const [typeverhicle, settypeverhicle ] = useState(1);
@@ -50,30 +49,15 @@ function EditTicketType({navigation,route}) {
                 })
             .then(async function (response) {
               if(response.data.success) {
-               // alert(response.data.msg);
                 navigation.push('ListTicketType');
               } else {
-                //alert(response.data.msg);
               }
             })
             .catch(function (error) {
-              // handle error
-            //   alert('error');
-            //   alert(JSON.stringify({
-            //         typetime,
-            //         name,
-            //         price: parseInt(name),
-            //         typeverhicle,
-            //         drescription,
-            //         isDefault:false,
-            //         isSystem:0
-
-            //     }));
             })
             .finally(function () {
             });
         }catch(er){
-           // alert(er);
         }
     }
     const vehicle = [
@@ -124,19 +108,6 @@ function EditTicketType({navigation,route}) {
                         <TextInput placeholder="Nhập tên loại vé" onChangeText={name => setName(name)}
                    defaultValue={name} />
                     </View>
-
-                    {/* <View style={{ height: 90, borderBottomColor: "#CCCCCC", borderBottomWidth: 1, paddingLeft: 20 }}>
-                        <Text style={{ marginRight: 10, marginBottom: 10, marginTop: 10 }}>Bãi gửi xe:  </Text>
-                        <Dropdown
-                            defaultIndex={0}
-                            style={styles.dropdownParkingName}
-                            options={parkingName}
-                            defaultValue={"Bãi gửi xe Duy Tân"}
-                            dropdownStyle={styles.dropdownStyle}
-
-                        />
-                    </View> */}
-
                     <View style={{ height: 90, borderBottomColor: "#CCCCCC", borderBottomWidth: 1, paddingTop: 10, paddingLeft: 20, paddingRight: 20 }}>
                         <Text>Giá vé: </Text>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
@@ -144,17 +115,15 @@ function EditTicketType({navigation,route}) {
                    defaultValue={price} />
                             <View style={{ flexDirection: 'row' }}>
                                 <Text style={{ fontSize: 25, marginTop: 5 }}>/ </Text>
-
                                 <Picker
-
-                                style={{ height: 50, width: 150 }}
-                                onValueChange={(itemValue, itemIndex) => {
-                                    setTypetime(itemValue)
-                                }}
-                                >
-                                {timeUnit.map(item => (
-                                <Picker.Item label={item.name} value={item.id} />
-                                ))}
+                                    style={{ height: 50, width: 150 }}
+                                    onValueChange={(itemValue, itemIndex) => {
+                                        setTypetime(itemValue)
+                                    }}
+                                    >
+                                    {timeUnit.map(item => (
+                                        <Picker.Item label={item.name} value={item.id} />
+                                    ))}
                                 </Picker>
                             </View>
                         </View>
