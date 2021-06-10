@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, SafeAreaView, Image, StyleSheet, Dimensions, FlatList, Alert, Alert } from "react-native";
+import { View, SafeAreaView, Image, StyleSheet, Dimensions, FlatList, Alert } from "react-native";
 import { ListItem, SearchBar } from "react-native-elements";
 import {  Button, Container, Header, Icon, Input, Item, Text } from 'native-base';
 import { ScrollView, TextInput, TouchableOpacity } from "react-native-gesture-handler";
