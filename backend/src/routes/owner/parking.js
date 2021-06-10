@@ -3,6 +3,7 @@ const knex = require('../../knex');
 const handleAPIError = require('../../common/handleAPIError');
 const { validateOwnerAPI } = require('../../middlewares/validateAPIAuthentication');
 var moment = require('moment');
+// tạo bãi đỗ
 router.post('/api/owner/parking', validateOwnerAPI, async(req, res) => {
     try {
         const { parkingname, TotalParkingCar,TotalParkingMotoBike,latitude,longitude,description, TotalParkingBike,address } = req.body;
@@ -19,7 +20,7 @@ router.post('/api/owner/parking', validateOwnerAPI, async(req, res) => {
         handleAPIError(err, res);
     }
 });
-
+//xóa bãi đỗ
 router.delete('/api/owner/parking/:parkingid',validateOwnerAPI, async(req, res) => {
     try {
         const { parkingid } = req.params;
@@ -43,7 +44,7 @@ router.delete('/api/owner/parking/:parkingid',validateOwnerAPI, async(req, res) 
         handleAPIError(err, res);
     }
 });
-
+// chỉnh sửa bãi đỗ
 router.put('/api/owner/parking/:parkingid', validateOwnerAPI, async(req, res) => {
     try {
         const { parkingname, TotalParkingCar,TotalParkingMotoBike,UsedPackingMotoBike,latitude,longitude,description, TotalParkingBike,address,TotalPackingTime,UsedPackingBike,UsedPackingCar } = req.body;
@@ -60,7 +61,7 @@ router.put('/api/owner/parking/:parkingid', validateOwnerAPI, async(req, res) =>
         handleAPIError(err, res);
     }
 });
-
+// lấy bãi đổ của chủ bãi đỗ
 router.get('/api/owner/parkings',validateOwnerAPI, async(req, res) => {
     try {
         const userid = req.session.userid;
@@ -73,7 +74,7 @@ router.get('/api/owner/parkings',validateOwnerAPI, async(req, res) => {
         handleAPIError(err, res);
     }
 });
-
+// lấy chi tiết bãi đỗ
 router.get('/api/owner/parking/:parkingid',validateOwnerAPI, async(req, res) => {
     try {
         const { parkingid } = req.params;
@@ -92,7 +93,7 @@ router.get('/api/owner/parking/:parkingid',validateOwnerAPI, async(req, res) => 
     }
 });
 
-
+// Thống kê doanh thu theo thời gian
 router.get('/api/owner/analys-amount/:typetime', validateOwnerAPI, async(req, res) => {
     try {
         let { typetime } = req.params;
@@ -145,7 +146,7 @@ router.get('/api/owner/analys-amount/:typetime', validateOwnerAPI, async(req, re
     }
 });
 
-
+// thống kê doanh thu theo bãi đỗ
 router.get('/api/owner/analys-amount/:parkingid', validateOwnerAPI, async(req, res) => {
   try {
       let { typetime } = req.params;

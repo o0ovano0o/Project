@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import { StyleSheet, View,Text ,Image,Dimensions,SafeAreaView,StatusBar,ScrollView,TextInput, TouchableHighlight  } from "react-native";
+import { StyleSheet, View,Text ,Image,Dimensions,SafeAreaView,StatusBar,ScrollView,TextInput, TouchableHighlight, Alert  } from "react-native";
 import { AntDesign,Feather,FontAwesome ,MaterialCommunityIcons,Ionicons,Fontisto    } from '@expo/vector-icons';
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
 import { Picker } from 'native-base';
@@ -152,25 +152,18 @@ const genCode = () => {
 }
 
 async function addVehicle(navigation:any, color: string, code: string, type: string, brand: string, description: string, QRCode: string, isDefault: boolean) {
-    // alert(JSON.stringify({
-    //     color, code, type, brand, description, QRCode, isDefault
-    //     }));
     await axios
     .post('https://project3na.herokuapp.com/api/customer/vehicle', {
         color, code, type, brand, description, QRCode, isDefault
         })
     .then(async function (response) {
-      // handle success
       if(response.data.success) {
-        // alert(response.data.msg)
         navigation.push('ListVehicle');
       } else {
-        // alert(response.data.msg);
+        Alert.alert(response.data.msg);
       }
     })
     .catch(function (error) {
-      // handle error
-        //  alert(error);
     })
     .finally(function () {
     });

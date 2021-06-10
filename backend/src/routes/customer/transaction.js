@@ -3,6 +3,7 @@ const knex = require('../../knex');
 const handleAPIError = require('../../common/handleAPIError');
 const { validateCustomerAPI } = require('../../middlewares/validateAPIAuthentication');
 const Enum = require('../../common/Enum');
+// danh sách vé cho người dùng
 router.get('/api/customer/transaction/:status', validateCustomerAPI, async(req, res) => {
     try {
         let { status } = req.params;

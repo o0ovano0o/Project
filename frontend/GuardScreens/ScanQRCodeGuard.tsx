@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View,Text ,Image,Dimensions,SafeAreaView,StatusBar,ScrollView,TextInput, AsyncStorage } from "react-native";
+import { StyleSheet, View,Text ,Image,Dimensions,SafeAreaView,StatusBar,ScrollView,TextInput, AsyncStorage, Alert } from "react-native";
 import {Camera} from 'expo-camera'
 import styles from '../Style/ListTicketStyle';
 import * as Permissions from 'expo-permissions';
@@ -42,7 +42,7 @@ export default class ScanQRCodeGuard extends React.Component{
         // alert(JSON.stringify(this.state.data));
     }
     async createTicket() {
-        if(!this.state.data?.QRCode) return //alert('Chưa nhận được thông tin');
+        if(!this.state.data?.QRCode) return Alert.alert("Thông báo",'Chưa nhận được thông tin');
         try {
           var reponse = await axios
           .post('https://project3na.herokuapp.com/api/vehicle', {
@@ -55,20 +55,19 @@ export default class ScanQRCodeGuard extends React.Component{
               parkingid: parseInt(this.state.user.parkingid),
               Timeout: `${hour.toString()} ${date.toString()}`
           }
-          //alert(JSON.stringify(data));
           var check = await axios
           .post('https://project3na.herokuapp.com/api/guard/transaction/active', data,{
             headers: {
                 'Content-Type': 'application/json',
             }
         });
-          //alert(JSON.stringify(check));
+
           if(!check.data.success){
 
             this.props.navigation.push('AddTicket', { data: reponse.data.data });
           }
           else {
-              //alert(JSON.stringify(check));
+
 
               this.props.navigation.push('CloseTicket', { data: {
                   ...reponse.data.data,
@@ -76,7 +75,7 @@ export default class ScanQRCodeGuard extends React.Component{
               } });
           }
         } catch (error) {
-          //alert("Đã có lỗi xảy ra"+ JSON.stringify(error))
+          alert("Đã có lỗi xảy ra"+ JSON.stringify(error))
         }
 
     }

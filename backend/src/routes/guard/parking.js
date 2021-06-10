@@ -3,6 +3,7 @@ const knex = require('../../knex');
 const handleAPIError = require('../../common/handleAPIError');
 const { validateCustomerAPI, validateGuardAPI } = require('../../middlewares/validateAPIAuthentication');
 const moment = require('moment');
+// lấy thông tin bãi đỗ của bảo vệ
 router.get('/api/guard/parking',validateGuardAPI, async(req, res) => {
     try {
         const { parkingid, ownerid } = req.session;

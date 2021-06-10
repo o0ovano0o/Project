@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Image, Text, Dimensions, SafeAreaView, StatusBar, ScrollView, AsyncStorage } from "react-native";
+import { StyleSheet, View, Image, Text, Dimensions, SafeAreaView, StatusBar, ScrollView, AsyncStorage, TouchableHighlight } from "react-native";
 import { AntDesign, Feather, MaterialIcons } from '@expo/vector-icons';
 import MaterialButtonViolet from "../components/MaterialButtonViolet";
 import styles from '../Style/ListTicketStyle';
@@ -51,25 +51,10 @@ export default class AddTicket extends React.Component {
             });
             this.setState({ success: false });
         } catch (er) {
-            // alert(JSON.stringify(er));
         }
     }
     async createTransaction() {
         try {
-            // alert(JSON.stringify({
-
-            //     vehicleid: parseInt(this.props.route.params.data.vehicleid),
-            //         parkingid: parseInt(this.state.user.parkingid),
-            //         ticketID: parseInt(this.state.ticket.ticketid),
-            //         Timein: `${this.state.now} ${this.state.today}`,
-            //         Timeout: "",
-            //         TotalAmount: 0,
-            //         Status: 1,
-            //         userid: parseInt(this.props.route.params.data.userid),
-            //         typetimeticket: parseInt(this.state.ticket.typetime),
-            //         priceticket: parseInt(this.state.ticket.price),
-            //         nameticket: this.state.ticket.name,
-            // }));
             var reponse = await axios
                 .post('https://project3na.herokuapp.com/api/guard/transaction', {
                     vehicleid: parseInt(this.props.route.params.data.vehicleid),
@@ -84,7 +69,6 @@ export default class AddTicket extends React.Component {
                     priceticket: parseInt(this.state.ticket.price),
                     nameticket: this.state.ticket.name,
                 });
-            // alert(reponse.data.msg);
 
             if (reponse.data.success) {
                 this.setState({ success: true });
@@ -92,23 +76,6 @@ export default class AddTicket extends React.Component {
 
             }
         } catch (error) {
-            // alert(
-            //     error
-            // );
-            // alert(JSON.stringify({
-
-            //     vehicleid: parseInt(this.props.route.params.data.vehicleid),
-            //         parkingid: parseInt(this.state.user.parkingid),
-            //         ticketID: parseInt(this.state.ticket.ticketid),
-            //         Timein: `${this.state.now} ${this.state.today}`,
-            //         Timeout: "",
-            //         TotalAmount: 0,
-            //         Status: 1,
-            //         userid: parseInt(this.props.route.params.data.userid),
-            //         typetimeticket: parseInt(this.state.ticket.typetime),
-            //         priceticket: parseInt(this.state.ticket.price),
-            //         nameticket: this.state.ticket.name,
-            // }));
         }
     }
     addTicketRender() {
@@ -237,9 +204,9 @@ export default class AddTicket extends React.Component {
                     hidden={true} />
                 <View style={{ flex: 9 }}>
                     <View style={styles.tabback}>
-                        <View style={{ flex: 1, alignItems: 'center' }}>
-                            <AntDesign name="left" size={24} color="gray" />
-                        </View>
+                    <TouchableHighlight onPress={() => this.props.navigation.push('Root', {screen:'Vé xe'})} style={{flex:1, alignItems:'center'}}>
+                            <AntDesign name="left" size={24} color="black" />
+                        </TouchableHighlight>
                         <View style={{ flex: 5, alignItems: 'center' }}>
                             <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Tạo vé xe</Text>
                         </View>

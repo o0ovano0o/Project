@@ -3,7 +3,7 @@ const knex = require('../../knex');
 const Enum = require('../../common/Enum');
 const handleAPIError = require('../../common/handleAPIError');
 const { validateOwnerAPI, validateAppAPI } = require('../../middlewares/validateAPIAuthentication');
-
+// tạo vé cho bãi
 router.post('/api/owner/ticket', validateOwnerAPI, async(req, res) => {
     try {
         let { name, price, typetime,typeverhicle,drescription,isDefault,isSystem } = req.body;
@@ -24,6 +24,7 @@ router.post('/api/owner/ticket', validateOwnerAPI, async(req, res) => {
     }
 });
 
+// chỉnh vé mặc định cho bãi
 router.post('/api/owner/ticket/default/:ticketid', validateOwnerAPI, async(req, res) => {
     try {
         let { ticketid } = req.params;
@@ -41,7 +42,7 @@ router.post('/api/owner/ticket/default/:ticketid', validateOwnerAPI, async(req, 
         handleAPIError(err, res);
     }
 });
-
+// xóa vé
 router.delete('/api/owner/ticket/:ticketid',validateOwnerAPI, async(req, res) => {
     try {
         const { ticketid } = req.params;
@@ -66,6 +67,7 @@ router.delete('/api/owner/ticket/:ticketid',validateOwnerAPI, async(req, res) =>
     }
 });
 
+// chỉnh thông tin vé
 router.put('/api/owner/ticket/:ticketid', validateOwnerAPI, async(req, res) => {
     try {
         let { name, price, typetime,typeverhicle,drescription,isDefault, isSystem } = req.body;
@@ -86,7 +88,7 @@ router.put('/api/owner/ticket/:ticketid', validateOwnerAPI, async(req, res) => {
         handleAPIError(err, res);
     }
 });
-
+// lấy danh sách vé
 router.get('/api/owner/tickets',validateOwnerAPI, async(req, res) => {
     try {
         const ownerid = req.session.userid;
@@ -113,7 +115,7 @@ router.get('/api/owner/tickets',validateOwnerAPI, async(req, res) => {
         handleAPIError(err, res);
     }
 });
-
+// lấy chi tiết vé
 router.get('/api/owner/ticket/:ticketid',validateOwnerAPI, async(req, res) => {
     try {
         const { ticketid } = req.params;
@@ -131,7 +133,7 @@ router.get('/api/owner/ticket/:ticketid',validateOwnerAPI, async(req, res) => {
         handleAPIError(err, res);
     }
 });
-
+// tạo thông tin xe
 router.post('/api/vehicle',validateAppAPI, async(req, res) => {
     try {
         const { QRCode } = req.body;
@@ -139,8 +141,9 @@ router.post('/api/vehicle',validateAppAPI, async(req, res) => {
         const vehicle = await knex('vehicle')
             .first()
             .where({ QRCode });
+
+        if (!vehicle) return res.json({ success: false, msg: 'Không tìm được xe tương ứng' });
         const [user] = await knex('user').where({userid: vehicle.userid});
-        if (!vehicle) return res.json({ success: false, msg: 'Lấy thông tin xe thất bại' });
         return res.status(200).json({
             success: true,
             data: {

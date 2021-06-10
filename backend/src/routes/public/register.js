@@ -4,7 +4,7 @@ const axios = require('axios')
 const knex = require('../../knex');
 const handleAPIError = require('../../common/handleAPIError');
 const Enum = require('../../common/Enum');
-
+// đăng ký tài khoản
 router.post('/api/customer/register',async (req, res) => {
   try {
     const { username, password, phonenumber,address,email } = req.body;

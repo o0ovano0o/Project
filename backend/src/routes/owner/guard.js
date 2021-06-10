@@ -4,7 +4,7 @@ const handleAPIError = require('../../common/handleAPIError');
 const Enum = require('../../common/Enum');
 const sha1 = require('sha1');
 const { validateOwnerAPI } = require('../../middlewares/validateAPIAuthentication');
-
+//tạo bảo vệ của chủ bãi
 router.post('/api/owner/guard', validateOwnerAPI, async(req, res) => {
     try {
         const { username, password, phonenumber,address,email,parkingid } = req.body;
@@ -25,7 +25,7 @@ router.post('/api/owner/guard', validateOwnerAPI, async(req, res) => {
         handleAPIError(err, res);
     }
 });
-
+// xóa bảo vệ
 router.delete('/api/owner/guard/:userid',validateOwnerAPI, async(req, res) => {
     try {
         const { userid } = req.params;
@@ -43,7 +43,7 @@ router.delete('/api/owner/guard/:userid',validateOwnerAPI, async(req, res) => {
         handleAPIError(err, res);
     }
 });
-
+// sửa thông tin bảo vệ
 router.put('/api/owner/guard/:userid', validateOwnerAPI, async(req, res) => {
     try {
         const { userid } = req.params;
@@ -62,7 +62,7 @@ router.put('/api/owner/guard/:userid', validateOwnerAPI, async(req, res) => {
         handleAPIError(err, res);
     }
 });
-
+// lấy danh sách bảo vệ
 router.get('/api/owner/guards',validateOwnerAPI, async(req, res) => {
     try {
         const ownerid = req.session.userid;
@@ -75,7 +75,7 @@ router.get('/api/owner/guards',validateOwnerAPI, async(req, res) => {
         handleAPIError(err, res);
     }
 });
-
+// lấy chi tiết bảo vệ
 router.get('/api/owner/guard/:id',validateOwnerAPI, async(req, res) => {
     try {
         const { id } = req.params;
