@@ -8,7 +8,7 @@ import Dropdown from "react-native-modal-dropdown";
 import axios from "axios";
 
 faker.seed(10);
-const item_img = `https://randomuser.me/api/portraits/${faker.helpers.randomize(['women', 'men'])}/${faker.random.number(60)}.jpg`;
+const item_img = `https://cdn1.iconfinder.com/data/icons/avatar-3/512/Security-512.png`;
 function AddGuard({navigation,route}) {
     const [user, setUser] = React.useState('');
     const [parkings, setParkings] =  React.useState([]);
@@ -31,17 +31,6 @@ function AddGuard({navigation,route}) {
             if(password != repassword) {
               return alert('Mật khẩu không khớp. Vui lòng nhập lại.');
             }
-            // alert(JSON.stringify({
-            //     username,
-            //     password,
-            //     phonenumber,
-            //     address,
-            //     email,
-            //     ownerid,parkingid
-            // }
-
-            //)
-            //);
             await axios
             .post('https://project3na.herokuapp.com/api/owner/guard', {
                   username,
@@ -49,34 +38,24 @@ function AddGuard({navigation,route}) {
                   phonenumber,address,email,ownerid,parkingid
                 })
             .then(async function (response) {
-
-                // alert(response.data.msg);
               if(response.data.success) {
-
                 navigation.push('ListGuard');
               } else {
-
               }
             })
             .catch(function (error) {
-              // handle error
-            //  alert('error');
             })
             .finally(function () {
             });
         }catch(er){
-           // alert(er);
         }
     }
     const getParking = async () => {
         try{
             var response = await axios
             .get(`https://project3na.herokuapp.com/api/owner/parkings`);
-
             setParkings(response.data.data);
-            // alert(JSON.stringify(response));
         }catch(er){
-            //alert(er);
         }
     }
     const getUser = async () => {
@@ -112,9 +91,9 @@ function AddGuard({navigation,route}) {
                     <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1 }}>
                         <View style={{ flexDirection: 'row', paddingTop: 10, marginBottom: 5 }}>
                             <AntDesign name="user" size={20} color="gray" style={{ marginRight: 10, marginLeft: 20 }} />
-                            <Text style={{}}>Tên đăng nhập:</Text>
+                            <Text style={{}}>Họ và tên:</Text>
                         </View>
-                        <TextInput style={styles.btn} placeholder="Nhập tên đăng nhập..." onChangeText={username => setusername(username)}
+                        <TextInput style={styles.btn} placeholder="Nhập họ tên..." onChangeText={username => setusername(username)}
                    defaultValue={username} />
                     </View>
                     <View style={{ height: 70, borderBottomColor: "#CCCCCC", borderBottomWidth: 1 }}>
@@ -154,7 +133,7 @@ function AddGuard({navigation,route}) {
 
                         <Picker
 
-                        style={{ height: 50, width: 150 }}
+                        style={{ height: 50, width: 250 }}
                         onValueChange={(itemValue, itemIndex) => {
                             SetParkingID(itemValue)
                         }}
@@ -213,8 +192,6 @@ function AddGuard({navigation,route}) {
                         ></MaterialButtonViolet>
                     </View>
                 </ScrollView>
-                {/* Khoảng cho menubar */}
-
             </View>
         </SafeAreaView>
     );

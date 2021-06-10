@@ -107,17 +107,11 @@ function ListTicketType({ navigation }) {
                 flex: 1,
                 backgroundColor: '#fff',
             }}>
-
-            <Image
-                source={{ uri: BG_IMG }}
-                style={StyleSheet.absoluteFillObject}
-                blurRadius={80}
-            />
             <StatusBar
                 animated={true}
                 hidden={true} />
             <View style={styles.tabback}>
-                <TouchableOpacity onPress={() => navigation.push('CustomerProfile')}  style={{ flex: 1, alignItems: 'center', justifyContent:'center' }}>
+                <TouchableOpacity onPress={() => navigation.push('CustomerProfile')}  style={{ flex: 1, marginLeft: 10, alignItems: 'center', justifyContent:'center' }}>
                     <AntDesign name="left" size={24} color="black" />
                 </TouchableOpacity>
                 <View style={{ flex: 5, alignItems: 'center' }}>
@@ -167,7 +161,7 @@ function ListTicketType({ navigation }) {
                                 flexDirection: 'row',
                                 padding: SPACING,
                                 marginBottom: SPACING,
-                                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                                backgroundColor: '#f0f0f0',
                                 borderRadius: 20,
                                 shadowColor: "#000",
                                 shadowOffset: {

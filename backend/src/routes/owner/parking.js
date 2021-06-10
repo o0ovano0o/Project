@@ -2,7 +2,7 @@ const router = require('express').Router();
 const knex = require('../../knex');
 const handleAPIError = require('../../common/handleAPIError');
 const { validateOwnerAPI } = require('../../middlewares/validateAPIAuthentication');
-
+var moment = require('moment');
 router.post('/api/owner/parking', validateOwnerAPI, async(req, res) => {
     try {
         const { parkingname, TotalParkingCar,TotalParkingMotoBike,latitude,longitude,description, TotalParkingBike,address } = req.body;
@@ -90,6 +90,112 @@ router.get('/api/owner/parking/:parkingid',validateOwnerAPI, async(req, res) => 
     } catch (err) {
         handleAPIError(err, res);
     }
+});
+
+
+router.get('/api/owner/analys-amount/:typetime', validateOwnerAPI, async(req, res) => {
+    try {
+        let { typetime } = req.params;
+        if (!typetime) {
+          return res.json({ success: false, msg: 'Thiếu thông tin bắt buộc', data: req.body });
+        }
+        const ownerid = req.session.userid;
+        let parkings = await knex('parking').where({userid : ownerid});
+        let filtertransaction = await knex('transaction').whereIn('parkingid', parkings.map(item => item.parkingid));
+        if(typetime == 'day') {
+          filtertransaction = filtertransaction.filter((item)=>{
+            if(!item.Timeout) return false;
+            var timeout = moment(item.Timeout, "hh:mm DD/MM/YYYY");
+            var now = moment();
+            var duration = timeout.diff(now,'days');
+            if(Math.abs(parseInt(duration))==0){
+              return true;
+            }
+            return false;
+          });
+        }
+        else if(typetime == 'month'){
+          filtertransaction = filtertransaction.filter((item)=>{
+            if(!item.Timeout) return false;
+            var timeout = moment(item.Timeout, "hh:mm DD/MM/YYYY");
+            var now = moment();
+            var duration = timeout.diff(now,'months');
+            if(Math.abs(parseInt(duration))==0){
+              return true;
+            }
+            return false;
+          });
+        }
+        else {
+          return res.status(200).json({ success: false, msg: 'Gửi sai thông tin' });
+        }
+        let transtotal = await knex('transaction').select('parkingid').whereIn('transactionid', filtertransaction.map(item => item.transactionid)).sum({ total: 'TotalAmount' }).groupBy('parkingid')
+        console.log(transtotal);
+        parkings = parkings.map(item => {
+          var TotalAmount = transtotal.find(el => el.parkingid == item.parkingid);
+          if(TotalAmount)
+          return Object.assign(item, { ...TotalAmount });
+          else
+          return Object.assign(item, { total: 0 });
+        });
+
+        return res.status(200).json({ success: true, data: parkings });
+    } catch (err) {
+        handleAPIError(err, res);
+    }
+});
+
+
+router.get('/api/owner/analys-amount/:parkingid', validateOwnerAPI, async(req, res) => {
+  try {
+      let { typetime } = req.params;
+      if (!typetime) {
+        return res.json({ success: false, msg: 'Thiếu thông tin bắt buộc', data: req.body });
+      }
+      const ownerid = req.session.userid;
+      let parkings = await knex('parking').where({userid : ownerid});
+      let filtertransaction = await knex('transaction').whereIn('parkingid', parkings.map(item => item.parkingid));
+      if(typetime == 'day') {
+        filtertransaction = filtertransaction.filter((item)=>{
+          if(!item.Timeout) return false;
+          var timeout = moment(item.Timeout, "hh:mm DD/MM/YYYY");
+          var now = moment();
+          var duration = timeout.diff(now,'days');
+          if(Math.abs(parseInt(duration))==0){
+            return true;
+          }
+          return false;
+        });
+      }
+      else if(typetime == 'month'){
+        filtertransaction = filtertransaction.filter((item)=>{
+          if(!item.Timeout) return false;
+          var timeout = moment(item.Timeout, "hh:mm DD/MM/YYYY");
+          var now = moment();
+          var duration = timeout.diff(now,'months');
+          if(Math.abs(parseInt(duration))==0){
+            return true;
+          }
+          return false;
+        });
+      }
+      else {
+        return res.status(200).json({ success: false, msg: 'Gửi sai thông tin' });
+      }
+      let transtotal = await knex('transaction').select('parkingid').whereIn('transactionid', filtertransaction.map(item => item.transactionid)).sum({ total: 'TotalAmount' }).groupBy('parkingid')
+      console.log(transtotal);
+      parkings = parkings.map(item => {
+        var TotalAmount = transtotal.find(el => el.parkingid == item.parkingid);
+        if(TotalAmount)
+        return Object.assign(item, { ...TotalAmount });
+        else
+        return Object.assign(item, { total: 0 });
+      });
+
+      return res.status(200).json({ success: true, data: parkings });
+  } catch (err) {
+      handleAPIError(err, res);
+  }
 });
 
 

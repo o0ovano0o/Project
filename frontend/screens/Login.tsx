@@ -88,6 +88,7 @@ async function login(navigate:any, phonenumber: string, password: string) {
   .catch(function (error) {
     // handle error
    // alert(error);
+   Alert.alert("Lỗi",JSON.stringify(error));
   })
   .finally(function () {
   });

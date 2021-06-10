@@ -90,7 +90,6 @@ import axios from "axios";
                 setList(data);
             })
             .catch(function (error) {
-                   // alert(JSON.stringify(error));
             })
         } catch (error) {
             //alert(JSON.stringify(error));
@@ -208,7 +207,6 @@ import axios from "axios";
             <Modal
                 isVisible={visible} onDismiss={hideModal}
                 useNativeDriver
-
                 style={styles.modalContainer}
                 backdropColor={"gray"}
                 onBackButtonPress={hideModal}

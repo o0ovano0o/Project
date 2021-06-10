@@ -40,9 +40,7 @@ export default class FindParking extends Component {
       await axios
         .get(`https://project3na.herokuapp.com/api/parkings/nearst`, {params})
         .then(async function (response) {
-          if (response.data.success) {
-            
-             //alert(JSON.stringify(response.data));
+          if (response.data.success) {            
             me.setState({
               parkings: response.data.data
             });
@@ -50,12 +48,8 @@ export default class FindParking extends Component {
           else Alert.alert("Thông báo",response.data.msg)
         })
         .catch(function (error) {
-         // alert(error);
         })
-
-
     } catch (error) {
-      //alert(error)
     }
 
   }
@@ -93,9 +87,7 @@ export default class FindParking extends Component {
     this.setState({ search });
   };
   gotoGooogleMap(lat, lng, address) {
-    var latcurr, lngcurr;
-    //alert(lat);
-    const me = this;
+    var me = this;
     navigator.geolocation.getCurrentPosition((data) => {
    
       me.setState({ currentregion: data.coords });
@@ -111,7 +103,7 @@ export default class FindParking extends Component {
       latitude: lat,
       longitude: lng,
       sourceLatitude: me.state.currentregion.latitude,  // optionally specify starting location for directions
-      sourceLongitude: me.state.currentregion.longitude,  // not optional if sourceLatitude is specified
+      sourceLongitude:  me.state.currentregion.longitude,  // not optional if sourceLatitude is specified
       title: address,  // optional
       googleForceLatLon: true,  // optionally force GoogleMaps to use the latlon for the query instead of the title
       googlePlaceId: 'ChIJGVtI4by3t4kRr51d_Qm_x58',  // optionally specify the google-place-id
@@ -136,19 +128,15 @@ export default class FindParking extends Component {
           active: true
         }
       });
-      // alert(JSON.stringify(region));
       me.state.ref.animateToRegion(
-        // (new Array()).push(me.state.region),
         me.state.region,
-        true, // not animated
+        true, 
       );
       me.setState({ region });
     }, ((error) => {
       var me = this;
       var region = me.state.region;
-      // alert(JSON.stringify(me.state));
       region = Object.assign(region,);
-      // alert(JSON.stringify(region));
       me.setState({
         region: {
           latitude: me.state.currentregion.latitude,
@@ -159,12 +147,10 @@ export default class FindParking extends Component {
         }
       });
       me.state.ref.animateToRegion(
-        // (new Array()).push(me.state.region),
         me.state.region,
         1000, // not animated
       );
       // alert('Lấy vị trí hiện tại thất bại');
-
     }))
     me.setState({ active: 'current' })
   }
@@ -237,25 +223,6 @@ export default class FindParking extends Component {
 
     )
   }
-  // render() {
-  //   return (
-  //     <Container>
-  //     <Header searchBar rounded>
-  //     <Item>
-  //       <Icon name="ios-search" />
-  //       <Input placeholder="Search" />
-  //       <Icon name="ios-people" />
-  //     </Item>
-  //     <Button transparent>
-  //       <Text>Search</Text>
-  //     </Button>
-  //     <View>
-
-  //     </View>
-  //   </Header>
-  //   </Container>
-  //   )
-  // }
 }
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;

@@ -26,11 +26,12 @@ function Statistic({ navigation }) {
             .then(async function (response) {
                 if (response.data.success) {
                     setDataParking(response.data.data);
+                    //alert(response.data.data[3].total);
                 }
                 setRefreshPage(false);
-
             })
             .catch(function (error) {
+                //alert(error);
             })
             .finally(function () {
             });
@@ -258,7 +259,7 @@ function Statistic({ navigation }) {
                 animated={true}
                 hidden={true} />
             <View style={styles.tabback}>
-                <TouchableOpacity style={{ flex: 1, alignItems: 'center', flexDirection: 'row', marginLeft: 20 }}>
+                <TouchableOpacity onPress={()=> navigation.goBack()} style={{ flex: 1, alignItems: 'center', flexDirection: 'row', marginLeft: 20 }}>
                     <AntDesign name="left" size={24} color="black" />
                 </TouchableOpacity>
                 <View style={{ flex: 5, alignItems: 'center' }}>

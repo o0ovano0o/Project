@@ -143,7 +143,7 @@ function AddTicketType({ navigation }) {
                             <TextInput style={{ fontSize: 18,width:130 }} keyboardType="numeric" onChangeText={price => setPrice(price)}
                    defaultValue={price} />
                             <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ fontSize: 25 }}>/ </Text>
+                                <Text style={{ fontSize: 25, marginTop: 5 }}>/ </Text>
 
                                 <Picker
 

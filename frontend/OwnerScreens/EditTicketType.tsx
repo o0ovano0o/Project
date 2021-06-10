@@ -108,7 +108,7 @@ function EditTicketType({navigation,route}) {
                 animated={true}
                 hidden={true} />
             <View style={styles.tabback}>
-                <TouchableOpacity onPress={() => navigation.push('ListTicketType')} style={{ flex: 1, alignItems: 'center' }}>
+                <TouchableOpacity onPress={() => navigation.push('ListTicketType')} style={{ flex: 1, alignItems: 'center', paddingTop: 10, marginLeft:10 }}>
                     <AntDesign name="left" size={24} color="gray" />
                 </TouchableOpacity>
                 <View style={{ flex: 5, alignItems: 'center' }}>
@@ -143,7 +143,7 @@ function EditTicketType({navigation,route}) {
                             <TextInput style={{ fontSize: 18,width:130 }} keyboardType="numeric" onChangeText={price => setPrice(price)}
                    defaultValue={price} />
                             <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ fontSize: 25 }}>/ </Text>
+                                <Text style={{ fontSize: 25, marginTop: 5 }}>/ </Text>
 
                                 <Picker
 

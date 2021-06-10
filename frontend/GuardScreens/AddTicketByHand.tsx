@@ -11,6 +11,7 @@ import * as MediaLibrary from 'expo-media-library';
 import axios from "axios";
 import moment from "moment";
 import { Picker } from "native-base";
+import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
@@ -99,7 +100,6 @@ export default class AddTicketByHand extends React.Component {
                 })
             }
         } catch (error) {
-           // alert(JSON.stringify(error));
         }
 
     }
@@ -107,7 +107,6 @@ export default class AddTicketByHand extends React.Component {
         try {
 
             if (!base64) {
-               // alert(JSON.stringify(base64))
                 return;
             }
             this.setState({
@@ -160,7 +159,6 @@ export default class AddTicketByHand extends React.Component {
                 listTicket: response,
                 ticket: response[0]
             })
-           // alert(JSON.stringify(this.state.listTicket));
         }
         else {
             this.setState({
@@ -177,7 +175,6 @@ export default class AddTicketByHand extends React.Component {
 
     }
     async pickdImage() {
-      //  alert(this.state.code);
         try {
 
             let result = await ImagePicker.launchCameraAsync({
@@ -186,19 +183,13 @@ export default class AddTicketByHand extends React.Component {
                 aspect: [3, 4],
                 mediaTypes: ImagePicker.MediaTypeOptions.All
             });
-
-           // alert(JSON.stringify(result));
             if (!result.cancelled) {
                 this.setState({
                     image: result.uri,
                     result: result
                 });
-                //  this.postPircture(result.base64);
             }
-
-
         } catch (error) {
-           // alert(JSON.stringify(error));
         }
     }
     AddTicketRender() {
@@ -303,7 +294,7 @@ export default class AddTicketByHand extends React.Component {
         if (Platform.OS !== 'web') {
             const { status } = await ImagePicker.requestCameraPermissionsAsync();
             if (status !== 'granted') {
-                //   alert('Sorry, we need camera roll permissions to make this work!');
+                alert('Sorry, we need camera roll permissions to make this work!');
             }
         }
 
@@ -318,26 +309,13 @@ export default class AddTicketByHand extends React.Component {
                 base64: true,
             });
             console.log(result.uri);
-            //alert(JSON.stringify(result));
             if (!result.cancelled) {
-
                 this.state.image = result.uri;
                 this.state.result = result;
-                // result.base64({
-                //     image: result.base64,
-                //     result:result
-                // });
-                //  this.postPircture(result.base64);
             }
-
-
-
-        } catch (error) {
-           // alert(JSON.stringify(error));
+        } 
+        catch (error) {
         }
-
-
-
     };
 
     async register(vehicleid: int, parkingid: int) {
@@ -359,12 +337,8 @@ export default class AddTicketByHand extends React.Component {
                 })
                 .then(async function (response) {
                     if (response.data.success) {
-                      //  alert(response.data.msg);
                     } else {
-                        // alert(response.data.msg);
-                        if(pictureUrl)
                         me.createTransaction(pictureUrl);
-
                     }
                 })
                 .catch(function (error) {
@@ -374,7 +348,6 @@ export default class AddTicketByHand extends React.Component {
                 .finally(function () {
                 });
         } catch (error) {
-           // alert(JSON.stringify(error));
         }
     }
     async createTransaction(url) {
@@ -395,30 +368,12 @@ export default class AddTicketByHand extends React.Component {
                     priceticket: parseInt(this.state.ticket.price),
                     nameticket: this.state.ticket.name,
                 });
-           // alert(reponse.data.msg);
-
             if (reponse.data.success) {
                this.setState({
                    code:2
                })
             }
         } catch (error) {
-
-            // alert(JSON.stringify({
-            //     error,
-            //     code: this.state.codeVe,
-            //     parkingid: parseInt('1'),
-            //     ticketID: parseInt(this.state.ticket.ticketid),
-            //     Timein: `${moment().format('hh:mm')} ${moment().format('DD/MM/YYYY')}`,
-            //     Timeout: "",
-            //     pictureUrl:url,
-            //     type:this.state.type,
-            //     TotalAmount: 0,
-            //     Status: 1,
-            //     typetimeticket: parseInt(this.state.ticket.typetime),
-            //     priceticket: parseInt(this.state.ticket.price),
-            //     nameticket: this.state.ticket.name,
-            // }));
         }
     }
     render() {
@@ -432,9 +387,9 @@ export default class AddTicketByHand extends React.Component {
                     hidden={true} />
                 <View style={{ flex: 9 }}>
                     <View style={styles.tabback}>
-                        <View style={{ flex: 1, alignItems: 'center' }}>
+                        <TouchableHighlight onPress={()=> this.props.navigation.goBack()} style={{ flex: 1, alignItems: 'center' }}>
                             <AntDesign name="left" size={24} color="black" />
-                        </View>
+                        </TouchableHighlight>
                         <View style={{ flex: 5, alignItems: 'center' }}>
                             <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Tạo vé xe</Text>
                         </View>

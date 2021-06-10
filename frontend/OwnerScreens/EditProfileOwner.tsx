@@ -46,7 +46,7 @@ function EditProfileOwner({ navigation }) {
                 <View style={styles.profile}>
                     <View style={styles.avatar}>
                         <Image
-                            source={require('../assets/images/ava.jpg')}
+                            source={require('../assets/images/owner.jpg')}
                             resizeMode="cover"
                             style={styles.image}
                         ></Image>

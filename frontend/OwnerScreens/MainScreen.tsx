@@ -121,7 +121,7 @@ function MainScreenOwner({ navigation }) {
                 <View style={{ flex: 4 }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
                         <Image
-                            source={require('../assets/images/gu.jpg')}
+                            source={require('../assets/images/owner.jpg')}
                             resizeMode="cover"
                             style={styles.image}
                         ></Image>
@@ -158,7 +158,7 @@ function MainScreenOwner({ navigation }) {
                                 height: 40, width: width - 60,
                                 borderRadius: 10, backgroundColor: "#23A67E"
                             }}>
-                                <TouchableOpacity style={{ height: 40, width: width - 60, justifyContent: 'center', alignItems: 'center', }}>
+                                <TouchableOpacity onPress={() => navigation.push('AddTicketByHand')} style={{ height: 40, width: width - 60, justifyContent: 'center', alignItems: 'center', }}>
                                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }}>
                                         <MaterialIcons name="add-a-photo" size={20} color="white" />
                                         <Text style={{ color: 'white', fontSize: 14, marginLeft: 30 }}>Tạo vé tay</Text>

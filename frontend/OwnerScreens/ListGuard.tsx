@@ -25,7 +25,6 @@ const DATA = [...Array(10).keys()].map((_, i) => {
 
 const SPACING = 16;
 const AVATAR_SIZE = 70;
-const BG_IMG = 'https://images.pexels.com/photos/5326901/pexels-photo-5326901.jpeg?auto=compress&cs=tinysrgb&h=650&w=940';
 const ITEM_SIZE = AVATAR_SIZE + SPACING * 3;
 
 function ListGuard({ navigation }) {
@@ -47,7 +46,7 @@ function ListGuard({ navigation }) {
             await axios
                 .delete(`https://project3na.herokuapp.com/api/owner/guard/${userid}`)
                 .then(async function (response) {
-                   // alert(response.data.msg);
+                    // alert(response.data.msg);
                     getGuardList();
                 });
         } catch (error) {
@@ -59,14 +58,9 @@ function ListGuard({ navigation }) {
         <SafeAreaView
             style={{
                 flex: 1,
-                backgroundColor: '#e3e3e3',
+                backgroundColor: '#fff',
             }}>
 
-            <Image
-                source={{ uri: BG_IMG }}
-                style={StyleSheet.absoluteFillObject}
-                blurRadius={80}
-            />
             <StatusBar
                 animated={true}
                 hidden={true} />
@@ -126,7 +120,7 @@ function ListGuard({ navigation }) {
                                 flexDirection: 'row',
                                 padding: SPACING,
                                 marginBottom: SPACING,
-                                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                                backgroundColor: '#f0f0f0',
                                 borderRadius: 20,
                                 shadowColor: "#000",
 
@@ -160,31 +154,29 @@ function ListGuard({ navigation }) {
                                 <Text numberOfLines={1} style={{ fontSize: 12, opacity: 0.8, color: '#0099cc', flex: 1 }}>{item.parkingname} - {item.parkingaddress}</Text>
                             </View>
                             <Button
-        title="Sửa"
+                                title="Sửa"
 
-        color='#FFD700'
-        onPress={() => navigation.push('EditGuard', {data: item})}
-      />
-    <View style={{width:10}}></View>
+                                color='#FFD700'
+                                onPress={() => navigation.push('EditGuard', { data: item })}
+                            />
+                            <View style={{ width: 10 }}></View>
                             <Button
-        title="Xóa"
-        color='#FF6347'
-        onPress={() => deleteGuard(item.userid)}
-      />
+                                title="Xóa"
+                                color='#FF6347'
+                                onPress={() => deleteGuard(item.userid)}
+                            />
 
-                                {/* <TouchableHighlight onPress={() =>alert('1')}>
+                            {/* <TouchableHighlight onPress={() =>alert('1')}>
                                 <Animated.View style={{ flex: 1, justifyContent: "center", alignContent: "center" }}>
                                                                 <AntDesign  name='delete' size={25} style={styles.icondelete} />
                                                                 </Animated.View>
                                 </TouchableHighlight> */}
 
 
-                    </Animated.View>
-                )
-            }}
-        />
-        <View style={{ height: 50, backgroundColor: "gray" }}></View>
-
+                        </Animated.View>
+                    )
+                }}
+            />
         </SafeAreaView>
     );
 }
