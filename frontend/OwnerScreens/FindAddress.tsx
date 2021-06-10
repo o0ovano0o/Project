@@ -60,7 +60,7 @@ export default class FindAddress extends Component {
 
     }
     async componentDidMount() {
-        alert(JSON.stringify(this.props.route.params));
+       // alert(JSON.stringify(this.props.route.params));
         await this.getCurrentLocation();
 
     }

@@ -81,7 +81,7 @@ function ListVehicle({ navigation }) {
         })
         .catch(function (error) {
           // handle error
-             alert(error);
+             //alert(error);
         })
         .finally(function () {
         });

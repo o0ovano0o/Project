@@ -15,7 +15,7 @@ function InScreen(props){
     React.useEffect(() => {
         getTransactions();
         getUser();
-        alert(JSON.stringify(props));
+       // alert(JSON.stringify(props));
         },[]);
     const getUser = async () => {
         let value = await AsyncStorage.getItem('user');
@@ -40,7 +40,7 @@ function InScreen(props){
                // alert(JSON.stringify(response.data));
             })
             .catch(function (error) {
-                   alert(error);
+                   //alert(error);
             });
 
     }
@@ -195,7 +195,7 @@ function OutScreen(props){
             //alert(JSON.stringify(response.data));
         })
         .catch(function (error) {
-               alert(error);
+              // alert(error);
         })
         .finally(function () {
         });

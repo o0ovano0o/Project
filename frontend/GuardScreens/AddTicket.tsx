@@ -38,7 +38,7 @@ export default class AddTicket extends React.Component {
             if (response.data.data && response.data.data.length)
                 response = response.data.data;
             else response = new Array();
-            alert(JSON.stringify(this.props.route.params.data));
+            //alert(JSON.stringify(this.props.route.params.data));
             me.setState({
                 listTicket: response
             });

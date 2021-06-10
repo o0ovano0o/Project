@@ -74,14 +74,14 @@ export default class ScanQRCode extends React.Component {
                 Timeout: `${hour} ${date}`
 
             });
-        alert(JSON.stringify(check));
+       // alert(JSON.stringify(check));
         if (!check.data.success)
             this.props.navigation.push('AddTicket', { data:{
                 ...reponse.data.data,
                 parking:this.state.parking
             }  });
         else {
-            alert(JSON.stringify(check));
+            //alert(JSON.stringify(check));
             this.props.navigation.push('CloseTicket', {
                 data: {
                     ...reponse.data.data,
